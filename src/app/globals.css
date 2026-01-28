@@ -24,3 +24,27 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+@layer components {
+
+  .banner  {
+
+    height: 60vh;
+  min-height: 10rem;   /* min-h-40 */
+   max-height: 25rem;  /* max-h-80 */
+  width: 100%;
+  background: linear-gradient(
+  to right,
+  #eef0f3 0%,
+  #f3e8ff 45%,
+  #7c3aed 100%
+);
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+   
+  }
+}

@@ -269,16 +269,19 @@ export default function ProfileSec({ user }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <main className="ml-3 bg-stone-400/30 text-black mx-auto max-w-xl rounded-xl   ">
+      <main className="ml-3 bg-stone-400/30 text-black mx-auto max-w-xl  rounded-xl   ">
         {/* Profile image with fallback */}
-        <div className="flex flex-col sm:flex-row sm:items-center bg-black/20 h-auto  gap-4 rounded-xl justify-between">
-          <Image
+        <div className="flex flex-col sm:flex-row sm:items-center bg-black/20 h-[15vh] border border-gray-800  gap-4 rounded-xl justify-between">
+         <section className="h-30 top-9 w-30 relative  m-4">
+           <Image
             src={formData.image || "/user.jpg"}
             alt="Profile"
-            width={100}
-            height={100}
-            className="rounded-full object-cover mt-2 p-2"
+            fill
+            priority
+            quality={100}
+            className="object-cover  rounded-full"
           />
+         </section>
 
           {/* File input shown only in edit mode */}
           {editing && (
@@ -299,7 +302,7 @@ export default function ProfileSec({ user }) {
             </button>
           )}
         </div>
-        <section className="p-4">
+        <section className="p-4 mt-8">
         {!editing ? (
           <div className="flex mt-4 mb-4 flex-col sm:flex-row  sm:items-center sm:gap-6 gap-1">
             {/* <span className="w-40 text-gray-600 font-medium">Name</span> */}
