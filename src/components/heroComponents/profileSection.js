@@ -269,10 +269,10 @@ export default function ProfileSec({ user }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <main className="ml-3 bg-stone-400/30 text-black mx-auto max-w-xl  rounded-xl   ">
+      <main className="profile-container">
         {/* Profile image with fallback */}
-        <div className="flex flex-col sm:flex-row sm:items-center bg-black/20 h-[15vh] border border-gray-800  gap-4 rounded-xl justify-between">
-         <section className="h-30 top-9 w-30 relative  m-4">
+        <div className="profile-header">
+         <section className="profile-avatar">
            <Image
             src={formData.image || "/user.jpg"}
             alt="Profile"
@@ -296,13 +296,13 @@ export default function ProfileSec({ user }) {
           {!editing && (
             <button
               onClick={() => setEditing(true)}
-              className="w-18 text-white   hover:underline  font-medium text-2xl  mt-5 ml-2  hover:cursor-pointer"
+              className="btn-edit self-start"
             >
               edit
             </button>
           )}
         </div>
-        <section className="p-4 mt-8">
+        <section className="profile-section">
         {!editing ? (
           <div className="flex mt-4 mb-4 flex-col sm:flex-row  sm:items-center sm:gap-6 gap-1">
             {/* <span className="w-40 text-gray-600 font-medium">Name</span> */}
@@ -320,7 +320,7 @@ export default function ProfileSec({ user }) {
           //   className="w-55 border rounded-2xl flex flex-col p-1 hover:cursor-pointer mt-5 ml-9 items-center  gap-3  "
           // />
 
-          <div className="relative w-full sm:w-72">
+          <div className="relative form-field">
             <input
               type="text"
               name="username"
@@ -374,16 +374,16 @@ export default function ProfileSec({ user }) {
           <></>
         ) : (
           <>
-            <div className="flex  gap-6 items-center">
-              <span className="w-40 text-gray-600 font-medium">AMU ID</span>
+            <div className="profile-row">
+              <span className="profile-label">AMU ID</span>
               <span>{formData.email}</span>
             </div>
           </>
         )}
 
         {!editing ? (
-          <div className="flex gap-6 items-center">
-            <span className="w-40 text-gray-600 font-medium">Country</span>
+          <div className="profile-row">
+            <span className="profile-label">Country</span>
             <span>{formData.country || "_"}</span>
           </div>
         ) : (
@@ -416,8 +416,8 @@ export default function ProfileSec({ user }) {
        
   {!editing ? (
 
-  <div className="flex gap-6 items-center ">
-    <span className="w-40 text-gray-600 font-medium">
+  <div className="profile-row ">
+    <span className="profile-label">
       Phone
     </span>
 
@@ -489,8 +489,8 @@ export default function ProfileSec({ user }) {
        
 
         {!editing ? (
-          <div className="flex gap-6 items-center">
-            <span className="w-40 text-gray-600 font-medium">Postal Code</span>
+          <div className="profile-row">
+            <span className="profile-label">Postal Code</span>
             <span>{formData.postalCode || "_"}</span>
           </div>
         ) : (
@@ -554,17 +554,17 @@ export default function ProfileSec({ user }) {
 
         {/* Action buttons */}
         {editing && (
-          <div className="flex  gap-3 mt-3  hover:cursor-pointer">
+          <div className="profile-actions">
             <button
               type="submit"
-              className="w-55 border rounded-2xl p-1 hover:bg-green-600 hover:text-white "
+              className="btn-primary "
               disabled={loading}
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>
 
             <button
-              className="w-55 border rounded-2xl p-1 hover:bg-red-600 hover:text-white  "
+              className="btn-danger"
               type="button"
               onClick={handleCancel}
             >

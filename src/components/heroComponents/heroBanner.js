@@ -2,50 +2,45 @@ import Image from "next/image";
 
 export default function HeroBanner() {
   return (
-    <main
-      className="
-        banner
-        p-10
-        flex
-        justify-between
-        items-start
-        gap-10
-      "
+    <section
+      className="banner"
       style={{
         background:
           "linear-gradient(to right, #eef0f3 0%, #f3e8ff 45%, #7c3aed 100%)",
       }}
     >
-      {/* LEFT CONTENT */}
-      <section className="max-w-xl">
-        <h1 className="font-bold mb-4 text-5xl">
-          AMU TECH FEST ~26
-        </h1>
+      <div className="layout-container layout-hero">
 
-        <p className="mb-6 text-2xl text-gray-700">
-          Smarter choices for all
-        </p>
+        {/* LEFT CONTENT */}
+        <div className="max-w-xl">
+          <h1 className="hero-title">
+            AMU TECH FEST ~26
+          </h1>
 
-        <ul className="text-lg list-disc ml-5 space-y-3 text-gray-800">
-          <li>Compare smarter. Buy better.</li>
-          <li>Find the best specs for your budget.</li>
-          <li>Grab exclusive deals in one place.</li>
-        </ul>
-      </section>
+          <p className="hero-subtitle">
+            Smarter choices for all
+          </p>
 
-      {/* RIGHT IMAGE */}
-      <section className="flex items-center justify-center">
-        <div className="relative w-100 h-100  ">
+          <ul className="hero-list">
+            <li>Compare smarter. Buy better.</li>
+            <li>Find the best specs for your budget.</li>
+            <li>Grab exclusive deals in one place.</li>
+          </ul>
+        </div>
+
+        {/* RIGHT IMAGE */}
+        <div className="hero-image">
           <Image
             src="/herobanner.png"
             alt="Hero illustration showing laptop comparison"
             fill
-            className="object-fill -mt-10 bg-blend-normal "
+            className="object-contain"
             quality={100}
             priority
           />
         </div>
-      </section>
-    </main>
+
+      </div>
+    </section>
   );
 }

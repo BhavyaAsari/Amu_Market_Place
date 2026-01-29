@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.10",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
     "dotenv": "^17.2.3",

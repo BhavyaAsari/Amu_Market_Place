@@ -15,7 +15,7 @@ export default function Home() {
 
                
 
-              <section className="flex flex-col justify-center items-center">
+              <section className="flex mt-4 flex-col justify-center w-full  items-center">
                                 <SearchBar/>
               </section>
 
