@@ -23,7 +23,7 @@ export default function DesktopNav() {
 
       <ul className="flex items-center gap-2">
         <li><Link href="/" className={linkClass("/")}>Home</Link></li>
-        <li><Link href="/products" className={linkClass("/products")}>Products</Link></li>
+        <li><Link href="/productlist" className={linkClass("/productlist")}>Products</Link></li>
         <li><Link href="/cart" className={linkClass("/cart")}>Cart</Link></li>
         <li><Link href="/contact" className={linkClass("/contact")}>Contact</Link></li>
 

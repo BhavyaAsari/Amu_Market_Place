@@ -19,63 +19,43 @@ const specSchema = new mongoose.Schema ({
 {_id:false}
 );
 
-const productSchema = new mongoose .Schema (
-    {
+const productSchema = new mongoose.Schema(
+  {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
 
-        id:{
+    brand: {
+      type: String,
+      required: true,
+      lowercase: true,
+      index: true,
+    },
 
-            type:String,
-            required:true,
-            unique:true,
-        },
+    series: {
+      type: String,
+      required: true,
+      index: true,
+    },
 
-        brand: {
-            type: String,
-            required: true,
-            lowercase: true,
-            index: true,
-        },
-        
-        title:{
+    title: { type: String, required: true },
+    shortDescription: { type: String, required: true },
+    price: { type: Number, required: true },
+    rating: { type: Number, default: 0 },
 
-            type:String,
-            required:true,
-        },
-
-        shortDescription:{
-
-            type:String,
-            required:true,
-        },
-
-        price:{
-
-            type:Number,
-            required:true,
-        },
-
-        rating:{
-
-            type:Number,
-            default:0,
-        },
-
-        image: {
-        type: String, // main image
-        required: true,
-        },
-
-        images: {
-        type: [String], // gallery
-        default: [],
-        },
+    image: { type: String, required: true },
+    images: { type: [String], default: [] },
 
     specs: specSchema,
-
-},
-{   timestamps:true}
-
+  },
+  { timestamps: true }
 );
+
+// 🔥 ADD INDEXES HERE (NOT INSIDE schema fields)
+productSchema.index({ brand: 1, series: 1 });
+productSchema.index({ price: 1 });
 
 
 export default mongoose.models.Product || mongoose.model("Product",productSchema);

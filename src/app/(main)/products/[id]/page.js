@@ -20,7 +20,7 @@ export default async function ProductPage({ params }) {
     <main className="bg-stone-700/20  text-black min-h-screen px-6 py-10">
 
       {/* TOP SECTION */}
-      <section className="max-w-7xl mx-auto grid grid-cols1 lg:grid-cols-2 gap-14">
+      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14">
 
         {/* LEFT: IMAGE + THUMBNAILS */}
         <div>
@@ -53,11 +53,11 @@ export default async function ProductPage({ params }) {
 
         {/* RIGHT COLUMN ~ Product Details  */}
         <div>
-          <h1 className="text-4xl font-semibold">
+          <h1 className="text-2xl sm:text-4xl font-semibold">
             {product.title}
           </h1>
 
-           <p className="text-3xl font-bold mt-4">
+           <p className="text-lg sm:text-2xl font-bold mt-4">
             {product.price}
           </p>
 
@@ -81,7 +81,7 @@ export default async function ProductPage({ params }) {
           </div>
 
            <div>
-            <h2 className="text-3xl text-gray font-bold mt-3 ">System Specs</h2>
+            <h2 className="text-2xl sm:text-3xl text-gray font-semibold mt-3 ">System Specs</h2>
         </div>
 
         <div className="flex  flex-col">

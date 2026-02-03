@@ -25,7 +25,7 @@ export default function CartCarousel ({images,title}) {
 return (
 
         
-<main className="h-20">
+<main className="h-24 ">
   <Carousel
   responsive={responsive}
   arrows
@@ -33,14 +33,13 @@ return (
     {images.map((img, index) => (
       <div
         key={index}
-        className="flex justify-center items-center h-full"
+        className=" w-32 h-52   sm:w-64 sm:h-72"
       >
         <Image
           src={img}
           alt={`${title} image ${index + 1}`}
-          width={300}
-          height={200}
-          className="object-contain"
+          fill
+          className="object-contain "
           priority={index === 0}
         />
       </div>

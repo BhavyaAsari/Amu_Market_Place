@@ -45,32 +45,52 @@ fs.createReadStream("./src/scripts/laptopData.csv")
     .replace(/[^a-zA-Z]/g, "")
     .toLowerCase();
 
-  products.push({
-    id: generateProductId(model),
-    brand, // ✅ laptop brand now
+    
+const series = row["Series"]?.trim();
 
-    title,
-    shortDescription: `${row["Processor Name"] || ""} • ${
-      row["RAM"] || ""
-    } RAM • ${row["SSD Capacity"] || ""} SSD`,
-    price,
-    rating: row["user rating"]
-      ? Number(row["user rating"])
-      : 4.2,
-    image: "/products/default.png",
-    images: [],
-      specs: {
-        processor: row["Processor Name"] || "",
-        ram: row["RAM"] || "",
-        storage: row["SSD Capacity"] || "",
-        graphics: row["Graphic Processor"] || "",
-        display: `${row["Screen Size"] || ""} ${row["Screen Resolution"] || ""}`,
-        os: row["Operating System"] || "",
-        color: row["Color"] || "",
-        weight: row["Weight"] || "",
-        battery: row["Battery Backup"] || "",
-      },
-  });
+if (!series) return; // skip bad rows
+
+
+ products.push({
+  id: generateProductId(model),
+  brand,
+  series,
+
+  title,
+  shortDescription: `${row["Processor Name"] || ""} • ${
+    row["RAM"] || ""
+  } RAM • ${
+    row["SSD Capacity"] || row["HDD Capacity"] || ""
+  } Storage`,
+
+  price,
+  rating: row["user rating"]
+    ? Number(row["user rating"])
+    : 4.2,
+
+  image: "/products/default.png",
+  images: [],
+
+  specs: {
+    processor: `${row["Processor Brand"] || ""} ${
+      row["Processor Name"] || ""
+    } ${row["Processor Generation"] || ""}`.trim(),
+
+    ram: `${row["RAM"] || ""} ${row["RAM Type"] || ""}`,
+    storage:
+      row["SSD"] === "Yes"
+        ? `${row["SSD Capacity"] || ""} SSD`
+        : `${row["HDD Capacity"] || ""} HDD`,
+
+    graphics: row["Graphic Processor"] || "",
+    display: `${row["Screen Size"] || ""} ${row["Screen Resolution"] || ""}`,
+    os: row["Operating System"] || "",
+    color: row["Color"] || "",
+    weight: row["Weight"] || "",
+    battery: row["Battery Backup"] || "",
+  },
+});
+
 }).on("end", async () => {
     try {
       // DEV ONLY
