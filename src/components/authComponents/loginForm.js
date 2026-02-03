@@ -1,25 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
-function LoginButton({ loading }) {
-  return (
-    <button
-      type="submit"
-      disabled={loading}
-      className="ml-5 w-30 text-white bg-[#560864] hover:bg-[#7e0578] hover:cursor-pointer rounded-4xl p-2 disabled:opacity-50 flex justify-center items-center"
-    >
-      {loading ? "Loading..." : "Login"}
-    </button>
-  );
-}
-
-export function LoginForm() {
+export default function LoginForm({ onForget }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,76 +25,83 @@ export function LoginForm() {
       });
 
       if (result?.ok) {
-        toast.success("Login successful!");
-        router.refresh(); 
+        toast.success("Login successful");
         router.push("/");
+        router.refresh();
       } else {
         toast.error("Invalid credentials");
       }
-    } catch (error) {
-      toast.error("Login failed. Please try again.");
-      console.error(error);
+    } catch {
+      toast.error("Login failed");
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <>
-      <h1 className="text-2xl font-bold text-white flex justify-center items-center">
+      <h1 className="text-2xl font-bold text-white text-center">
         User Login
       </h1>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        <main className="flex flex-col gap-4 justify-center items-center">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/user.svg"
-              alt="user_logo"
-              width={50}
-              height={70}
-            />
+        <div className="flex items-center gap-3">
+          <Image src="/user.svg" alt="user" width={40} height={40} />
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="inputForget"
+          />
+        </div>
 
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="text-white bg-[#323044] border-gray-600 rounded-xl p-2"
-            />
-          </div>
+        <div className="flex items-center gap-3">
+          <Image src="/lock.svg" alt="lock" width={40} height={40} />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="inputForget"
+          />
+        </div>
 
-          <div className="flex items-center gap-3">
-            <Image
-              src="/lock.svg"
-              alt="lock_logo"
-              width={40}
-              height={70}
-            />
+       <div className="flex items-center justify-center sm:flex-row gap-2">
+        
+         <button className="login-button" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="text-white bg-[#323044] border-gray-600 rounded-xl p-2"
-            />
-          </div>
-          <LoginButton loading={loading} />
-        </main>
+        <button
+          type="button"
+          className="login-button"
+          onClick={() =>
+            signIn("google", {
+              prompt: "select_account",
+              callbackUrl: "/",
+            })
+          }
+        >
+          Google
+        </button>
+
+       </div>
+       
+        <p  className="text-white cursor-pointer text-center">
+       
+          <Link href="/forget-password" className="hover:underline">Forget Password?</Link>
+        </p>
+
+        <p className="text-lg text-white text-center">
+          Don’t have an account?
+          <Link href="/signup" className="ml-2 underline text-[#c82ee3]">
+            Register
+          </Link>
+        </p>
       </form>
-
-      <p className="mt-4 text-white flex justify-center items-center text-xl">
-        New User?
-        <Link href="/signup" className="underline text-[#7B61FF] ml-2">
-          Register
-        </Link>
-      </p>
     </>
   );
 }

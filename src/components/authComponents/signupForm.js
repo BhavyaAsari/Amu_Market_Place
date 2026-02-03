@@ -10,6 +10,7 @@ import { redirect } from "next/dist/server/api-utils";
 import { signIn } from "next-auth/react";
 
 
+
 function SubmitButton() {
   const { pending } = useFormStatus();
 
@@ -85,9 +86,9 @@ export function SignupForm() {
     <>
       <h1 className="text-2xl font-bold text-white">Create an account</h1>
 
-      <p className="mt-4 text-white">
+      <p className="mt-4 text-white text-lg">
         Already have an account?{" "}
-        <Link href="/login" className="underline text-[#7B61FF]">
+        <Link href="/login" className="underline text-[#b313cf]">
           Login
         </Link>
       </p>

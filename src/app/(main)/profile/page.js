@@ -26,7 +26,7 @@ export default async  function ProfilePage() {
         <>
         
         <h1>Profile Page</h1>
-        <ProfileSec
+        <ProfileSec 
       user={{
         username: user.username,
         email: user.email,

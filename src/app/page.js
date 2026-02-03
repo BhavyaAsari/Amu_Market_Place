@@ -3,31 +3,50 @@ import Footer from "@/components/heroComponents/footer";
 import ProductCarousal from "@/components/productComponents/carousal";
 import SearchBar from "@/components/heroComponents/searchBar";
 import HeroBanner from "@/components/heroComponents/heroBanner";
+import HeroProduct from "@/components/heroComponents/heroProduct";
+import getBrands from "./actions/productBrand";
+import { brandMeta } from "@/config/brandMeta";
 
-export default function Home() {
+export default async function Home() {
+  const dbBrands = await getBrands();
 
-    return (
+  const brands = dbBrands.map((brand) => {
+    const meta = brandMeta[brand.toLowerCase()];
+    return {
+      name: meta?.name || brand.toUpperCase(),
+      tagline: meta?.tagline || "Quality Laptops & Devices",
+      image: meta?.image || "/products/default.png",
+    };
+  });
+//   console.log("Final Brands Array:", brands);
+//   console.log("Home Page Rendered with Brands",dbBrands);
+  return (
+    <>
+      <NavBar />
 
-        <>
-        <NavBar/>
-        <main>
-            <div className="flex flex-col w-full  h-full">
+      <main className="min-h-screen flex flex-col">
+        <section className="flex mt-4 justify-center">
+          <SearchBar />
+        </section>
 
-               
+        <section className="flex justify-center mt-8 mb-8">
+          <HeroBanner />
+        </section>
 
-              <section className="flex mt-4 flex-col justify-center w-full  items-center">
-                                <SearchBar/>
-              </section>
+        <h1 className="font-bold text-3xl text-black/70 mb-2">
+          Featured Products
+        </h1>
 
-               <section className="flex flex-col justify-center items-center mt-8 mb-8">
-                    <HeroBanner/>
-                </section>
-                <h1 className="font-bold  text-3xl text-black/70 mb-2">Featured Products</h1>  
-                <ProductCarousal/>
+       <section className=" ">
+         <ProductCarousal />
+       </section>
 
-            </div>
-        </main>
-        <Footer/>
-        </>
-    );
+        <section>
+          <HeroProduct brands={brands} />
+        </section>
+      </main>
+
+      <Footer />
+    </>
+  );
 }

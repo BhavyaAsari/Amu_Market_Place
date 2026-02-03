@@ -3,7 +3,7 @@
 import User from "@/models/Users";
 import bcrypt from "bcrypt";
 import { connectDB } from "@/libs/db";
-import { WElcomeMail } from "@/libs/resend";
+import { WelcomeMail } from "@/libs/WEelcomeMail";
 
 function validateSignup(formData) {
   const fname = formData.get("fname");
@@ -12,6 +12,7 @@ function validateSignup(formData) {
   const password = formData.get("password");
   const confirmPassword = formData.get("confirmPassword")
   const terms = formData.get("terms");
+
 
   if (!fname || !lname || !email || !password) {
     throw new Error("All fields are required");
@@ -50,24 +51,32 @@ export async function SignupValid(prevState, formData) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-  const useer =  await User.create({
+  const user =  await User.create({
       username: `${fname} ${lname}`,
       email,
       password: hashedPassword,
       role: "user",
     });
-    console.log(useer,"user hhhyyyyyyy")
+    // console.log(useer,"user hhhyyyyyyy")
+console.log("username",user)
+console.log("username",user.username)
 
-    // const username = `${fname} ${lname}`;
-    // try {
-    //   await WElcomeMail({
-    //     to: email,
-    //     username,
-    //   });
-    // } catch (err) {
-    //   console.error("Welcome email failed", err);
-    // }
+    try {
 
+      await WelcomeMail({
+
+      to:user.email,
+      name:user.username,
+    });
+
+
+  } catch(mailerr) {
+
+    console.log("Mail error",mailerr);
+
+
+  }
+  
     return { success: true, message: "Account created successfully!",};
 
   } catch (error) {
