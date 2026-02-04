@@ -8,10 +8,11 @@ export default function ProductCard({
   price,
   image,
 }) {
+
+  console.log("product card props",id,title,description,price,image);
   return (
     <section className="bg-stone-700/20 rounded-lg p-2 shadow-lg">
 
-      {/* 🔹 IMAGE SECTION (HOVER ONLY HERE) */}
       <div
         className="relative group overflow-hidden rounded-lg
                    transition duration-300"
@@ -60,19 +61,18 @@ export default function ProductCard({
       <div className=" h-px w-full bg-black/20"></div>
 
       {/* 🔹 PRODUCT DETAILS (ALWAYS VISIBLE) */}
-      <div className="mt-4 bg-white p-5 rounded-xl"  >
-        <h3 className="text-black text-2xl font-semibold">
-          {title}
+      <div className="mt-4 bg-white p-5 rounded-xl h-40 sm:h-44 lh:h-48 flex flex-col"  >
+        <h3 className="text-black text-xl font-semibold leading-6 line-clamp-2 ">
+          {title}inch
         </h3>
 
         {/* DESCRIPTION */}
         <p className="text-black/70 text-lg mt-1 line-clamp-2 ">
-         <span className="font-bold">Specs:     </span> 
          {description}
         </p>
 
-        <p className="text-black/80 font-bold mt-2 text-lg">
-          {price}
+        <p className="text-black/80 font-bold mt-auto text-lg">
+          ₹{price}
         </p>
       </div>
 

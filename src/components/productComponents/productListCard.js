@@ -1,4 +1,4 @@
-import {LuRam} from "react-icons/lu";
+import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard,LuSettings } from "react-icons/lu";
 
 export default function ProductListCard ({product}) {
 
@@ -23,7 +23,7 @@ const ram = ramMatch ? ramMatch[1].replace(" ", "") : "";
 const storage = product.specs.storage.replace(/\s+/g, " ").replace(" ", "");
 
 // Final display title
-const displayTitle = `${brand} ${series} ${screenSize} (${ram}, ${storage})`;
+const displayTitle = `${brand} ${series} ${screenSize}inch`;
 
 console.log(displayTitle);
 
@@ -35,14 +35,14 @@ return (
 
     <div className="imageContainer">Image</div>
     <div className="detailsContainer">
-        <p>{displayTitle}</p>
-        <p>₹{product.price}</p>
+        <p className="font-semibold text-2xl">{displayTitle}</p>
+        <p className="text-gray-800 font-semibold text-xl">₹{product.price}</p>
         <hr className="text-gray-700"></hr>
-        <ul className="flex flex-col gap-1">
-            <li>{product.specs.graphics}</li>
-            <li>{ram}</li>
-            <li>{product.specs.processor}</li>
-            <li>{product.specs.os}</li>
+        <ul className="flex flex-col gap-1 font-mono text-xl">
+            <li><LuCircuitBoard size={22} className="inline mr-2"/>{product.specs.graphics}</li>
+            <li><LuHardDrive size={22} className="inline mr-2"/>{ram},{storage}</li>
+            <li><LuCpu size={22} className="inline mr-2"/>{product.specs.processor}</li>
+            <li><LuLaptop size={22} className="inline "/> {product.specs.os}</li>
         </ul>
       <div className="flex flex-col gap-3 sm:flex-row mt-5 ">
           <button className="border rounded-xl px-4 py-2 hover:cursor-pointer bg-black/50 text-white  hover:text-black hover:bg-white/10 transition font-semibold ">view specs</button>
