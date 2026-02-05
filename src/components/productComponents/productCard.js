@@ -9,53 +9,46 @@ export default function ProductCard({
   image,
 }) {
 
-  console.log("product card props",id,title,description,price,image);
+  // console.log("product card props",id,title,description,price,image);
   return (
-    <section className="bg-stone-700/20 rounded-lg p-2 shadow-lg">
+    <section className="bg-slate-100 rounded-lg p-2 shadow-lg">
 
-      <div
-        className="relative group overflow-hidden rounded-lg
-                   transition duration-300"
+      {/* IMAGE CONTAINER */}
+<div className="relative h-48  rounded-lg overflow-hidden flex items-center justify-center group">
+  <Image
+    src={image}
+    alt={title}
+    fill
+    className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+    sizes="(max-width: 768px) 100vw, 200px"
+  />
+
+  {/* OVERLAY */}
+  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm
+                  opacity-0 group-hover:opacity-100
+                  transition duration-300
+                  flex items-center justify-center">
+    <div className="flex flex-col gap-3">
+      <Link
+        href={`/products/${id}`}
+        className="px-5 py-2 rounded-lg
+                   bg-white text-black text-sm font-semibold
+                   hover:bg-gray-200 transition"
       >
-        {/* IMAGE */}
-        <Image
-          src={image}
-          width={300}
-          height={300}
-          alt={title}
-          className="w-full h-62 object-cover
-                     transition duration-300
-                     group-hover:scale-105 p-2"
-        />
+        View Details
+      </Link>
 
-        {/*  OVERLAY */}
-        <div
-          className="absolute inset-0 bg-black/60
-                     opacity-0 group-hover:opacity-100
-                     transition duration-300
-                     flex items-center justify-center"
-        >
-          {/* VERTICAL BUTTONS */}
-          <div className="flex flex-col gap-3">
-            <Link
-              href={`/products/${id}`}
-              className="px-5 py-2 rounded-lg
-                         bg-white text-black text-sm font-semibold
-                         hover:bg-gray-200 transition"
-            >
-              View Details
-            </Link>
+      <button
+        className="px-5 py-2 rounded-lg
+                   bg-violet-600 text-white
+                   hover:bg-violet-700 transition"
+      >
+        Buy
+      </button>
+    </div>
+  </div>
+</div>
 
-            <button
-              className="px-5 py-2 rounded-lg
-                         bg-violet-600 text-white
-                         hover:bg-violet-700 transition"
-            >
-              Buy
-            </button>
-          </div>
-        </div>
-      </div>
 
        {/* 🔹 HORIZONTAL LINE */}
       <div className=" h-px w-full bg-black/20"></div>
@@ -71,7 +64,7 @@ export default function ProductCard({
          {description}
         </p>
 
-        <p className="text-black/80 font-bold mt-auto text-lg">
+        <p className="text-black/80 font-extrabold mt-auto text-2xl">
           ₹{price}
         </p>
       </div>

@@ -13,7 +13,7 @@ export default async function getAllLaptops() {
 
             "id brand series title price image rating specs"
         ).sort({ createdAt: -1 })
-        .limit(6)
+        .limit(16)
         .lean();
 
         return Laptops;

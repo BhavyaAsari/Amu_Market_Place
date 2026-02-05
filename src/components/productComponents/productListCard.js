@@ -1,4 +1,6 @@
-import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard,LuSettings } from "react-icons/lu";
+import Image from "next/image";
+import Link from "next/link";
+import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard } from "react-icons/lu";
 
 export default function ProductListCard ({product}) {
 
@@ -25,7 +27,9 @@ const storage = product.specs.storage.replace(/\s+/g, " ").replace(" ", "");
 // Final display title
 const displayTitle = `${brand} ${series} ${screenSize}inch`;
 
-console.log(displayTitle);
+console.log("product",product._id)
+
+// console.log(displayTitle);
 
 
 return (
@@ -33,7 +37,15 @@ return (
     <>
     <div className="productlistCard">
 
-    <div className="imageContainer">Image</div>
+    <div className="imageContainer bg-black/80">
+      <Image
+        src={product.image}
+        alt={displayTitle}
+        width={200}
+        height={200}
+        className="object-contain w-64 h-56 p-4"
+      />
+      </div>
     <div className="detailsContainer">
         <p className="font-semibold text-2xl">{displayTitle}</p>
         <p className="text-gray-800 font-semibold text-xl">₹{product.price}</p>
@@ -45,8 +57,18 @@ return (
             <li><LuLaptop size={22} className="inline "/> {product.specs.os}</li>
         </ul>
       <div className="flex flex-col gap-3 sm:flex-row mt-5 ">
-          <button className="border rounded-xl px-4 py-2 hover:cursor-pointer bg-black/50 text-white  hover:text-black hover:bg-white/10 transition font-semibold ">view specs</button>
-        <button className="btnGlobal">Add to cart</button>
+          
+<Link
+  href={`/products/${product._id}`}
+  className="border rounded-xl px-4 py-2 text-center
+             hover:cursor-pointer bg-black/50 text-white
+             hover:text-black hover:bg-white/10 transition font-semibold"
+>
+  View Specs
+</Link>
+        <button className="cartBtn">
+          Add to cart
+          </button>
       </div>
     </div>
         

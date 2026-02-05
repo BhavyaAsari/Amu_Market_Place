@@ -11,7 +11,6 @@ import getFeaturedProducts from "./actions/getFeaturedProducts";
 
 export default async function Home() {
   const dbBrands = await getBrands();
-  console.log("featurdproducts",)
   const brands = dbBrands.map((brand) => {
     const meta = brandMeta[brand.toLowerCase()];
     return {
@@ -24,7 +23,7 @@ export default async function Home() {
   const products = await getAllLaptops();
   const featuredProducts = await getFeaturedProducts(5);
 
-  console.log("featuredProducts",featuredProducts);
+  // console.log("featuredProducts",featuredProducts);
   
 //   console.log("Final Brands Array:", brands);
 //   console.log("Home Page Rendered with Brands",dbBrands);

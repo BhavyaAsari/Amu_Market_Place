@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { FaGoogle } from "react-icons/fa";
+import {SiGoogle} from  "react-icons/si"
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginForm({ onForget }) {
   const [email, setEmail] = useState("");
@@ -71,13 +74,13 @@ export default function LoginForm({ onForget }) {
 
        <div className="flex items-center justify-center sm:flex-row gap-2">
         
-         <button className="login-button" disabled={loading}>
+         <button className="login-button font-bold" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
 
         <button
           type="button"
-          className="login-button"
+          className="login-button flex items-center justify-center py-2"
           onClick={() =>
             signIn("google", {
               prompt: "select_account",
@@ -85,7 +88,9 @@ export default function LoginForm({ onForget }) {
             })
           }
         >
-          Google
+          
+          <FaGoogle />
+         
         </button>
 
        </div>

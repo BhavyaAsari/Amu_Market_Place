@@ -35,8 +35,9 @@ fs.createReadStream("./src/scripts/laptopData.csv")
   .pipe(csv())
   .on("data", (row) => {
   const model = row["Model Name"]?.trim();
-  const title = row["name"]?.trim();
   const price = parsePrice(row["Price"]);
+  const title = row["name"]?.trim();
+
 
   if (!model || !title || price === null) return;
 

@@ -1,5 +1,6 @@
 "use client";
 
+import {LuPlus,LuMinus} from "react-icons/lu";
 import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 
@@ -36,7 +37,7 @@ export default function CartPage () {
 
                                 {/* Product Image */}
 
-                            <div>
+                            <div className="">
                                 <Image
                                 src={item.image}
                                 alt={item.title}
@@ -57,26 +58,22 @@ export default function CartPage () {
 
                                 {/* Product Qunatity */}
 
-                                <div>
-                                    <h2 className="font-bold mt-2 mb-1  text-2xl">Qunatity</h2>
-                                    <button className=" items-center text-lg border rounded-xl w-17 h-5" onClick={() => decreaseQty(item.id)}>
-                                        <Image
-                                        alt="decrease qunatity"
-                                        src="/minus.png"
-                                        width={20}
-                                        height={10}
-                                        className="ml-6"/>
-                                    </button>
-                                    <span className="ml-1 font-bold text-2xl">{item.quantity}</span>
-                                    <button className="ml-1   text-lg border rounded-xl w-17 h-5  " onClick={() => increaseQty(item.id)}>
-                                        <Image
-                                        alt="Increase"
-                                        src="/plus.png"
-                                        width={15}
-                                        height={20}
-                                        className="ml-5"/>
+                                <div className="flex w-96 h-20   items-center gap-4">
+                                    <h2 className="font-sans mt-2 mb-1  text-2xl"> Qunatity:</h2>
 
+                                    <section className="qltyContainer">
+
+                                        <button className="  " onClick={() => increaseQty(item.id)}> 
+                                       <LuPlus className=" QunatityButton"/> 
                                     </button>
+                                    <span className=" font-mono text-lg text-center">{item.quantity}</span>
+
+                                    <button className="" onClick={() => decreaseQty(item.id)}>
+                                        <LuMinus className=" QunatityButton"/>
+                                    </button>
+                                    </section>
+                                
+                                    
 
                                 </div>
 

@@ -11,13 +11,13 @@ export default function AddToCartButton({ product }) {
     const cartProduct = {
       id: product.id,
       title: product.title,
-      price: Number(product.price.replace(/[₹,]/g, "")),
+      price: Number(product.price),
       image: product.image,
 
       
     };
 
-    console.log("product image",product.image)
+    // console.log("product image",product.image)
 
     addToCart(cartProduct);
 

@@ -5,7 +5,7 @@ export function formatFeaturedProducts(product) {
 
     const rawTitle = product.title || "";
 
-    console.log("shortdesc",product.shortDescription);
+    // console.log("shortdesc",product.shortDescription);
     const screenMatch = rawTitle.match(/(\d{2}\.\d)\s*inch/i);
     const screenSize = screenMatch? `${screenMatch[1]}"`:"";
 

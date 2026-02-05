@@ -58,8 +58,8 @@ export async function SignupValid(prevState, formData) {
       role: "user",
     });
     // console.log(useer,"user hhhyyyyyyy")
-console.log("username",user)
-console.log("username",user.username)
+// console.log("username",user)
+// console.log("username",user.username)
 
     try {
 
