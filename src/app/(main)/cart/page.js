@@ -63,14 +63,17 @@ export default function CartPage () {
 
                                     <section className="qltyContainer">
 
-                                        <button className="  " onClick={() => increaseQty(item.id)}> 
-                                       <LuPlus className=" QunatityButton"/> 
-                                    </button>
-                                    <span className=" font-mono text-lg text-center">{item.quantity}</span>
-
                                     <button className="" onClick={() => decreaseQty(item.id)}>
                                         <LuMinus className=" QunatityButton"/>
                                     </button>
+
+                                        
+                                    <span className=" font-mono text-lg text-center">{item.quantity}</span>
+
+                                    <button className="  " onClick={() => increaseQty(item.id)}> 
+                                       <LuPlus className=" QunatityButton"/> 
+                                    </button>
+                                    
                                     </section>
                                 
                                     

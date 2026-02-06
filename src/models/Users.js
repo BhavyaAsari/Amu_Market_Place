@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
 
+const AddressSchema = new mongoose.Schema({
+  label: { type: String }, // Home, Office
+  street: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+
+  // OPTIONAL overrides
+  fullName: String,
+  phone: String,
+  postalCode: String,
+  country: String,
+
+  isDefault: { type: Boolean, default: false },
+});
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -52,6 +67,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+
+    addresses :{
+
+      type:[AddressSchema],
+      default:[],
     },
 
     resetPasswordToken:String,
