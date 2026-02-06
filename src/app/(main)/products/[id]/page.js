@@ -78,7 +78,7 @@ export default async function ProductPage({ params }) {
           <div className="mt-6 flex gap-4">
             <AddButton product={product} />
 
-            <button className="border rounded-xl px-4 py-2 text-[#7C3AED] hover:bg-purple-100 hover:cursor-pointer transition  ">
+            <button className="border rounded-xl px-4 py-2 bg-[#7C3AED] text-white hover:text-purple-600 hover:bg-white hover:cursor-pointer transition  ">
               Buy Now
             </button>
           </div>

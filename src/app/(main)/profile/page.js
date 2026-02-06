@@ -1,32 +1,19 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import ProfileSec from "@/components/heroComponents/profileSection";
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
+import MyAccountPage from "@/components/profileComonents/MyAccount";
 
-export default async  function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await getServerSession();
+  if (!session) redirect("/login");
 
-    const session = await getServerSession();
+  await connectDB();
+  const user = await User.findOne({ email: session.user.email }).lean();
+  if (!user) redirect("/login");
 
-    if(!session) {
-
-        redirect("/login");
-    }
-
-    await connectDB();
-
-    const user = await User.findOne({email:session.user.email}).lean();
-    // console.log("user",user);
-     if (!user) {
-    redirect("/login");
-  }
-
-    return(
-
-        <>
-        
-        <h1>Profile Page</h1>
-        <ProfileSec 
+  return (
+    <MyAccountPage
       user={{
         username: user.username,
         email: user.email,
@@ -36,6 +23,5 @@ export default async  function ProfilePage() {
         image: user.image || "",
       }}
     />
-        </>
-    );
+  );
 }

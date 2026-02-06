@@ -1,54 +1,46 @@
+"use server";
+
 import bcrypt from "bcrypt";
-import { UpdateUserPassword } from "./updatePassword";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
 
 export async function resetPasswordProfile(formData) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return { success: false, message: "Unauthorized" };
+  }
 
-    const session = getServerSession(authOptions);
+  const currentPassword = formData.get("currentPassword");
+  const newPassword = formData.get("newPassword");
+  const confirmPassword = formData.get("confirmPassword");
 
-    if(!session) {
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return { success: false, message: "All fields are required" };
+  }
 
-        throw new Error("Unauthorized");
-    }
+  if (newPassword !== confirmPassword) {
+    return { success: false, message: "Passwords do not match" };
+  }
 
-    const currentPassword = formData.get("currentPassword");
-    const newPassword = formData.get("newPassword");
-    const confirmPassword = formData.get("confirmPassword");
+  await connectDB();
+  const user = await User.findById(session.user.id);
 
+  if (!user.password) {
+    return {
+      success: false,
+      message: "Password update not available for Google users",
+    };
+  }
 
-    if(!currentPassword||!newPassword) {
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return { success: false, message: "Current password incorrect" };
+  }
 
-        throw new Error("All fields are must required");
-    }
+  user.password = await bcrypt.hash(newPassword, 12);
+  await user.save();
 
-    if(newPassword !== currentPassword) {
-
-        throw new Error("Password doesnot match");
-    }
-
-    await connectDB();
-
-    const user = await User.findById(session.user.id);
-
-    if(!user.password) {
-
-        throw new Error("Password update not availabe for google users ")
-    }
-
-    const isMatch = await bcrypt.compare(currentPassword,user.password);
-
-    if(!isMatch) {
-
-        throw new Error("Current password is not correct");
-    }
-
-    await UpdateUserPassword(user._id,newPassword);
-
-    return {success:true};
-
-
-
+  return { success: true };
 }

@@ -145,32 +145,33 @@
 
   .profile-container {
 
-    @apply  bg-stone-400/30 text-black w-full m-1 sm:m-5 sm:w-lg rounded-xl 
+    @apply   text-black w-full m-1 sm:m-5  rounded-xl 
   }
 
   .profile-header {
 
-    @apply  flex flex-row  sm:flex-row h-22   items-center gap-4 bg-black/20 border rounded-xl p-4
+    @apply  flex flex-col items-center justify-center    gap-4 bg-black/20  rounded-t-2xl p-4
   }
 
   .profile-avatar {
 
-    @apply relative w-21 h-21 sm:top-8 top-9  sm:w-28 sm:h-28
+    @apply relative w-24 h-24   sm:w-28 sm:h-28
   }
 
   .profile-section {
 
-    @apply p-4 space-y-4 sm:mt-9 mt-11 
+    @apply flex flex-col gap-4 items-start justify-start py-8 px-6
   }
 
   .form-field {
 
-    @apply w-full sm:max-w-sm
+    @apply w-full sm:w-72  
   }
 
+  
   .profile-row {
 
-    @apply flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-1
+    @apply flex flex-row text-2xl  w-full
   }
 
   .profile-label {
@@ -179,31 +180,116 @@
   }
 
   .profile-actions {
-  @apply flex flex-col sm:flex-row gap-3 mt-4;
+  @apply flex gap-3 ;
 }
 
 .btn-primary {
-  @apply min-h-[44px] px-4 rounded-lg border hover:bg-green-600 hover:text-white transition;
+  @apply min-h-11   px-4 rounded-lg border hover:cursor-pointer   bg-purple-600 text-white transition;
 }
 
 .btn-danger {
-  @apply min-h-[44px] px-4 rounded-lg border hover:bg-red-600 hover:text-white transition;
+  @apply min-h-11 rounded-lg border hover:cursor-pointer transition;
 }
 
 .btn-edit {
 
    @apply
-    min-h-11
-    px-6
     text-white
-    text-2xl
+    text-3xl
     font-medium
-    hover:underline
+    underline
     ml-auto
     cursor-pointer;
 }
 
 }
+
+/* Address Field */
+
+@layer components {
+
+  .addressContainer {
+
+    @apply text-xl text-center
+  }
+}
+
+/* My Orders section  */
+
+@layer components {
+
+  .MyordersContainer {
+
+    @apply text-xl text-center 
+  }
+}
+
+/* Reset Pssword */
+
+@layer components {
+
+  .resetPassContainer {
+
+    @apply  flex flex-col items-center sm:w-full  gap-4 text-black
+  }
+
+  .resetBtn {
+
+    @apply  w-full  text-xl  text-center  h-9 border rounded-lg hover:cursor-pointer  transition-colors
+  }
+
+  .resetInput {
+  @apply
+    w-full
+    font-bold
+    max-w-sm
+    px-4
+    py-2
+    text-lg
+    rounded-lg
+    border
+    text-left;
+}
+
+ .resetBtns {
+  @apply
+    flex
+    gap-3
+    justify-center
+    w-full
+    max-w-sm;
+}
+
+  .resetProfileContainer {
+
+    @apply  text-black  py-8   flex justify-center
+  }
+
+  .resetMaskConatiner{
+
+    @apply sm:w-full flex flex-col gap-3    rounded-xl 
+  }
+
+
+
+}
+
+ /* MyAccount Container */
+
+ @layer components {
+
+  .AccountContainer {
+
+    @apply  bg-gray-100 
+  }
+
+  .GridContainer {
+
+    @apply  grid grid-cols-[260px_1fr] gap-6 max-w-7xl px-6   mt-4
+
+
+  }
+ }
 
 /* Forget Password */
 @layer components {
