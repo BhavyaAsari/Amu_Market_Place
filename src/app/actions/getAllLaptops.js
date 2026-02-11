@@ -85,13 +85,47 @@ export default async function getAllLaptops(filters = {}) {
       }
     }
 
+
+    let sort = {createdAt:-1};
+
+    switch(filters.sort) {
+
+      case "price-asc":
+        sort={price:1,createdAt:-1};
+        break;
+
+      case "price-desc":
+        sort={price:-1,createdAt:1};
+        break;
+
+      case "rating":
+       sort={rating:-1,price:1};
+       break;
+
+
+      case "newest":
+        sort={createdAt:-1};
+        break;
+
+      default :
+      break;
+
+
+    }
+
     const laptops = await Product.find(query)
       .select("id brand series title price image rating specs")
-      .sort({ createdAt: -1 })
+      .sort(sort)
       .limit(100)
       .lean();
+     
+      const safeLaptops = laptops.map((p) => ({
+  ...p,
+  _id: p._id.toString(),
+  image: typeof p.image === "string" ? p.image : "",
+}));
 
-    return laptops;
+    return safeLaptops;
   } catch (error) {
     console.error("Error fetching Laptops", error);
     throw new Error("Failed to fetch Laptops");

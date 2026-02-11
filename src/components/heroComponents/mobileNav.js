@@ -103,7 +103,7 @@ export default function MobileNav() {
             </li>
             <li>
               <Link
-                href="/products"
+                href="/productlist"
                 onClick={closeMenu}
                 className="flex py-3 px-4 rounded-lg hover:bg-purple-100 hover:text-purple-600 transition-colors text-gray-800 font-medium"
               > 

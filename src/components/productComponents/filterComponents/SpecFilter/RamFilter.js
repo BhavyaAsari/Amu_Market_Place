@@ -17,16 +17,17 @@ export default function RamFilter({rams=[]}) {
 
         <>
 
-        <div>
+        <div className="flex  flex-col gap-2">
 
 
            {rams.map((ram) => (
 
-                <label key={ram} className="flex">
+                <label key={ram} className="flex  gap-1">
 
                     <input
 
                     type="checkbox"
+                    className=""
                     checked={activeRam.includes(ram)}
                     onChange={() => toggleFilter("ram",ram)}
                     />

@@ -302,6 +302,15 @@
 
 }
 
+@layer components {
+
+  .SortColorBg {
+
+    @apply bg-purple-600 text-white
+  }
+   
+}
+
  /* MyAccount Container */
 
  @layer components {

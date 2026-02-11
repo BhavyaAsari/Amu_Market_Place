@@ -48,13 +48,13 @@ export default function useFilters() {
         params.set(key, [...current, value].join(","));
       }
 
-      router.push(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`);
     },
     [searchParams, router]
   );
 
   const clearAll = useCallback(() => {
-    router.push(window.location.pathname);
+    router.replace(window.location.pathname);
   }, [router]);
 
   return { filters, setFilter, toggleFilter, clearAll };

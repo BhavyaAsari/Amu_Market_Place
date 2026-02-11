@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard } from "react-icons/lu";
+import AddToCartButton from "./addToCartButton";
 
 
 
@@ -68,9 +69,7 @@ return (
 >
   View Specs
 </Link>
-        <button className="cartBtn">
-          Add to cart
-          </button>
+        <AddToCartButton product={product}/>
       </div>
     </div>
         

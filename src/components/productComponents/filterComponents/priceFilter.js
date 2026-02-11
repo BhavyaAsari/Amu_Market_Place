@@ -21,7 +21,7 @@ export default function PriceFilter() {
 
   const [bounds, setBounds] = useState({ min: MIN, max: MAX });
 
-  // ✅ Fix #4 — Fetch real price bounds from DB
+  //  Fix #4 — Fetch real price bounds from DB
   useEffect(() => {
     fetch("/api/price-range")
       .then((r) => r.json())

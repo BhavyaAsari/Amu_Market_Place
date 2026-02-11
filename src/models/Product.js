@@ -56,6 +56,9 @@ const productSchema = new mongoose.Schema(
 //  ADD INDEXES HERE (NOT INSIDE schema fields)
 productSchema.index({ brand: 1, series: 1 });
 productSchema.index({ price: 1 });
+productSchema.index({rating:-1,price:1});
+productSchema.index({ createdAt: -1 });
+
 
 
 export default mongoose.models.Product || mongoose.model("Product",productSchema);

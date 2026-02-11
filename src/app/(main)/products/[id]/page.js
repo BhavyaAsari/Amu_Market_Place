@@ -3,6 +3,7 @@ import { getProductById } from "@/app/actions/getProductById";
 import AddButton from "@/components/productComponents/addToCartButton";
 import CartCarousel from "@/components/productComponents/productCarousal";
 import { Cossette_Texte } from "next/font/google";
+import SortDropDown from "@/components/productComponents/filterComponents/sortDropDown";
 
 export default async function ProductPage({ params }) {
   
@@ -31,6 +32,7 @@ export default async function ProductPage({ params }) {
 
   return (
     <main className="bg-stone-700/20  text-black min-h-screen px-6 py-10">
+
       {/* TOP SECTION */}
       <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14">
         {/* LEFT: IMAGE + THUMBNAILS */}

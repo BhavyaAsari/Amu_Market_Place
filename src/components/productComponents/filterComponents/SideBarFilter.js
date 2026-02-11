@@ -24,7 +24,7 @@ export default function SideBarFilter({ meta }) {
     >
       {/* Fixed Header */}
       <div className="p-4 border-b">
-        <h2 className="text-4xl font-semibold">Filters</h2>
+        <h2 className="text-3xl font-stretch-ultra-condensed">Apply filters</h2>
         <Closebutton  />
       </div>
 
