@@ -34,11 +34,12 @@ export default function ProductCarousal({products}) {
         <>
         <Carousel responsive={responsive} arrows 
          keyBoardControl
-         removeArrowOnDeviceType={["tablet", "mobile","desktop"]}
+         removeArrowOnDeviceType={["tablet", "mobile",]}
          autoPlay
-         autoPlaySpeed={3000}
+         containerClass="relative"
+         autoPlaySpeed={2000}
          infinite
-         itemClass="px-2 "
+         itemClass="px-5  py-7 "
           showDots={false}
           pauseOnHover={true}
            transitionDuration={500}

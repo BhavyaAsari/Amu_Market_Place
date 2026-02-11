@@ -8,6 +8,7 @@ export default async function ProductPage({ params }) {
   
   const { id } = await params;
   
+  
   const product = await getProductById(id);
 
   const series = product.series;

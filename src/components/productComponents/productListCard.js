@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard } from "react-icons/lu";
 
+
+
 export default function ProductListCard ({product}) {
 
 // Extracting brand name and capitalizing first letter
@@ -27,7 +29,7 @@ const storage = product.specs.storage.replace(/\s+/g, " ").replace(" ", "");
 // Final display title
 const displayTitle = `${brand} ${series} ${screenSize}inch`;
 
-console.log("product",product._id)
+// console.log("product",product._id)
 
 // console.log(displayTitle);
 
@@ -35,9 +37,9 @@ console.log("product",product._id)
 return (
 
     <>
-    <div className="productlistCard">
+    <div className="productlistCard flex flex-col shadow-2xl ">
 
-    <div className="imageContainer bg-black/80">
+    <div className="imageContainer bg-slate-200">
       <Image
         src={product.image}
         alt={displayTitle}
@@ -48,7 +50,7 @@ return (
       </div>
     <div className="detailsContainer">
         <p className="font-semibold text-2xl">{displayTitle}</p>
-        <p className="text-gray-800 font-semibold text-xl">₹{product.price}</p>
+        <p className="text-gray-800 font-bold text-2xl">₹{product.price}</p>
         <hr className="text-gray-700"></hr>
         <ul className="flex flex-col gap-1 font-mono text-xl">
             <li><LuCircuitBoard size={22} className="inline mr-2"/>{product.specs.graphics}</li>

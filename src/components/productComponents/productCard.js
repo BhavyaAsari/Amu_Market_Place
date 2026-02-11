@@ -11,7 +11,7 @@ export default function ProductCard({
 
   // console.log("product card props",id,title,description,price,image);
   return (
-    <section className="bg-slate-100 rounded-lg p-2 shadow-lg">
+    <section className="bg-slate-100 rounded-lg p-2 shadow-lg hover:translate-y-1 hover:shadow-2xl">
 
       {/* IMAGE CONTAINER */}
 <div className="relative h-48  rounded-lg overflow-hidden flex items-center justify-center group">

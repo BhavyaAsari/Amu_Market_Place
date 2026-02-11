@@ -8,6 +8,7 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { LuPencil,LuPenLine } from "react-icons/lu";
 
 // Server Action used ONLY for database update
 // Image upload is handled separately via API route
@@ -285,7 +286,7 @@ export default function ProfileSec({ user }) {
 
           {/* File input shown only in edit mode */}
           {editing && (
-            <label className="cursor-pointer text-lg  underline">
+            <label className="cursor-pointer text-lg  border hover:text-white border-black px-10 py-1 rounded-full hover:bg-black/40">
               Change Photo
               <input
               ref={fileInputRef}
@@ -301,9 +302,10 @@ export default function ProfileSec({ user }) {
             <button
               onClick={() => setEditing(true)}
               type="button"
-              className="btn-edit self-start"
+              className="btn-edit self-start text2xl border border-black px-10 py-1 rounded-full hover:bg-black/40 "
             >
-              edit
+             Edit 
+              
             </button>
           )}
         </div>

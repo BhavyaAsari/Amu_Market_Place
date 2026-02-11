@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
 import { getServerSession } from "next-auth";
@@ -8,11 +9,20 @@ export async function saveAddress(prevState, formData) {
   const session = await getServerSession();
   if (!session) return { success: false, message: "Unauthorized" };
 
+ 
+
   await connectDB();
   const user = await User.findOne({ email: session.user.email });
   if (!user) return { success: false, message: "User not found" };
 
   const addressId = formData.get("addressId");
+
+  revalidatePath("/MyAccountPage");
+   // 🔐 backward compatibility
+if (!Array.isArray(user.addresses)) {
+  user.addresses = [];
+}
+
 
   const data = {
     label: formData.get("label") || "Home",

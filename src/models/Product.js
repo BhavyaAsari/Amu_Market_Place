@@ -53,7 +53,7 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// 🔥 ADD INDEXES HERE (NOT INSIDE schema fields)
+//  ADD INDEXES HERE (NOT INSIDE schema fields)
 productSchema.index({ brand: 1, series: 1 });
 productSchema.index({ price: 1 });
 

@@ -18,9 +18,9 @@ export default function CartPage () {
     return (
 
         <>
-        <main className="max-w-6xl max-auto p-6">
+        <main className="  max-w-6xl  p-6">
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1  lg:grid-cols-2 gap-8">
 
                 {/* Left Part */}
                 <section className="lg:col-span-2 border p-4">
@@ -43,7 +43,7 @@ export default function CartPage () {
                                 alt={item.title}
                                 width={200}
                                 height={112}
-                                className="w-full h-full object-contain"
+                                className="w-full h-full object-contain "
                                 />
                             </div>
 
@@ -59,7 +59,7 @@ export default function CartPage () {
                                 {/* Product Qunatity */}
 
                                 <div className="flex w-96 h-20   items-center gap-4">
-                                    <h2 className="font-sans mt-2 mb-1  text-2xl"> Qunatity:</h2>
+                                    <h2 className="font-sans mt-2 mb-1  text-3xl"> Qunatity:</h2>
 
                                     <section className="qltyContainer">
 
@@ -82,13 +82,14 @@ export default function CartPage () {
 
                                 {/* User Action */}
                                 <div>
-                                    <button className="mt-2 border rounded-xl px-4 py-2 text-[#7C3AED] hover:bg-purple-100 hover:cursor-pointer transition" onClick={() => removeFromCart(item.id)}>Remove</button>
+                                    <button className="mt-2 font-bold  border rounded-full px-4 py-2 text-white bg-[#7C3AED]  hover:bg-white hover:text-purple-700 hover:cursor-pointer transition" onClick={() => removeFromCart(item.id)}>Remove</button>
                                 </div>
                             </div>
 
                             {/* Product Price */}
                             <div className="text-xl">
-                                 ₹{item.price * item.quantity}
+                                <p className="text-2xl font-serif">Total Price</p>
+                                 <p className="font-bold text-2xl"> ₹{item.price * item.quantity}</p>
                             </div>
                            </div>
                         ) }
@@ -99,7 +100,7 @@ export default function CartPage () {
 
                 {/* Right Part */}
 
-                <section className="lg:col-span-1 border p-4">
+                <section className="lg:col-span-2 border p-4">
 
                     <div className="border rounded-lg p-4">
                         <h3 className="font-bold  text-lg mb-4">order Summary</h3>
