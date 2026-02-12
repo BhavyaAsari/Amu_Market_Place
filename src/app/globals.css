@@ -359,6 +359,8 @@
   }
 }
 
+
+/* Hero Brand Section */
 @layer components {
 
   .productContainer {
@@ -382,6 +384,8 @@
 
  .brandContainer {
   @apply
+
+  
     w-full
     h-56
     sm:h-52
@@ -406,9 +410,81 @@
     transition-all
     duration-300
     cursor-pointer;
+    
+}
+
+.BrandImageContainer
+{
+
+  @apply 
+  h-36 
+  sm:h-40  
+  flex items-center 
+  justify-center
+  relative
+  transition-all
+  ease-in-out;
+}
+
+.ImageCard {
+
+  @apply object-contain  p-2 w-full;
+
+   
+}
+
+
+.BrandButton {
+
+  /* Initial hidden state */
+  @apply opacity-0 translate-y-6 relative z-30;
+
+  @apply will-change-transform;
+
+    /* Clip hidden state */
+  @apply [clip-path:inset(0_0_100%_0)];
+
+  /* Reveal on hover */
+  @apply group-hover:[clip-path:inset(0_0_0_0)];
+
+
+  /* Hover state */
+  @apply group-hover:opacity-100 group-hover:translate-y-2;
+
+  /* Position */
+  @apply absolute bottom-8 left-1/2 -translate-x-1/2;
+
+  /* Style */
+  @apply bg-white text-black hover:text-white hover:cursor-pointer hover:bg-purple-600 rounded-lg w-3/4 py-2 text-center;
+
+  /* Animation */
+  @apply transition-all duration-400 ease-out;
 }
 
 }
+
+.CardMask {
+
+  /* Cover entire card */
+  @apply absolute inset-0 w-full rounded-xl z-10;
+
+  /* Purple theme background */
+  @apply bg-black/30;
+
+  /* Clip animation (smooth + performance safe) */
+  @apply motion-safe:transition-[clip-path] 
+         motion-safe:duration-900
+           will-change-[clip-path]
+         ease-out;
+
+  /* Initial state → small circle bottom-right */
+  @apply [clip-path:circle(12%_at_120%_120%)];
+
+  /* On hover → expand fully */
+  @apply group-hover:[clip-path:circle(200%_at_120%_120%)];
+
+}
+
 
 @layer components {
 

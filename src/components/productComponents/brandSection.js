@@ -4,17 +4,22 @@ import Image from "next/image";
 
 export default function BrandSection({ brands }) {
   return (
-    <section className="productContainer">
+    <section className="productContainer ">
       {brands.map((brand, index) => (
-        <div key={index} className="brandContainer ">
-         <div className="h-36 sm:h-40  flex items-center justify-center">
-             <Image
+        <div key={index} className="brandContainer group relative">
+                      <div className="CardMask"></div>
+
+         <div className="BrandImageContainer ">
+
+            <Image
             src={brand.image}
             alt={brand.name}
             width={180}
             height={80}
-            className="object-contain  p-2"
+            className="ImageCard"
           />
+
+          <button className="BrandButton">View</button>
 
          </div>
          <div className="mt-2 text-center  ">
