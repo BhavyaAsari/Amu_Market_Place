@@ -8,7 +8,8 @@
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
-import { LuPencil,LuPenLine } from "react-icons/lu";
+import { LuPencil, LuPenLine } from "react-icons/lu";
+import { HiOutlineEnvelope, HiOutlinePhone, HiOutlineMapPin, HiOutlineHashtag } from "react-icons/hi2";
 
 // Server Action used ONLY for database update
 // Image upload is handled separately via API route
@@ -271,70 +272,101 @@ export default function ProfileSec({ user }) {
   return (
     <form onSubmit={handleSubmit}>
       <main className="profile-container">
-        {/* Profile image with fallback */}
-        <div className="profile-header">
-         <section className="profile-avatar">
-           <Image
-            src={formData.image || "/user.jpg"}
-            alt="Profile"
-            fill
-            priority
-            quality={100}
-            className="object-cover  rounded-full"
-          />
-         </section>
-
-          {/* File input shown only in edit mode */}
-          {editing && (
-            <label className="cursor-pointer text-lg  border hover:text-white border-black px-10 py-1 rounded-full hover:bg-black/40">
-              Change Photo
-              <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImage}
-              hidden
-            />
-            </label>
-          )}
-
-          {!editing && (
-            <button
-              onClick={() => setEditing(true)}
-              type="button"
-              className="btn-edit self-start text2xl border border-black px-10 py-1 rounded-full hover:bg-black/40 "
-            >
-             Edit 
-              
-            </button>
-          )}
-        </div>
         <section className="profile-section">
           {!editing ? (
-            // View Mode - Like image 2
-            <div className="w-full space-y-4">
-              <h2 className="text-4xl font-serif font-bold text-black">
-                {formData.username || "_"}
-              </h2>
-              <div className="profile-row">
-                <span className="profile-label">AMU ID</span>
-                <span className="text-black">{formData.email}</span>
+            // View Mode - Professional Card Layout
+            <div className="w-full">
+              {/* Header with background banner */}
+              <div className="relative w-full h-40 sm:h-48 mb-12 rounded-t-2xl overflow-hidden bg-linear-to-r from-gray-300 via-gray-200 to-gray-300">
+                <Image
+                  src="/banner.png"
+                  alt="Banner"
+                  fill
+                  className="object-cover opacity-40"
+                />
               </div>
-              <div className="profile-row">
-                <span className="profile-label">Country</span>
-                <span className="text-black">{formData.country || "_"}</span>
-              </div>
-              <div className="profile-row">
-                <span className="profile-label">Phone</span>
-                <span className="text-black">
-                  {formData.phone
-                    ? `${COUNTRY_META[formData.country]?.code || ""} ${formData.phone}`
-                    : "_"}
-                </span>
-              </div>
-              <div className="profile-row">
-                <span className="profile-label">Postal Code</span>
-                <span className="text-black">{formData.postalCode || "_"}</span>
+
+              {/* Profile Card Container */}
+              <div className="px-4 sm:px-8 pb-8">
+                {/* Profile Header with Avatar, Name, and Edit Button */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-8">
+                  {/* Avatar with purple border */}
+                  <div className="relative -mt-28 sm:-mt-24">
+                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg">
+                      <Image
+                        src={formData.image || "/user.jpg"}
+                        alt="Profile"
+                        fill
+                        priority
+                        quality={100}
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Profile Info */}
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-black">
+                          {formData.username || "_"}
+                        </h2>
+                      </div>
+                      <button
+                        onClick={() => setEditing(true)}
+                        type="button"
+                        className="bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-fit"
+                      >
+                        Edit Profile
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {/* Contact Information Card */}
+                  <div className="bg-gray-50 p-4  rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <HiOutlineEnvelope className="w-6 h-6 text-gray-500" />
+                      <p className="text-gray-600 font-medium text-sm">Email</p>
+                    </div>
+                    <p className="text-gray-900 font-semibold ">{formData.email || "_"}</p>
+                  </div>
+
+                  {/* Phone Card */}
+                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <HiOutlinePhone className="w-6 h-6 text-gray-500" />
+                      <p className="text-gray-600 font-medium text-sm">Phone</p>
+                    </div>
+                    <p className="text-gray-900 font-semibold">
+                      {formData.phone
+                        ? `${COUNTRY_META[formData.country]?.code || ""} ${formData.phone}`
+                        : "_"}
+                    </p>
+                  </div>
+
+                  {/* Location & ID Card */}
+                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <HiOutlineMapPin className="w-6 h-6 text-gray-500" />
+                      <p className="text-gray-600 font-medium text-sm">Location & ID</p>
+                    </div>
+                    <p className="text-gray-900 font-semibold">
+                      {formData.country || "_"}, {formData.postalCode || "_"}
+                    </p>
+                  </div>
+
+                  {/* AMU ID Card */}
+                  {/* <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <HiOutlineHashtag className="w-6 h-6 text-gray-500" />
+                      <p className="text-gray-600 font-medium text-sm">AMU ID</p>
+                    </div>
+                    <p className="text-gray-900 font-semibold">{formData.email || "_"}</p>
+                  </div> */}
+                </div>
               </div>
             </div>
           ) : (
@@ -358,7 +390,7 @@ export default function ProfileSec({ user }) {
                       border-gray-300
                       rounded-lg
                       px-4
-                      pt-5
+                      pt-8
                       pb-2
                       text-black
                       bg-gray-50
@@ -387,7 +419,7 @@ export default function ProfileSec({ user }) {
                       border-gray-300
                       rounded-lg
                       px-4
-                      pt-5
+                      pt-8
                       pb-2
                       text-black
                       bg-gray-50
@@ -420,7 +452,7 @@ export default function ProfileSec({ user }) {
                       border-gray-300
                       rounded-lg
                       px-4
-                      pt-5
+                      pt-8
                       pb-2
                       text-black
                       bg-gray-50
@@ -459,7 +491,7 @@ export default function ProfileSec({ user }) {
                       border-gray-300
                       rounded-lg
                       px-4
-                      pt-5
+                      pt-8
                       pb-2
                       text-black
                       bg-gray-50
@@ -494,7 +526,7 @@ export default function ProfileSec({ user }) {
                       border-gray-300
                       rounded-lg
                       px-4
-                      pt-5
+                      pt-8
                       pb-2
                       text-black
                       bg-gray-50

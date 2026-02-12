@@ -8,6 +8,7 @@ import getBrands from "./actions/productBrand";
 import { brandMeta } from "@/config/brandMeta";
 import getAllLaptops from "./actions/getAllLaptops";
 import getFeaturedProducts from "./actions/getFeaturedProducts";
+import { Suspense } from "react";
 
 export default async function Home() {
   const dbBrands = await getBrands();
@@ -33,7 +34,9 @@ export default async function Home() {
 
       <main className="min-h-screen flex flex-col">
         <section className="flex mt-4 justify-center">
+           <Suspense fallback={<div>Loading filters...</div>}>
           <SearchBar />
+           </Suspense>
         </section>
 
         <section className="flex justify-center mt-8 mb-8">

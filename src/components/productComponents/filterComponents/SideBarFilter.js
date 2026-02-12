@@ -10,17 +10,7 @@ import PriceFilter from "./priceFilter"
 export default function SideBarFilter({ meta }) {
   return (
     <aside
-      className="
-        hidden md:flex
-        flex-col
-        w-64
-        shrink-0
-        shadiw-xl
-        rounded-xl
-        sticky top-20
-        hover:cursor-pointer
-        h-[calc(100vh-5rem)]
-      "
+      className="sideFilter"
     >
       {/* Fixed Header */}
       <div className="p-4 border-b">

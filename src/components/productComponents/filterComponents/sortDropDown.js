@@ -21,7 +21,7 @@ export default function SortDropDown() {
             <select
             value={filters.sort || ""}
             onChange={(e) => setFilter({sort:e.target.value})}
-            className="text-lg border-0">
+            className="text-lg border-0 hover:cursor-pointer">
                 
                 <option>Relevance</option>
                 <option value="price-asc" className="" >Price:Low to High</option>

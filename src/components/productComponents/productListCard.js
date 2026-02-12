@@ -38,15 +38,15 @@ const displayTitle = `${brand} ${series} ${screenSize}inch`;
 return (
 
     <>
-    <div className="productlistCard flex flex-col shadow-2xl ">
+    <div className="productlistCard ">
 
-    <div className="imageContainer bg-slate-200">
+    <div className="imageContainer bg-slate-200 ">
       <Image
         src={product.image}
         alt={displayTitle}
         width={200}
         height={200}
-        className="object-contain w-64 h-56 p-4"
+        className="object-contain w-66 h-56 p-4"
       />
       </div>
     <div className="detailsContainer">

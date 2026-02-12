@@ -144,23 +144,11 @@
 @layer components {
 
   .profile-container {
-
-    @apply   text-black w-full m-1 sm:m-5  rounded-xl 
-  }
-
-  .profile-header {
-
-    @apply  flex flex-col items-center justify-center    gap-4 bg-black/20  rounded-t-2xl p-4
-  }
-
-  .profile-avatar {
-
-    @apply relative w-24 h-24   sm:w-36 sm:h-36
+    @apply text-black w-full rounded-2xl bg-white shadow-lg overflow-hidden
   }
 
   .profile-section {
-
-    @apply flex flex-col gap-4 items-start justify-start py-8 px-6
+    @apply flex flex-col gap-4 w-full
   }
 
   .form-field {
@@ -197,8 +185,8 @@
     text-white
     text-3xl
     font-medium
-    
     ml-auto
+    mt-auto
     cursor-pointer;
 }
 
@@ -371,7 +359,7 @@
   }
 }
 
-@Layer components {
+@layer components {
 
   .productContainer {
   @apply
@@ -381,9 +369,10 @@
     grid-cols-1
     sm:grid-cols-2
     gap-4
-    sm:gap-6
+    
+    sm:gap-8
     lg:gap-8
-    px-3
+    px-4
     sm:px-6
     lg:px-8
     text-black;
@@ -421,16 +410,16 @@
 
 }
 
-@Layer components {
+@layer components {
 
   .productlistCard {
 
-    @apply w-full p-5  rounded-2xl flex flex-col sm:flex-row justify-center items-center gap-4
+    @apply w-full p-5 shadow-2xl bg-white rounded-2xl flex flex-col    gap-4
   }
 
   .imageContainer {
 
-    @apply w-80 h-56 sm:h-60 sm:w-96 flex items-center justify-center    rounded-2xl 
+    @apply w-full h-56 flex items-center justify-center  gap-2 rounded-2xl 
   }
 
   .detailsContainer {
@@ -460,15 +449,24 @@
   @apply appearance-none h-4 w-4 bg-purple-600 rounded-full pointer-events-auto cursor-pointer;
 }
 
-.ProductListPageContainer {
 
-  @apply flex flex-col md:flex-row gap-6
+.ProductListPageContainer {
+  @apply w-full max-w-7xl mx-auto grid grid-cols-[260px_1fr] gap-8 px-6 items-start;
 }
+
 
 .sideFilter {
-
-  @apply hidden md:flex flex-col border-r  w-64 shrink-0 p-4  sticky top-20 h-fit
+  @apply sticky top-24 flex flex-col 
+         max-h-[calc(100vh-6rem)] 
+         bg-white 
+         rounded-xl 
+         w-64
+         ml-6
+         shadow-lg;
+         
+         
 }
+
 
 .filterSection {
 

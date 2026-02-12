@@ -14,12 +14,12 @@ export default async function ProductListPage({ searchParams }) {
     <>
       {/* <h1 className="text-center text-3xl font-bold">Grab Laptops of your choice</h1> */}
 
-      <div className="flex justify-end mr-6 rounded-lg"><SortDropDown/></div>
-      <div className=" py-1 ">
-        <section className="ProductListPageContainer">
+      <div className="flex justify-end mr-6 rounded-lg py-4"><SortDropDown/></div>
+      <div className=" py-4 ">
+        <section className="flex w-full ">
           <SideBarFilter meta={metaData} />
 
-          <div className="flex-1">
+          <div className="flex-1 px-6">
             {laptops.length === 0 &&
 
            <div className="min-h-screen flex  flex-col items-center justify-center px-4  bg-center bg-fill bg-no-repeat"

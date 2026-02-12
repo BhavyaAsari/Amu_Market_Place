@@ -5,7 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 import ProductCard from "./productCard";
 export default function ProductCarousal({products}) {
 
-    console.log("products data",products);
+    // console.log("products data",products);
 
     const responsive = {
 
