@@ -461,8 +461,6 @@
   @apply transition-all duration-400 ease-out;
 }
 
-}
-
 .CardMask {
 
   /* Cover entire card */
@@ -484,6 +482,10 @@
   @apply group-hover:[clip-path:circle(200%_at_120%_120%)];
 
 }
+
+
+}
+
 
 
 @layer components {

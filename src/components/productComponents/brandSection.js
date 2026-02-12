@@ -7,7 +7,7 @@ export default function BrandSection({ brands }) {
     <section className="productContainer ">
       {brands.map((brand, index) => (
         <div key={index} className="brandContainer group relative">
-                      <div className="CardMask"></div>
+         <div className="CardMask"></div>
 
          <div className="BrandImageContainer ">
 
