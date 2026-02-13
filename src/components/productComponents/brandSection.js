@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function BrandSection({ brands }) {
   return (
@@ -19,7 +20,8 @@ export default function BrandSection({ brands }) {
             className="ImageCard"
           />
 
-          <button className="BrandButton">View</button>
+          <Link href={`productlist?brand=${brand.name.toLowerCase()}`}><button className="BrandButton">View</button></Link>
+
 
          </div>
          <div className="mt-2 text-center  ">

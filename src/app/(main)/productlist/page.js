@@ -14,7 +14,7 @@ export default async function ProductListPage({ searchParams }) {
     <>
       {/* <h1 className="text-center text-3xl font-bold">Grab Laptops of your choice</h1> */}
 
-      <div className="flex justify-end mr-6 rounded-lg py-4"><SortDropDown/></div>
+      {/* <div className="flex justify-end mr-6 rounded-lg py-4"><SortDropDown/></div> */}
       <div className=" py-4 ">
         <section className="flex w-full ">
           <SideBarFilter meta={metaData} />

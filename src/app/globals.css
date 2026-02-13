@@ -467,7 +467,7 @@
   @apply absolute inset-0 w-full rounded-xl z-10;
 
   /* Purple theme background */
-  @apply bg-black/30;
+  @apply bg-black/30 ;
 
   /* Clip animation (smooth + performance safe) */
   @apply motion-safe:transition-[clip-path] 
@@ -550,5 +550,244 @@
 
   @apply grid grid-cols-2 gap-2
 }
+
+}
+
+
+/* =====Custom DropDown filter ==== */
+
+@layer components {
+
+  .customDropDown {
+    @apply py-6  relative w-full max-w-xl;
+  }
+
+  .dropMenu {
+    @apply flex  items-center justify-between px-4 py-2 border border-gray-300  bg-white cursor-pointer hover:border-purple-500 transition;
+  }
+
+  .optnMenu {
+    @apply bg-white absolute  left-0 right-0 border border-gray-300  shadow-lg flex flex-col z-50 max-h-64 overflow-y-auto;
+  }
+
+  .optnLabel {
+    @apply hover:cursor-pointer px-4 py-3 hover:bg-purple-100 text-gray-800 transition border-b border-gray-100 last:border-b-0;
+  }
+}
+
+
+/* ===== PROFILE SECTION STYLES ===== */
+@layer components {
+
+  /* Banner Section */
+  .profile-banner {
+    @apply relative w-full h-40 sm:h-48 mb-12 rounded-t-2xl overflow-hidden bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
+  }
+
+  /* Avatar Container */
+  .profile-avatar-wrapper {
+    @apply relative -mt-28 sm:-mt-24
+  }
+
+  .profile-avatar-image {
+    @apply relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg
+  }
+
+   .profile-avatar-image-edit {
+    @apply relative w-32 h-32  sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg
+  }
+
+  /* Profile Info Container */
+  .profile-info-wrapper {
+    @apply px-4 sm:px-8 pb-8
+  }
+
+  .profile-header-row {
+    @apply flex flex-col sm:flex-row sm:items-center gap-6 mb-8
+  }
+
+  .profile-name-section {
+    @apply flex-1
+  }
+
+  .profile-name-title {
+    @apply text-3xl sm:text-4xl font-bold text-black 
+  }
+
+  .profile-badge {
+    @apply text-purple-600 font-semibold text-sm mt-1
+  }
+
+  /* Edit Button */
+  .profile-edit-btn {
+    @apply bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-fit
+  }
+
+  /* Info Cards Grid */
+  .profile-cards-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4
+  }
+
+  .profile-card {
+    @apply bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow
+  }
+
+  .profile-card-header {
+    @apply flex items-center gap-3 mb-3
+  }
+
+  .profile-card-icon {
+    @apply w-6 h-6 text-gray-500
+  }
+
+  .profile-card-label {
+    @apply text-gray-600 font-medium text-sm
+  }
+
+  .profile-card-value {
+    @apply text-gray-900 font-semibold
+  }
+
+  /* ===== FORM FIELDS ===== */
+
+  /* Form Container */
+  .profile-form-wrapper {
+    @apply w-full
+  }
+
+  .profile-form-title {
+    @apply text-2xl font-bold text-black mb-6
+  }
+
+  /* Form Row */
+  .profile-form-row {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-6
+  }
+
+  /* Field Wrapper */
+  .profile-field-wrapper {
+    @apply relative p-4
+  }
+
+  /* Input Field */
+  .profile-input {
+    @apply w-full border border-gray-300 rounded-lg px-4 pt-8 pb-2 text-black bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent;
+  }
+
+  .profile-input:disabled {
+    @apply bg-gray-100 text-gray-600;
+  }
+
+  /* Select Field */
+  .profile-select {
+    @apply w-full appearance-none border border-gray-300 rounded-lg px-4 pt-8 pb-2 text-black bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent;
+  }
+
+  /* Field Label */
+  .profile-label-float {
+    @apply absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600
+  }
+
+  /* Select Dropdown Arrow */
+  .profile-select-arrow {
+    @apply absolute right-4 top-3.5 text-gray-400 pointer-events-none text-lg
+  }
+
+  /* Error Message */
+  .profile-error {
+    @apply text-red-500 text-xs mt-1
+  }
+
+  /* Postal Code Row */
+  .profile-postal-wrapper {
+    @apply mb-8
+  }
+
+  /* Action Buttons */
+  .profile-buttons-wrapper {
+    @apply flex gap-4 p-4;
+  }
+
+  .profile-btn-submit {
+    @apply min-h-11 px-4 rounded-lg border hover:cursor-pointer bg-purple-600 text-white transition flex-1 text-lg;
+  }
+
+  .profile-btn-cancel {
+    @apply min-h-11 px-4 rounded-lg border hover:cursor-pointer transition flex-1 bg-white text-black border-2 border-gray-300;
+  }
+
+}
+
+
+/* ==== CheckOut Page ==== */
+
+@layer components {
+
+
+  .checkoutContainer {
+
+    @apply  min-h-screen flex flex-col
+  }
+
+  .addressContainer {
+
+    @apply   
+    
+   
+    drop-shadow-2xl 
+    w-full  
+    gap-4
+    py-4; 
+  }
+
+  .addressForm {
+
+    @apply  
+    w-full 
+    grid 
+    grid-cols-2 
+    gap-10 
+    p-4;
+  }
+
+  .addressInput {
+
+    @apply 
+    w-full 
+    border 
+    rounded-lg 
+    py-2 
+    px-4 ;
+  }
+
+  .fullWidth {
+
+    @apply md:col-span-2;
+  }
+
+  .checkoutWrapper{
+
+    @apply
+     max-w-7xl
+     flex
+     flex-col
+     lg:flex-row
+     mx-auto
+     gap-8
+     px-6 py-10;
+  }
+
+  .checkoutRight {
+
+    @apply 
+    lg:w-96
+    w-full;
+  }
+
+  .checkoutLeft{
+
+    @apply flex-1 space-y-8 shadow-2xl rounded-2xl;
+  }
+
 
 }

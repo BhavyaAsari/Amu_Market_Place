@@ -273,11 +273,20 @@ export default function ProfileSec({ user }) {
     <form onSubmit={handleSubmit}>
       <main className="profile-container">
         <section className="profile-section">
+          {/* Hidden file input - accessible in both view and edit modes */}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImage}
+            ref={fileInputRef}
+            className="hidden"
+          />
+
           {!editing ? (
             // View Mode - Professional Card Layout
             <div className="w-full">
               {/* Header with background banner */}
-              <div className="relative w-full h-40 sm:h-48 mb-12 rounded-t-2xl overflow-hidden bg-linear-to-r from-gray-300 via-gray-200 to-gray-300">
+              <div className="profile-banner">
                 <Image
                   src="/banner.png"
                   alt="Banner"
@@ -287,12 +296,12 @@ export default function ProfileSec({ user }) {
               </div>
 
               {/* Profile Card Container */}
-              <div className="px-4 sm:px-8 pb-8">
+              <div className="profile-info-wrapper">
                 {/* Profile Header with Avatar, Name, and Edit Button */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-8">
+                <div className="profile-header-row">
                   {/* Avatar with purple border */}
-                  <div className="relative -mt-28 sm:-mt-24">
-                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg">
+                  <div className="profile-avatar-wrapper">
+                    <div className="profile-avatar-image">
                       <Image
                         src={formData.image || "/user.jpg"}
                         alt="Profile"
@@ -302,20 +311,29 @@ export default function ProfileSec({ user }) {
                         className="object-cover"
                       />
                     </div>
+                    {/* Change Picture Button on Avatar */}
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      type="button"
+                      className="absolute bottom-0 right-0 bg-purple-600 text-white rounded-full p-2 hover:bg-purple-700 transition shadow-lg"
+                      title="Change Profile Picture"
+                    >
+                      <LuPenLine size={16} />
+                    </button>
                   </div>
 
                   {/* Profile Info */}
-                  <div className="flex-1">
+                  <div className="profile-name-section">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                       <div>
-                        <h2 className="text-3xl sm:text-4xl font-bold text-black">
+                        <h2 className="profile-name-title">
                           {formData.username || "_"}
                         </h2>
                       </div>
                       <button
                         onClick={() => setEditing(true)}
                         type="button"
-                        className="bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-fit"
+                        className="profile-edit-btn"
                       >
                         Edit Profile
                       </button>
@@ -324,23 +342,23 @@ export default function ProfileSec({ user }) {
                 </div>
 
                 {/* Info Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="profile-cards-grid">
                   {/* Contact Information Card */}
-                  <div className="bg-gray-50 p-4  rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <HiOutlineEnvelope className="w-6 h-6 text-gray-500" />
-                      <p className="text-gray-600 font-medium text-sm">Email</p>
+                  <div className="profile-card">
+                    <div className="profile-card-header">
+                      <HiOutlineEnvelope className="profile-card-icon" />
+                      <p className="profile-card-label">Email</p>
                     </div>
-                    <p className="text-gray-900 font-semibold ">{formData.email || "_"}</p>
+                    <p className="profile-card-value">{formData.email || "_"}</p>
                   </div>
 
                   {/* Phone Card */}
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <HiOutlinePhone className="w-6 h-6 text-gray-500" />
-                      <p className="text-gray-600 font-medium text-sm">Phone</p>
+                  <div className="profile-card">
+                    <div className="profile-card-header">
+                      <HiOutlinePhone className="profile-card-icon" />
+                      <p className="profile-card-label">Phone</p>
                     </div>
-                    <p className="text-gray-900 font-semibold">
+                    <p className="profile-card-value">
                       {formData.phone
                         ? `${COUNTRY_META[formData.country]?.code || ""} ${formData.phone}`
                         : "_"}
@@ -348,119 +366,92 @@ export default function ProfileSec({ user }) {
                   </div>
 
                   {/* Location & ID Card */}
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <HiOutlineMapPin className="w-6 h-6 text-gray-500" />
-                      <p className="text-gray-600 font-medium text-sm">Location & ID</p>
+                  <div className="profile-card">
+                    <div className="profile-card-header">
+                      <HiOutlineMapPin className="profile-card-icon" />
+                      <p className="profile-card-label">Location & ID</p>
                     </div>
-                    <p className="text-gray-900 font-semibold">
+                    <p className="profile-card-value">
                       {formData.country || "_"}, {formData.postalCode || "_"}
                     </p>
                   </div>
-
-                  {/* AMU ID Card */}
-                  {/* <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-3 mb-3">
-                      <HiOutlineHashtag className="w-6 h-6 text-gray-500" />
-                      <p className="text-gray-600 font-medium text-sm">AMU ID</p>
-                    </div>
-                    <p className="text-gray-900 font-semibold">{formData.email || "_"}</p>
-                  </div> */}
                 </div>
               </div>
             </div>
           ) : (
             // Edit Mode - Like image 1 with grid layout
             <div className="w-full">
-              <h2 className="text-2xl font-bold text-black mb-6">My Profile</h2>
+
+              <h2 className="profile-form-title text-center">My Profile</h2>
               
+              {/* Profile Picture Upload Section */}
+              <div className="flex flex-col items-center gap-4 mb-8">
+                <div className="profile-avatar-image-edit">
+                  <Image
+                    src={formData.image || "/user.jpg"}
+                    alt="Profile"
+                    fill
+                    priority
+                    quality={100}
+                    className="object-cover"
+                  />
+                </div>
+                
+                {/* Change Picture Button */}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="profile-btn-submit w-full max-w-xs"
+                >
+                  Choose Photo
+                </button>
+                {selectedFile && (
+                  <p className="text-sm text-green-600 font-medium">
+                    ✓ {selectedFile.name} selected
+                  </p>
+                )}
+              </div> 
+                           
+
               {/* Row 1: First Name & Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="relative">
+              <div className="profile-form-row">
+                <div className="profile-field-wrapper">
                   <input
                     type="text"
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
                     placeholder=" "
-                    className="
-                      peer
-                      w-full
-                      border
-                      border-gray-300
-                      rounded-lg
-                      px-4
-                      pt-8
-                      pb-2
-                      text-black
-                      bg-gray-50
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple-500
-                      focus:border-transparent
-                    "
+                    className="profile-input peer"
                   />
-                  <label className="absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600">
+                  <label className="profile-label-float">
                     First Name
                   </label>
                 </div>
 
-                <div className="relative">
+                <div className="profile-field-wrapper">
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     disabled
                     placeholder=" "
-                    className="
-                      peer
-                      w-full
-                      border
-                      border-gray-300
-                      rounded-lg
-                      px-4
-                      pt-8
-                      pb-2
-                      text-black
-                      bg-gray-50
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple-500
-                      focus:border-transparent
-                      disabled:bg-gray-100
-                      disabled:text-gray-600
-                    "
+                    className="profile-input peer disabled:bg-gray-100 disabled:text-gray-600"
                   />
-                  <label className="absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600">
+                  <label className="profile-label-float">
                     Email Address
                   </label>
                 </div>
               </div>
 
               {/* Row 2: Country & Phone */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="relative">
+              <div className="profile-form-row">
+                <div className="profile-field-wrapper">
                   <select
                     name="country"
                     value={formData.country}
                     onChange={handleCountryChange}
-                    className="
-                      peer
-                      w-full
-                      appearance-none
-                      border
-                      border-gray-300
-                      rounded-lg
-                      px-4
-                      pt-8
-                      pb-2
-                      text-black
-                      bg-gray-50
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple-500
-                      focus:border-transparent
-                    "
+                    className="profile-select peer"
                   >
                     <option value="" disabled hidden></option>
                     {COUNTRIES.map((c) => (
@@ -469,91 +460,61 @@ export default function ProfileSec({ user }) {
                       </option>
                     ))}
                   </select>
-                  <label className="absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600">
+                  <label className="profile-label-float">
                     Country
                   </label>
-                  <span className="absolute right-4 top-3.5 text-gray-400 pointer-events-none text-lg">
+                  <span className="profile-select-arrow">
                     ▼
                   </span>
                 </div>
 
-                <div className="relative">
+                <div className="profile-field-wrapper">
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     placeholder=" "
-                    className="
-                      peer
-                      w-full
-                      border
-                      border-gray-300
-                      rounded-lg
-                      px-4
-                      pt-8
-                      pb-2
-                      text-black
-                      bg-gray-50
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple-500
-                      focus:border-transparent
-                    "
+                    className="profile-input peer"
                   />
-                  <label className="absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600">
+                  <label className="profile-label-float">
                     Phone Number
                   </label>
                   {phoneError && (
-                    <p className="text-red-500 text-xs mt-1">{phoneError}</p>
+                    <p className="profile-error">{phoneError}</p>
                   )}
                 </div>
               </div>
 
               {/* Row 3: Postal Code */}
-              <div className="mb-8">
-                <div className="relative">
+              <div className="profile-postal-wrapper">
+                <div className="profile-field-wrapper">
                   <input
                     type="text"
                     name="postalCode"
                     value={formData.postalCode}
                     onChange={handleChange}
                     placeholder=" "
-                    className="
-                      peer
-                      w-full
-                      border
-                      border-gray-300
-                      rounded-lg
-                      px-4
-                      pt-8
-                      pb-2
-                      text-black
-                      bg-gray-50
-                      focus:outline-none
-                      focus:ring-2
-                      focus:ring-purple-500
-                      focus:border-transparent
-                    "
+                    className="profile-input peer"
                   />
-                  <label className="absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600">
+                  <label className="profile-label-float">
                     Postal Code
                   </label>
                 </div>
               </div>
 
               {/* Action buttons */}
-              <div className="flex gap-4">
+              <div className="profile-buttons-wrapper">
                 <button
                   type="submit"
-                  className="btn-primary flex-1 text-lg"
+                  className="profile-btn-submit"
                   disabled={loading}
                 >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
 
                 <button
-                  className="btn-primary flex-1 bg-white text-black border-2 border-gray-300"
+                  className="profile-btn-cancel"
                   type="button"
                   onClick={handleCancel}
                 >

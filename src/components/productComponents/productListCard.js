@@ -42,8 +42,8 @@ return (
 
     <div className="imageContainer bg-slate-200 ">
       <Image
-        src={product.image}
-        alt={displayTitle}
+        src={product.image || "/products/default.png"}
+        alt="Product Image"
         width={200}
         height={200}
         className="object-contain w-66 h-56 p-4"
@@ -59,7 +59,7 @@ return (
             <li><LuCpu size={22} className="inline mr-2"/>{product.specs.processor}</li>
             <li><LuLaptop size={22} className="inline "/> {product.specs.os}</li>
         </ul>
-      <div className="flex flex-col gap-3 sm:flex-row mt-5 ">
+      <div className="flex flex-col justify-between sm:flex-row mt-5 ">
           
 <Link
   href={`/products/${product._id}`}

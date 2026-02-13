@@ -5,6 +5,7 @@ import Closebutton from "./closeButton"
 import StorageFilter from "./SpecFilter/StorageFilter"
 import ProcessorFilter from "./SpecFilter/ProcessorFilter"
 import PriceFilter from "./priceFilter"
+import CustomDropDown from "./CustomdropDownFilter"
 
 
 export default function SideBarFilter({ meta }) {
@@ -20,6 +21,8 @@ export default function SideBarFilter({ meta }) {
 
       {/* Scrollable Filters */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <CustomDropDown/>
+
         <PriceFilter />
 
         <FilterSection title="Brand">

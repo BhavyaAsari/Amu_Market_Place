@@ -37,7 +37,7 @@ export default function CartPage () {
                                 >
 
                                     {/* Product Image */}
-                                    <div className="w-full sm:w-40 sm:h-32 flex-shrink-0">
+                                    <div className="w-full sm:w-40 sm:h-32 shrink-0">
                                         <Image
                                             src={item.image}
                                             alt={item.title}
@@ -77,7 +77,7 @@ export default function CartPage () {
                                     </div>
 
                                     {/* Product Total Price */}
-                                    <div className="text-right flex-shrink-0">
+                                    <div className="text-right shrink-0">
                                         <p className="text-xs sm:text-sm text-gray-600 mb-2">Total</p>
                                         <p className="font-bold text-xl sm:text-2xl text-purple-600">₹{item.price * item.quantity}</p>
                                     </div>
@@ -96,30 +96,30 @@ export default function CartPage () {
                 {/* Right Part - Order Summary */}
                 <section className="lg:col-span-1">
                     <div className="border border-gray-200 rounded-lg p-4 sm:p-6 bg-white shadow-sm sticky top-24">
-                        <h3 className="font-bold text-xl sm:text-2xl mb-6 text-black">Order Summary</h3>
+                        <h3 className="font-semibold text-xl sm:text-2xl mb-6 text-black">Order Summary</h3>
 
                         <div className="space-y-4 mb-6">
                             <div className="flex justify-between text-base sm:text-lg">
                                 <span className="text-gray-700">Subtotal</span>
-                                <span className="font-semibold text-black">₹{total.toFixed(2)}</span>
+                                <span className="font-semibold text-black">₹{cart.length > 0 ? total.toFixed(2) : "0.00"}</span>
                             </div>
 
                             <div className="flex justify-between text-base sm:text-lg">
                                 <span className="text-gray-700">Est. Shipping</span>
-                                <span className="font-semibold text-black">₹99</span>
+                                <span className="font-semibold text-black">₹{cart.length > 0 ? "99" : "0"}</span>
                             </div>
 
                             <div className="flex justify-between text-base sm:text-lg">
                                 <span className="text-gray-700">Tax (18%)</span>
-                                <span className="font-semibold text-black">₹{(total * 0.18).toFixed(2)}</span>
+                                <span className="font-semibold text-black">₹{cart.length > 0 ? (total * 0.18).toFixed(2) : "0.00"}</span>
                             </div>
                         </div>
 
                         <hr className="border-gray-200" />
 
                         <div className="flex justify-between text-xl sm:text-2xl font-bold mt-6 mb-6 text-black">
-                            <span>Total</span>
-                            <span className="text-purple-600">₹{(total + 99 + (total * 0.18)).toFixed(2)}</span>
+                            <span className="font-semibold">Total</span>
+                            <span className="text-purple-600">₹{cart.length > 0 ? (total + 99 + (total * 0.18)).toFixed(2) : "0.00"}</span>
                         </div>
 
                         <button className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors mb-3">

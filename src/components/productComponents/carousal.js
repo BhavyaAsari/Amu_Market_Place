@@ -34,7 +34,7 @@ export default function ProductCarousal({products}) {
         <>
         <Carousel responsive={responsive} arrows 
          keyBoardControl
-         removeArrowOnDeviceType={["tablet", "mobile",]}
+         removeArrowOnDeviceType={["tablet", "mobile","desktop"]}
          autoPlay
          containerClass="relative"
          autoPlaySpeed={2000}
