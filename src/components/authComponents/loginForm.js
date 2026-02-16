@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
@@ -15,6 +15,8 @@ export default function LoginForm({ onForget }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,16 +31,14 @@ export default function LoginForm({ onForget }) {
 
       if (result?.ok) {
         toast.success("Login successful");
-        router.push("/");
+        router.push(callbackUrl);
         router.refresh();
       } else {
         toast.error("Invalid credentials");
       }
     } catch {
       toast.error("Login failed");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -84,7 +84,7 @@ export default function LoginForm({ onForget }) {
           onClick={() =>
             signIn("google", {
               prompt: "select_account",
-              callbackUrl: "/",
+              callbackUrl: callbackUrl,
             })
           }
         >
@@ -101,7 +101,7 @@ export default function LoginForm({ onForget }) {
         </p>
 
         <p className="text-lg text-white text-center">
-          Don’t have an account?
+          Dont have an account?
           <Link href="/signup" className="ml-2 underline text-[#c82ee3]">
             Register
           </Link>

@@ -45,6 +45,7 @@ const activeBrands = filters.brand?.split(",") || [];
                     <label key={brand} className="flex ">
                         <input
                         type="checkbox"
+                        className="checkBox"
                         checked={activeBrands.includes(brand)}
                         onChange={() => toggleFilter("brand",brand)}/>
 

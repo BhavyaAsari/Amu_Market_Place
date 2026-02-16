@@ -65,9 +65,7 @@ export function SignupForm() {
 
       if (result?.ok) {
         router.push("/");
-      } else {
-        toast.error("Login failed after signup. Please log in manually.");
-      }
+      } 
     }, 1000);
 
     return () => clearTimeout(timer);

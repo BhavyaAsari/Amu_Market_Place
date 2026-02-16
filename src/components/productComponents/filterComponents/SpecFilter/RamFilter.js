@@ -27,7 +27,7 @@ export default function RamFilter({rams=[]}) {
                     <input
 
                     type="checkbox"
-                    className=""
+                    className="checkBox"
                     checked={activeRam.includes(ram)}
                     onChange={() => toggleFilter("ram",ram)}
                     />

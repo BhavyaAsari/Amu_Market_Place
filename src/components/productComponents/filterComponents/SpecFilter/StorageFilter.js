@@ -17,6 +17,7 @@ export default function StorageFilter({storages=[]}) {
         >
           <input
             type="checkbox"
+            className="checkBox"
             checked={activeStorage.includes(storage)}
             onChange={() => toggleFilter("storage", storage)}
           />

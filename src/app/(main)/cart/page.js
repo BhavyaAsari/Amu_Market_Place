@@ -3,6 +3,7 @@
 import {LuPlus,LuMinus} from "react-icons/lu";
 import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CartPage () {
 
@@ -122,9 +123,9 @@ export default function CartPage () {
                             <span className="text-purple-600">₹{cart.length > 0 ? (total + 99 + (total * 0.18)).toFixed(2) : "0.00"}</span>
                         </div>
 
-                        <button className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors mb-3">
+                       <Link href={"/checkout"}> <button className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors mb-3 hover:cursor-pointer">
                             Proceed to Checkout
-                        </button>
+                        </button></Link>
 
                         <button className="w-full border-2 border-gray-300 text-black font-bold py-3 rounded-lg hover:bg-gray-50 transition-colors">
                             Continue Shopping

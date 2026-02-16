@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const specSchema = new mongoose.Schema ({
 
@@ -17,6 +17,36 @@ const specSchema = new mongoose.Schema ({
 },
 
 {_id:false}
+);
+
+
+const reviewSchema = new mongoose.Schema(
+
+ {
+
+   user: {
+
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    required:true,
+  },
+
+  rating : {
+
+    type:Number,
+    required:true,
+    min:1,
+    max:5
+  },
+
+  comment : {
+
+    type:String,
+    required:true,
+  },
+ },
+
+ {timestamps:true}
 );
 
 const productSchema = new mongoose.Schema(
@@ -44,6 +74,10 @@ const productSchema = new mongoose.Schema(
     shortDescription: { type: String, required: true },
     price: { type: Number, required: true },
     rating: { type: Number, default: 0 },
+
+
+    reviewCount:{type:Number,default:0},
+    reviews:[reviewSchema],
 
     image: { type: String, required: true },
     images: { type: [String], default: [] },

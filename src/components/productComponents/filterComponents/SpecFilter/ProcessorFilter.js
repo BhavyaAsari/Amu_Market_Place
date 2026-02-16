@@ -42,6 +42,7 @@ export default function ProcessorFilter({processors=[]}) {
         >
           <input
             type="checkbox"
+            className="checkBox"
             checked={activeProcessors.includes(cpu)}
             onChange={() => toggleFilter("processor", cpu)}
           />
