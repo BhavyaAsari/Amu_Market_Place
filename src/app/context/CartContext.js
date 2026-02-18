@@ -1,71 +1,122 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState, useTransition } from "react";
+import { useSession } from "next-auth/react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  // 1. Logic: Initialize state by checking the environment immediately.
-  // This avoids calling setState inside a useEffect later.
-  const [cart, setCart] = useState(() => {
-    // If we are on the server (Next.js pre-rendering), return empty array
-    if (typeof window === "undefined") return [];
+  const [cart, setCart] = useState([]);
+  const [isPending, startTransition] = useTransition();
+  const { data: session } = useSession();
 
-    // If we are on the client, grab the data immediately
-    try {
-      const savedCart = window.localStorage.getItem("cart");
-      return savedCart ? JSON.parse(savedCart) : [];
-    } catch (error) {
-      console.error("Local storage access failed:", error);
-      return [];
-    }
-  });
+  /* ------------------------------------ */
+  /* 🔹 Load Cart (Clean Version) */
+  /* ------------------------------------ */
 
-  const isMounted = useRef(false);
-
-  // 2. Logic: Syncing back to storage
   useEffect(() => {
-    if (isMounted.current) {
-      window.localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-      isMounted.current = true;
-    }
-  }, [cart]);
-
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
+    const fetchCart = async () => {
+      try {
+        const res = await fetch("/api/cart");
+        const data = await res.json();
+        setCart(data?.items || []);
+      } catch (error) {
+        console.error("Failed to load cart:", error);
       }
-      return [...prev, { ...product, quantity: 1 }];
+    };
+
+    fetchCart();
+  }, [session]); // runs on mount + login/logout
+
+  /* ------------------------------------ */
+  /* 🔹 Add To Cart */
+  /* ------------------------------------ */
+
+  const additionToCart = (productId) => {
+    startTransition(async () => {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId }),
+      });
+
+      const data = await res.json();
+      setCart(data.items);
     });
   };
 
-  const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  /* ------------------------------------ */
+  /* 🔹 Remove Item */
+  /* ------------------------------------ */
+
+  const removeFromCart = (productId) => {
+    startTransition(async () => {
+      const res = await fetch("/api/cart/remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId }),
+      });
+
+      const data = await res.json();
+      setCart(data.items);
+    });
   };
 
-  const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
-    );
+  /* ------------------------------------ */
+  /* 🔹 Increase Quantity */
+  /* ------------------------------------ */
+
+  const increaseQty = (productId) => {
+    startTransition(async () => {
+      const res = await fetch("/api/cart/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, delta: 1 }),
+      });
+
+      const data = await res.json();
+      setCart(data.items);
+    });
   };
 
-  const decreaseQty = (id) => {
-    setCart((prev) =>
-      prev
-        .map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
-        .filter((item) => item.quantity > 0)
-    );
+  /* ------------------------------------ */
+  /* 🔹 Decrease Quantity */
+  /* ------------------------------------ */
+
+  const decreaseQty = (productId) => {
+    startTransition(async () => {
+      const res = await fetch("/api/cart/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, delta: -1 }),
+      });
+
+      const data = await res.json();
+      setCart(data.items);
+    });
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  /* ------------------------------------ */
+  /* 🔹 Total Price */
+  /* ------------------------------------ */
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, increaseQty, decreaseQty, total }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        total,
+        isPending,
+        additionToCart,
+        removeFromCart,
+        increaseQty,
+        decreaseQty,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
