@@ -4,7 +4,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useFormStatus } from "react-dom";
 import { useActionState, useEffect, useState } from "react";
-import { SignupValid } from "@/app/actions/signupAction";
+import { SignupValid } from "@/app/actions/authActions/signupAction";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/dist/server/api-utils";
 import { signIn } from "next-auth/react";

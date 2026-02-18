@@ -13,7 +13,7 @@ import { HiOutlineEnvelope, HiOutlinePhone, HiOutlineMapPin, HiOutlineHashtag } 
 
 // Server Action used ONLY for database update
 // Image upload is handled separately via API route
-import { UpdateProfile } from "@/app/actions/profileAction";
+import { UpdateProfile } from "@/app/actions/proifleAction/profileAction";
 import { useRouter } from "next/navigation";
 
 /*

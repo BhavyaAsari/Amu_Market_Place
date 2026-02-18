@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { addReview } from "@/app/actions/addReview";
+import { addReview } from "@/app/actions/productAction/addReview";
 import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-export default function ReviewForm({ productId, email }) {
+export default function ReviewForm({ productId, email, onSubmitSuccess }) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [hover, setHover] = useState(0);
@@ -24,6 +24,11 @@ export default function ReviewForm({ productId, email }) {
       setRating(5);
       setComment("");
       router.refresh();
+      
+      // Close the form after successful submission
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
     } else {
       toast.error(result.message || "something went wrong");
     }

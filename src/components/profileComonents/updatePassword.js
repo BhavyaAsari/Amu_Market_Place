@@ -3,7 +3,7 @@
 import { toast } from "react-toastify";
 import {useRef,useState} from "react";
 
-import { resetPasswordProfile } from "@/app/actions/resetPasswordProfile";
+import { resetPasswordProfile } from "@/app/actions/proifleAction/resetPasswordProfile";
 
 export default function UpdatePasswordForm() {
 

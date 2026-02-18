@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import { ForgetPasswordAction } from "@/app/actions/forgetPassword";
+import { ForgetPasswordAction } from "@/app/actions/authActions/forgetPassword";
 
 const initialState = {
   success: null,

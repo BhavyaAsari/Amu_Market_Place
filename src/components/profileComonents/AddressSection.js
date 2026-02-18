@@ -5,7 +5,7 @@ import { FaMapMarkedAlt,FaLocationArrow } from "react-icons/fa";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { deleteAddress, saveAddress } from "@/app/actions/addressAction";
+import { deleteAddress, saveAddress } from "@/app/actions/proifleAction/addressAction";
 import { useFormStatus } from "react-dom";
 import { HiLocationMarker } from "react-icons/hi";
 

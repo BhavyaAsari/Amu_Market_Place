@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { ResetPasswordAction } from "@/app/actions/resetPassword";
+import { ResetPasswordAction } from "@/app/actions/authActions/resetPassword";
 
 const initialState = {
   success: null,

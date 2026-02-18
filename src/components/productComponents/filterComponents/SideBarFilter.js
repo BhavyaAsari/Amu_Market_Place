@@ -1,3 +1,5 @@
+"use client";
+
 import FilterSection from "./filterSection"
 import BrandFilter from "./SpecFilter/BrandFilter"
 import RamFilter from "./SpecFilter/RamFilter"

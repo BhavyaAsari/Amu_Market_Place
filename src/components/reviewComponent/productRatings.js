@@ -4,8 +4,11 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 export default function ProductRatings({ rating, reviewCount }) {
 
-  const safeRating = Number(rating) || 0;
+  
   const safeReviewCount = Number(reviewCount) || 0;
+
+  const safeRating =
+    safeReviewCount === 0 ? 0 : Number(rating) || 0;
 
   const rounded = Math.round(safeRating * 2) / 2;
 

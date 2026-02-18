@@ -7,6 +7,10 @@ export default function ReviewCard({ session, product, userEmail }) {
 
   const [showForm, setShowForm] = useState(false);
 
+  const handleFormClose = () => {
+    setShowForm(false);
+  };
+
   return (
     <div className="mt-8">
 
@@ -27,6 +31,7 @@ export default function ReviewCard({ session, product, userEmail }) {
               <ReviewForm
                 productId={product._id.toString()}
                 email={userEmail}
+                onSubmitSuccess={handleFormClose}
               />
             </div>
           )}
