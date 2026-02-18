@@ -114,15 +114,20 @@ export default async function getAllLaptops(filters = {}) {
     }
 
     const laptops = await Product.find(query)
-      .select("id brand series title price image rating specs")
+      .select("_id brand series title price image rating specs")
       .sort(sort)
       .limit(100)
       .lean();
-     
-      const safeLaptops = laptops.map((p) => ({
-  ...p,
+     const safeLaptops = laptops.map((p) => ({
   _id: p._id.toString(),
+  brand: p.brand || "",
+  series: p.series || "",
+  title: p.title || "",
+  price: Number(p.price) || 0,
   image: typeof p.image === "string" ? p.image : "",
+  rating: Number(p.rating) || 0,
+  specs: p.specs ? { ...p.specs } : {},
+  createdAt: p.createdAt ? p.createdAt.toISOString() : null,
 }));
 
     return safeLaptops;

@@ -4,8 +4,7 @@ import { getServerSession } from "next-auth";
 import { connectDB } from "@/libs/db";
 import { revalidatePath } from "next/cache";
 import User from "@/models/Users";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-
+import { authOptions } from "@/libs/authOptions";
 export async function UpdateProfile(data) {
 
 try {

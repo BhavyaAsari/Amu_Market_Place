@@ -10,7 +10,7 @@ export  async function getProductById(id) {
     .populate("reviews.user", "username email image")
     .lean();
 
-  const rating = product.rating;
+  // const rating = product.rating;
 
 
   if (!product) return null;

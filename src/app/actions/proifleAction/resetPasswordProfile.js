@@ -2,7 +2,7 @@
 
 import bcrypt from "bcrypt";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/libs/authOptions";
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
 
