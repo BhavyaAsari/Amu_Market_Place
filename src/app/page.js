@@ -4,10 +4,10 @@ import ProductCarousal from "@/components/productComponents/carousal";
 import SearchBar from "@/components/heroComponents/searchBar";
 import HeroBanner from "@/components/heroComponents/heroBanner";
 import HeroProduct from "@/components/heroComponents/heroProduct";
-import getBrands from "./actions/productBrand";
+import getBrands from "./actions/productAction/productBrand";
 import { brandMeta } from "@/config/brandMeta";
-import getAllLaptops from "./actions/getAllLaptops";
-import getFeaturedProducts from "./actions/getFeaturedProducts";
+import getAllLaptops from "./actions/productAction/getAllLaptops";
+import getFeaturedProducts from "./actions/productAction/getFeaturedProducts";
 import { Suspense } from "react";
 
 export default async function Home() {

@@ -30,60 +30,78 @@ export default function CartPage () {
                         <h2 className="text-3xl sm:text-4xl font-bold text-black mb-6">My Cart ({cart.length})</h2>
 
                         {cart.length > 0 ? (
-                            cart.map((item)=> 
-                        
-                                <div
-                                    key={item.id}
-                                    className="flex flex-col sm:flex-row gap-4 sm:gap-6 border-b border-gray-200 pb-6 mb-6 last:border-b-0"
-                                >
+                            cart.map((item) => (
+  <div
+    key={item.product._id}
+    className="flex flex-col sm:flex-row gap-4 sm:gap-6 border-b border-gray-200 pb-6 mb-6 last:border-b-0"
+  >
+    {/* Product Image */}
+    <div className="w-full sm:w-40 sm:h-32 shrink-0">
+      <Image
+        src={item.product.image}
+        alt={item.product.title}
+        width={160}
+        height={128}
+        className="w-full h-auto sm:h-32 object-contain rounded-lg"
+      />
+    </div>
 
-                                    {/* Product Image */}
-                                    <div className="w-full sm:w-40 sm:h-32 shrink-0">
-                                        <Image
-                                            src={item.image}
-                                            alt={item.title}
-                                            width={160}
-                                            height={128}
-                                            className="w-full h-auto sm:h-32 object-contain rounded-lg"
-                                        />
-                                    </div>
+    {/* Product Details */}
+    <div className="flex-1">
+      <h3 className="text-lg sm:text-xl font-semibold text-black mb-2">
+        {item.product.title}
+      </h3>
 
-                                    {/* Product Details */}
-                                    <div className="flex-1">
-                                        <h3 className="text-lg sm:text-xl font-semibold text-black mb-2">{item.title}</h3>
-                                        <p className="text-lg sm:text-xl font-bold text-purple-600 mb-4">₹{item.price}</p>
+      <p className="text-lg sm:text-xl font-bold text-purple-600 mb-4">
+        ₹{item.product.price}
+      </p>
 
-                                        {/* Product Quantity */}
-                                        <div className="flex items-center gap-4 mb-4">
-                                            <span className="text-sm sm:text-base font-medium text-gray-700">Quantity:</span>
+      {/* Quantity */}
+      <div className="flex items-center gap-4 mb-4">
+        <span className="text-sm sm:text-base font-medium text-gray-700">
+          Quantity:
+        </span>
 
-                                            <div className="qltyContainer">
-                                                <button onClick={() => decreaseQty(item.id)} className="hover:bg-gray-100 rounded transition">
-                                                    <LuMinus className="QunatityButton"/>
-                                                </button>
-                                                <span className="font-mono text-lg text-center w-8">{item.quantity}</span>
-                                                <button onClick={() => increaseQty(item.id)} className="hover:bg-gray-100 rounded transition"> 
-                                                    <LuPlus className="QunatityButton"/> 
-                                                </button>
-                                            </div>
-                                        </div>
+        <div className="qltyContainer">
+          <button
+            onClick={() => decreaseQty(item.product._id)}
+            className="hover:bg-gray-100 rounded transition"
+          >
+            <LuMinus className="QunatityButton" />
+          </button>
 
-                                        {/* Remove Button */}
-                                        <button 
-                                            className="mt-2 font-semibold border-2 border-purple-600 rounded-lg px-4 py-2 text-purple-600 bg-white hover:bg-purple-600 hover:text-white transition-colors" 
-                                            onClick={() => removeFromCart(item.id)}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
+          <span className="font-mono text-lg text-center w-8">
+            {item.quantity}
+          </span>
 
-                                    {/* Product Total Price */}
-                                    <div className="text-right shrink-0">
-                                        <p className="text-xs sm:text-sm text-gray-600 mb-2">Total</p>
-                                        <p className="font-bold text-xl sm:text-2xl text-purple-600">₹{item.price * item.quantity}</p>
-                                    </div>
-                                </div>
-                            )
+          <button
+            onClick={() => increaseQty(item.product._id)}
+            className="hover:bg-gray-100 rounded transition"
+          >
+            <LuPlus className="QunatityButton" />
+          </button>
+        </div>
+      </div>
+
+      {/* Remove */}
+      <button
+        className="mt-2 font-semibold border-2 border-purple-600 rounded-lg px-4 py-2 text-purple-600 bg-white hover:bg-purple-600 hover:text-white transition-colors"
+        onClick={() => removeFromCart(item.product._id)}
+      >
+        Remove
+      </button>
+    </div>
+
+    {/* Total */}
+    <div className="text-right shrink-0">
+      <p className="text-xs sm:text-sm text-gray-600 mb-2">Total</p>
+      <p className="font-bold text-xl sm:text-2xl text-purple-600">
+        ₹{item.product.price * item.quantity}
+      </p>
+    </div>
+  </div>
+))
+
                         ) : (
                             <div className="text-center py-12">
                                 <p className="text-lg text-gray-500">Your cart is empty</p>

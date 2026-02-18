@@ -1,5 +1,5 @@
 import ProductListCard from "@/components/productComponents/productListCard";
-import getAllLaptops from "@/app/actions/getAllLaptops";
+import getAllLaptops from "@/app/actions/productAction/getAllLaptops";
 import { getMetaDataFilter } from "@/config/FilterMetaProducts";
 import SideBarFilter from "@/components/productComponents/filterComponents/SideBarFilter";
 import SortDropDown from "@/components/productComponents/filterComponents/sortDropDown";
@@ -34,7 +34,7 @@ export default async function ProductListPage({ searchParams }) {
           }
             <div className="grid grid-cols-1 sm:grid-cols-3  gap-6 ">
               {laptops.map((laptop) => (
-                <ProductListCard key={laptop.id} product={laptop} />
+                <ProductListCard key={laptop._id} product={laptop} />
               ))}
             </div>
           </div>

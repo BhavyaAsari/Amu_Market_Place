@@ -1,5 +1,5 @@
 import CheckOutPage from "@/components/ShippingComponents/ProceedToCheckOut";
-import getCurrentUser from "@/app/actions/getCurrentUser";
+import getCurrentUser from "@/app/actions/productAction/getCurrentUser";
 import { redirect } from "next/navigation";
 
 export default  async function CheckoutPageConatiner() {

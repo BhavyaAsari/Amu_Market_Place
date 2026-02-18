@@ -1,3 +1,5 @@
+"use client";
+
 import NavBar from "@/components/heroComponents/navBar"
 import Footer from "@/components/heroComponents/footer"
 
