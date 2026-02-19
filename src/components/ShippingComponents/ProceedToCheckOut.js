@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useState } from "react";
+import OrderSummary from "./orderSummary";
 import LocalDropDown from "../productComponents/localDropDown";
 
 export default function CheckOutPage({ user }) {
@@ -48,6 +49,58 @@ export default function CheckOutPage({ user }) {
       [name]: value,
     }));
   };
+
+
+
+  const handlePlaceOrder = async () => {
+
+    try {
+
+      const res = await fetch("/api/checkout",{
+
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+
+          shippingAddress:{
+
+            fullName: formData.firstName + " " + formData.lastName,
+          phone: formData.phone,
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          postalCode: formData.postalCode,
+          country: formData.country,
+          },
+        deliveryMethod: formData.deliveryMethod,
+        paymentMethod: formData.paymentMethod,
+        }),
+      });
+
+      const data = await res.json();
+
+      if(!res.ok) {
+
+        alert(data.error || "something went wrong");
+
+        return;
+      }
+
+      if(formData.paymentMethod === "cod") {
+
+        router.push("/success")
+      
+      } else {
+
+        window.location.href  = data.url;
+      }
+
+    } catch (error) {
+
+      console.error("order error",error);
+      alert("order failed")
+    }
+  }
 
   return (
     <>
@@ -219,35 +272,10 @@ export default function CheckOutPage({ user }) {
         </main>
         <aside className="checkoutRight">
           <div className="border border-gray-200 rounded-lg p-4 sm:p-6 bg-white shadow-sm sticky top-24">
-            <h3 className="font-semibold text-xl sm:text-2xl mb-6 text-black">
-              Order Summary
-            </h3>
 
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between text-base sm:text-lg">
-                <span className="text-gray-700">Subtotal</span>
-                {/* <span className="font-semibold text-black">₹{cart.length > 0 ? total.toFixed(2) : "0.00"}</span> */}
-              </div>
-
-              <div className="flex justify-between text-base sm:text-lg">
-                <span className="text-gray-700">Est. Shipping</span>
-                {/* <span className="font-semibold text-black">₹{cart.length > 0 ? "99" : "0"}</span> */}
-              </div>
-
-              <div className="flex justify-between text-base sm:text-lg">
-                <span className="text-gray-700">Tax (18%)</span>
-                {/* <span className="font-semibold text-black">₹{cart.length > 0 ? (total * 0.18).toFixed(2) : "0.00"}</span> */}
-              </div>
-            </div>
-
-            <hr className="border-gray-200" />
-
-            <div className="flex justify-between text-xl sm:text-2xl font-bold mt-6 mb-6 text-black">
-              <span className="font-semibold">Total</span>
-              {/* <span className="text-purple-600">₹{cart.length > 0 ? (total + 99 + (total * 0.18)).toFixed(2) : "0.00"}</span> */}
-            </div>
-
-            <button className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors mb-3">
+            <OrderSummary deliveryMethod={formData.deliveryMethod}/>
+            <button onClick={handlePlaceOrder}
+            className="w-full mt-10 bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700 transition-colors mb-3">
               Place Order
             </button>
 

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/authOptions";
 import { cookies } from "next/headers";
+import Product from "@/models/Product";
 import { v4 as uuid } from "uuid";
 import Cart from "@/models/CartModel";
 import { connectDB } from "@/libs/db";
