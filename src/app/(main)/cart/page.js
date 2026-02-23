@@ -4,6 +4,7 @@ import {LuPlus,LuMinus} from "react-icons/lu";
 import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
+import Breadcrumb from "@/components/heroComponents/breadCrum";
 
 export default function CartPage () {
 
@@ -20,6 +21,9 @@ export default function CartPage () {
 
         <>
         <main className="max-w-7xl mx-auto p-4 sm:p-6">
+
+                  <Breadcrumb/>
+          
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 

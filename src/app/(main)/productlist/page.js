@@ -4,6 +4,8 @@ import { getMetaDataFilter } from "@/config/FilterMetaProducts";
 import SideBarFilter from "@/components/productComponents/filterComponents/SideBarFilter";
 import SortDropDown from "@/components/productComponents/filterComponents/sortDropDown";
 import Image from "next/image";
+import Breadcrumb from "@/components/heroComponents/breadCrum";
+
 
 export default async function ProductListPage({ searchParams }) {
   const params = await searchParams;
@@ -16,7 +18,10 @@ export default async function ProductListPage({ searchParams }) {
 
       {/* <div className="flex justify-end mr-6 rounded-lg py-4"><SortDropDown/></div> */}
       <div className=" py-4 ">
+                            <Breadcrumb/>
+
         <section className="flex w-full ">
+
           <SideBarFilter meta={metaData} />
 
           <div className="flex-1 px-6">
