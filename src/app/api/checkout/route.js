@@ -7,6 +7,24 @@ import Cart from "@/models/CartModel";
 import Orders from "@/models/Orders";
 import { stripe } from "@/libs/Stripe";
 
+function generateOrderNumber() {
+  const now = new Date();
+
+  const day = String(now.getDate()).padStart(2, "0");
+  const year = now.getFullYear();
+
+  const monthNames = [
+    "JAN","FEB","MAR","APR","MAY","JUN",
+    "JUL","AUG","SEP","OCT","NOV","DEC"
+  ];
+
+  const month = monthNames[now.getMonth()];
+
+  const uniquePart = Date.now().toString().slice(-6);
+
+  return `AMU-ORDER-${day}${month}${year}-${uniquePart}`;
+}
+
 export async function POST(req) {
 
     try {
@@ -57,6 +75,8 @@ export async function POST(req) {
 
         const order = await Orders.create({
 
+            orderNumber: generateOrderNumber(),
+
             user:session.user.id,
 
             items:cart.items.map((item)=> ({
@@ -70,7 +90,7 @@ export async function POST(req) {
 
             shippingAddress,
 
-            deliveryMethod:shippingAddress.deliveryMethod,
+            deliveryMethod,
 
             paymentMethod,
 
@@ -95,6 +115,7 @@ export async function POST(req) {
             return NextResponse.json({
 
                 success:true,
+                orderId:order._id.toString()
             });
         }
 

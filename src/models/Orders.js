@@ -15,7 +15,7 @@ const orderItemSchema = new mongoose.Schema(
 
     quantity: { type: Number, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const orderSchema = new mongoose.Schema(
@@ -65,6 +65,12 @@ const orderSchema = new mongoose.Schema(
       default: null,
     },
 
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     subtotal: { type: Number, required: true },
     tax: { type: Number, required: true },
     shippingFee: { type: Number, required: true },
@@ -76,8 +82,7 @@ const orderSchema = new mongoose.Schema(
       default: "processing",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export default mongoose.models.Order ||
-  mongoose.model("Order", orderSchema);
+export default mongoose.models.Order || mongoose.model("Order", orderSchema);
