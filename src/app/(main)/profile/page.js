@@ -2,10 +2,15 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
+
+import { getAllOrders } from "@/app/actions/productAction/getAllOrders";
 import MyAccountPage from "@/components/profileComonents/MyAccount";
 
 export default async function ProfilePage() {
+
   const session = await getServerSession();
+
+
   if (!session) redirect("/login");
 
 
@@ -24,7 +29,11 @@ export default async function ProfilePage() {
     country: addr.country,
     isDefault: addr.isDefault,
   }));
+
+    const orders = await getAllOrders();
+
   return (
+   <>
     <MyAccountPage
   user={{
     username: user.username,
@@ -33,9 +42,14 @@ export default async function ProfilePage() {
     country: user.country || "",
     postalCode: user.postalCode || "",
     image: user.image || "",
-    addresses: safeAddresses,          
-  }}
-/>
+    addresses: safeAddresses, 
+    
+     
+  }}   orders={orders} />
 
+  
+
+   
+   </>
   );
 }

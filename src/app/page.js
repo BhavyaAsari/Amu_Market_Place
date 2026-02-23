@@ -9,6 +9,7 @@ import { brandMeta } from "@/config/brandMeta";
 import getAllLaptops from "./actions/productAction/getAllLaptops";
 import getFeaturedProducts from "./actions/productAction/getFeaturedProducts";
 import { Suspense } from "react";
+import Breadcrumb from "@/components/heroComponents/breadCrum";
 
 export default async function Home() {
   const dbBrands = await getBrands();
@@ -38,7 +39,7 @@ export default async function Home() {
           <SearchBar />
            </Suspense>
         </section>
-
+        <Breadcrumb/>
         <section className="flex justify-center mt-8 mb-8">
           <HeroBanner />
         </section>

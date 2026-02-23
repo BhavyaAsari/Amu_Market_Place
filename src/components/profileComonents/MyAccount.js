@@ -5,6 +5,8 @@ import ProfileSec from "./profileSection";
 import UpdatePasswordForm from "./updatePassword";
 import AddressSection from "./AddressSection";
 import Myorders from "./OrdersSection";
+import Breadcrumb from "@/components/heroComponents/breadCrum";
+
 import {
   LuUser,
   LuShieldCheck,
@@ -36,7 +38,7 @@ const menuItems = [
 ];
 
 
-export default function MyAccountPage({user}) {
+export default function MyAccountPage({user,orders}) {
 
     const[active,setActive] = useState("profile");
 
@@ -53,6 +55,8 @@ export default function MyAccountPage({user}) {
 
 
         <main className="AccountContainer" >
+                    <Breadcrumb/>
+
 
             <h1 className="text-3xl mt-2 font-medium text-center font-serif">Manage Your Account {safeUser.username} </h1>
 
@@ -93,7 +97,7 @@ export default function MyAccountPage({user}) {
                     {active === "profile" && <ProfileSec user={user}/>}
                     {active === "security" && <UpdatePasswordForm/>}
                     {active === "address" &&  <AddressSection addresses={safeUser.addresses} user={safeUser} />}
-                    {active === "orders" && <Myorders/>}
+                    {active === "orders" && <Myorders orders={orders} />}
 
                 </section>
 
