@@ -9,66 +9,55 @@ export default function ProductCard({
   image,
 }) {
 
+  
   // console.log("product card props",id,title,description,price,image);
   return (
-    <section className="bg-slate-100 rounded-lg p-2 shadow-lg hover:translate-y-1 hover:shadow-2xl">
+    <section className="group bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden HoveUnderline">
 
-      {/* IMAGE CONTAINER */}
-<div className="relative h-48  rounded-lg overflow-hidden flex items-center justify-center group">
-  <Image
-    src={image}
-    alt={title}
-    fill
-    className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
-    sizes="(max-width: 768px) 100vw, 200px"
-  />
+  {/* IMAGE */}
+  <div className="relative h-52 bg-gray-50 flex items-center justify-center">
+    <Image
+      src={image}
+      alt={title}
+      fill
+      className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+      sizes="(max-width: 768px) 100vw, 300px"
+    />
 
-  {/* OVERLAY */}
-  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm
-                  opacity-0 group-hover:opacity-100
-                  transition duration-300
-                  flex items-center justify-center">
-    <div className="flex flex-col gap-3">
-      <Link
-        href={`/products/${id}`}
-        className="px-5 py-2 rounded-lg
-                   bg-white text-black text-sm font-semibold
-                   hover:bg-gray-200 transition"
-      >
-        View Details
-      </Link>
+    {/* OVERLAY */}
+    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      <div className="flex flex-col gap-3">
+        <Link
+          href={`/products/${id}`}
+          className="px-6 py-2 rounded-xl bg-white text-black text-sm font-semibold hover:bg-gray-200 transition"
+        >
+          View Details
+        </Link>
 
-      <button
-        className="px-5 py-2 rounded-lg
-                   bg-violet-600 text-white
-                   hover:bg-violet-700 transition"
-      >
-        Buy
-      </button>
+        <Link href={`/checkout?buyNow=true&productId=${id}&qty=1`}>
+          <button className="px-6 py-2 rounded-xl bg-violet-600 text-white hover:bg-violet-700 transition">
+            Buy Now
+          </button>
+        </Link>
+      </div>
     </div>
   </div>
-</div>
 
+  {/* DETAILS */}
+  <div className="p-5 space-y-2">
+    <h3 className="text-lg font-semibold line-clamp-2">
+      {title}
+    </h3>
 
-       {/* 🔹 HORIZONTAL LINE */}
-      <div className=" h-px w-full bg-black/20"></div>
+    <p className="text-sm text-gray-500 line-clamp-2">
+      {description}
+    </p>
 
-      {/* 🔹 PRODUCT DETAILS (ALWAYS VISIBLE) */}
-      <div className="mt-4 bg-white p-5 rounded-xl h-40 sm:h-44 lh:h-48 flex flex-col"  >
-        <h3 className="text-black text-xl font-semibold leading-6 line-clamp-2 ">
-          {title}inch
-        </h3>
+    <p className="text-xl font-bold text-gray-900">
+      ₹{price}
+    </p>
+  </div>
 
-        {/* DESCRIPTION */}
-        <p className="text-black/70 text-lg mt-1 line-clamp-2 ">
-         {description}
-        </p>
-
-        <p className="text-black/80 font-extrabold mt-auto text-2xl">
-          ₹{price}
-        </p>
-      </div>
-
-    </section>
+</section>
   );
 }

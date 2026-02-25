@@ -11,12 +11,12 @@ export default function DesktopNav() {
   const linkClass = (path) =>
     `px-4 py-2 rounded-lg transition ${
       pathname === path
-        ? "text-black bg-violet-600/20"
-        : "text-white/70  hover:bg-violet-600/80 hover:rounded-2xl "
+        ? "text-black "
+        : "text-white    hover:rounded-2xl "
     }`;
 
   return (
-    <nav className="hidden md:flex h-16 w-full px-6 items-center justify-between bg-purple-900/90 border-2 border-black ">
+    <nav className="hidden md:flex h-16 w-full px-6 items-center justify-between bg-linear-to-br from-purple-400 via-violet-800 to-purple-500">
       <Link href="/" className="text-3xl font-bold text-white/50">
         AMU
       </Link>

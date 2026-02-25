@@ -36,7 +36,7 @@ export default function ProductCarousal({products}) {
          keyBoardControl
          removeArrowOnDeviceType={["tablet", "mobile","desktop"]}
          autoPlay
-         containerClass="relative"
+         containerClass="relative "
          autoPlaySpeed={2000}
          infinite
          itemClass="px-5  py-7 "

@@ -34,6 +34,10 @@ const displayTitle = `${brand} ${series} ${screenSize}inch`;
 
 // console.log(displayTitle);
 
+// useEffect(() => {
+//   window.scrollTo({ top: 0, behavior: "smooth" });
+// }, []);
+
 
 return (
 
@@ -49,7 +53,7 @@ return (
         className="object-contain w-66 h-56 p-4"
       />
       </div>
-    <div className="detailsContainer">
+    <div className="detailsContainerProduct HoveUnderline">
         <p className="font-semibold text-2xl">{displayTitle}</p>
         <p className="text-gray-800 font-bold text-2xl">₹{product.price}</p>
         <hr className="text-gray-700"></hr>
@@ -65,11 +69,11 @@ return (
   href={`/products/${product._id}`}
   className="border rounded-xl px-4 py-2 text-center
              hover:cursor-pointer bg-black/50 text-white
-             hover:text-black hover:bg-white/10 transition font-semibold"
+             hover:text-black hover:bg-white/10 transition font-semibold  hover:no-underline"
 >
-  View Specs
+  <p className="hover:no-underline">View Specs</p>
 </Link>
-        <AddToCartButton product={product}/>
+        <AddToCartButton product={product} />
       </div>
     </div>
         

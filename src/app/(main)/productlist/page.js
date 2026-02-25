@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ProductListCard from "@/components/productComponents/productListCard";
 import getAllLaptops from "@/app/actions/productAction/getAllLaptops";
 import { getMetaDataFilter } from "@/config/FilterMetaProducts";

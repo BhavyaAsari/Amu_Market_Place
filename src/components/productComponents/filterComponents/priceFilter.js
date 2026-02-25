@@ -67,7 +67,7 @@ export default function PriceFilter() {
     ((maxPrice - bounds.min) / (bounds.max - bounds.min)) * 100;
 
   return (
-    <div className="relative w-full mt-8 mb-4">
+    <div className="relative w-full mt-8 mb-4 hover:shadow-2xl shadow-lg">
       <p className="font-semibold text-2xl">Price Range</p>
 
       <div className="flex justify-between mt-2 mb-2 text-lg font-medium">

@@ -1,6 +1,7 @@
 "use client";
 
 import useFilters from "@/libs/useFilter";
+import { Checkbox } from "@heroui/react";
 import Closebutton from "../closeButton";
 import FilterSection from "../filterSection";
 
@@ -33,7 +34,7 @@ const activeBrands = filters.brand?.split(",") || [];
                 <p>Dell</p>
             </FilterSection> */}
 
-            <div className="filterSection" >
+            <div className="filterSection p-2 shadow-xl rounded-2xl" >
 
 
                             
@@ -45,11 +46,11 @@ const activeBrands = filters.brand?.split(",") || [];
                     <label key={brand} className="flex ">
                         <input
                         type="checkbox"
-                        className="checkBox"
+                        className="checkBox hover:border "
                         checked={activeBrands.includes(brand)}
                         onChange={() => toggleFilter("brand",brand)}/>
 
-                        <span className="capitalize ml-1">{brand}</span>
+                        <span className="capitalize ml-1 hoverText">{brand}</span>
                     </label>
                 ))}
             </div>

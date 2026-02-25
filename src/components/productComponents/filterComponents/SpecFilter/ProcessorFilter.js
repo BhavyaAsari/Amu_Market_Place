@@ -32,7 +32,7 @@ export default function ProcessorFilter({processors=[]}) {
   return (
 
 
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 p-2 shadow-xl rounded-2xl">
 
 {visibleProcessors.map((cpu) => (
 
@@ -46,7 +46,7 @@ export default function ProcessorFilter({processors=[]}) {
             checked={activeProcessors.includes(cpu)}
             onChange={() => toggleFilter("processor", cpu)}
           />
-          <span className="uppercase">{cpu}</span>
+          <span className="uppercase hoverText">{cpu}</span>
         </label>
 ))}
 

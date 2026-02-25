@@ -9,7 +9,7 @@ export default function StorageFilter({storages=[]}) {
   const activeStorage = filters.storage?.split(",") || [];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2  p-2 shadow-xl rounded-2xl">
       {storages.map((storage) => (
         <label
           key={storage}
@@ -21,7 +21,7 @@ export default function StorageFilter({storages=[]}) {
             checked={activeStorage.includes(storage)}
             onChange={() => toggleFilter("storage", storage)}
           />
-          <span>{storage}</span>
+          <span className="hoverText">{storage}</span>
         </label>
       ))}
     </div>

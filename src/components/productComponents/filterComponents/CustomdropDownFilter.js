@@ -25,10 +25,10 @@ export default function CustomDropDown() {
     return (
 
         <>
-        <section className="customDropDown">
+        <section className="customDropDown ronded-2xl ">
 
             <label className="font-semibold text-lg  mr-2">Sort By :</label>
-            <div onClick={() =>setIsOpen(!isOpen)} className="dropMenu">
+            <div onClick={() =>setIsOpen(!isOpen)} className="dropMenu shadow-xl  ">
                 {options.find(o => o.value === (filters.sort || ""))?.label}
                 <LuChevronDown
                 className={`transition-transform duration-300 mt-1 ml-4 ${isOpen
@@ -41,7 +41,7 @@ export default function CustomDropDown() {
                 {options.map((option) => (
 
                      <div
-                     className="optnLabel"
+                     className="optnLabel hover:px-8 hover:text-lg"
                      key={option.value}
                      onClick={() => {
 

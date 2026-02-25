@@ -2,6 +2,7 @@
 
 import AddButton from "@/components/productComponents/addToCartButton";
 import ReviewCard from "@/components/reviewComponent/reviewCard";
+import { useRouter } from "next/navigation";
 import {
   LuCpu,
   LuMemoryStick,
@@ -33,6 +34,12 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
 
   const displayTitle = `${brand} ${product.series}`;
 
+  const router = useRouter();
+
+  const handleBuyNow = () => {
+  router.push(`/checkout?buyNow=true&productId=${product._id}&qty=1`);
+};
+
   return (
     <>
       {/* TITLE */}
@@ -58,7 +65,8 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
       <div className="mt-6 flex gap-4">
         <AddButton product={product} />
 
-        <button className="border rounded-xl px-4 py-2 bg-[#7C3AED] text-white hover:text-purple-600 hover:bg-white transition">
+        <button className="border rounded-xl px-4 py-2 bg-[#7C3AED] text-white hover:text-purple-600 hover:bg-white transition"
+        onClick={handleBuyNow}>
           Buy Now
         </button>
       </div>

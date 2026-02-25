@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 /* ================== CSS VARIABLES ================== */
 :root {
   --background: #ffffff;
@@ -17,7 +16,6 @@
 
 /* ================== COMPONENT LAYER ================== */
 @layer components {
-
   /* ---------- NAVBAR ---------- */
   .navWrapper {
     @apply sticky top-0 z-50 h-16 w-full;
@@ -37,8 +35,7 @@
 
   /* ---------- LAYOUT UTILITIES ---------- */
   .layout-container {
-    @apply
-      w-full
+    @apply w-full
       max-w-7xl
       mx-auto
       px-4
@@ -70,8 +67,7 @@
   }
 
   .layout-hero {
-    @apply
-      flex
+    @apply flex
       flex-col
       gap-10
       py-8
@@ -98,19 +94,16 @@
   }
 }
 
-
 @layer components {
   .search-wrapper {
-    @apply
-      w-full
+    @apply w-full
       max-w-lg
       mx-auto
       relative;
   }
 
   .search-input {
-    @apply
-      w-full
+    @apply w-full
       pl-10
       pr-4
       py-2
@@ -128,8 +121,7 @@
   }
 
   .search-dropdown {
-    @apply
-      absolute
+    @apply absolute
       z-10
       w-full
       bg-white
@@ -142,105 +134,84 @@
 }
 
 @layer components {
-
   .profile-container {
-    @apply text-black w-full rounded-2xl bg-white shadow-lg overflow-hidden
+    @apply text-black w-full rounded-2xl bg-white shadow-lg overflow-hidden;
   }
 
   .profile-section {
-    @apply flex flex-col gap-4 w-full
+    @apply flex flex-col gap-4 w-full;
   }
 
   .form-field {
-
-    @apply w-full sm:w-72  
+    @apply w-full sm:w-72;
   }
 
-  
   .profile-row {
-
-    @apply flex flex-row text-2xl  w-full
+    @apply flex flex-row text-2xl  w-full;
   }
 
   .profile-label {
-
-    @apply  text-gray-600 font-medium sm:w-40;
+    @apply text-gray-600 font-medium sm:w-40;
   }
 
   .profile-actions {
-  @apply flex gap-3 ;
-}
+    @apply flex gap-3;
+  }
 
-.btn-primary {
-  @apply min-h-11   px-4 rounded-lg border hover:cursor-pointer   bg-purple-600 text-white transition;
-}
+  .btn-primary {
+    @apply min-h-11   px-4 rounded-lg border hover:cursor-pointer   bg-purple-600 text-white transition;
+  }
 
-.btn-danger {
-  @apply min-h-11 rounded-lg border hover:cursor-pointer transition;
-}
+  .btn-danger {
+    @apply min-h-11 rounded-lg border hover:cursor-pointer transition;
+  }
 
-.btn-edit {
-
-   @apply
-    text-white
+  .btn-edit {
+    @apply text-white
     text-3xl
     font-medium
     ml-auto
     mt-auto
     cursor-pointer;
-}
-
+  }
 }
 
 /* Address Field */
 
 @layer components {
-
   .addressContainer {
-
-    @apply text-xl w-full 
+    @apply text-xl w-full;
   }
 
   .addressParentContainer {
-
-    @apply w-full max-w-full mx-auto sm:px-6 lg:px-8 flex flex-col gap-6
+    @apply w-full max-w-full mx-auto sm:px-6 lg:px-8 flex flex-col gap-6;
   }
 
   .addressTitle {
-
-    @apply flex flex-col gap-4 sm:flex-col  
+    @apply flex flex-col gap-4 sm:flex-col;
   }
 
   .addressCard {
-
-    @apply  text-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 
+    @apply text-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
   }
 
   .addressMainCards {
-
-    @apply w-full text-2xl relative shadow-lg hover:shadow-2xl border p-5 rounded-xl transition 
+    @apply w-full text-2xl relative shadow-lg hover:shadow-2xl border p-5 rounded-xl transition;
   }
 
   .titleCard {
-
     @apply font-semibold;
   }
-
-  
- 
 }
 
 /* My Orders section  */
 
 @layer components {
-
   .MyordersContainer {
-
-    @apply max-w-6xl mx-auto p-4 flex flex-col items-center justify-center ;
+    @apply max-w-6xl mx-auto p-4 flex flex-col items-center justify-center;
   }
 
   .orders_topSection {
-
     @apply flex;
   }
 }
@@ -248,20 +219,16 @@
 /* Reset Pssword */
 
 @layer components {
-
   .resetPassContainer {
-
-    @apply  flex flex-col items-center sm:w-full  gap-4 text-black
+    @apply flex flex-col items-center sm:w-full  gap-4 text-black;
   }
 
   .resetBtn {
-
-    @apply  w-full  text-xl  text-center  h-9 border rounded-lg hover:cursor-pointer  transition-colors
+    @apply w-full  text-xl  text-center  h-9 border rounded-lg hover:cursor-pointer  transition-colors;
   }
 
   .resetInput {
-  @apply
-    w-full
+    @apply w-full
     font-bold
     max-w-sm
     px-4
@@ -270,62 +237,47 @@
     rounded-lg
     border
     text-left;
-}
+  }
 
- .resetBtns {
-  @apply
-    flex
+  .resetBtns {
+    @apply flex
     gap-3
     justify-center
     w-full
     max-w-sm;
-}
+  }
 
   .resetProfileContainer {
-
-    @apply  text-black  py-8   flex justify-center
+    @apply text-black  py-8   flex justify-center;
   }
 
-  .resetMaskConatiner{
-
-    @apply sm:w-full flex flex-col gap-3    rounded-xl 
+  .resetMaskConatiner {
+    @apply sm:w-full flex flex-col gap-3    rounded-xl;
   }
-
-
-
 }
 
 @layer components {
-
   .SortColorBg {
-
-    @apply bg-purple-600 text-white
+    @apply bg-purple-600 text-white;
   }
-   
 }
 
- /* MyAccount Container */
+/* MyAccount Container */
 
- @layer components {
-
+@layer components {
   .AccountContainer {
-
-    @apply  bg-gray-100 
+    @apply bg-gray-100;
   }
 
   .GridContainer {
-
-    @apply  grid grid-cols-[260px_1fr] gap-6 max-w-7xl px-6   mt-4
-
-
+    @apply grid grid-cols-[260px_1fr] gap-6 max-w-7xl px-6   mt-4;
   }
- }
+}
 
 /* Forget Password */
 @layer components {
-
   .resetContainer {
-    @apply min-h-screen flex items-start md:items-center justify-center pt-10 md:pt-0 px-4 ;
+    @apply min-h-screen flex items-start md:items-center justify-center pt-10 md:pt-0 px-4;
   }
 
   .formContainer {
@@ -349,28 +301,22 @@
   }
 
   .login-button {
-
-    @apply w-full sm:max-w-32 text-white bg-[#6c127c]  p-1 rounded-3xl hover:bg-[#7e0578]
+    @apply w-full sm:max-w-32 text-white bg-[#6c127c]  p-1 rounded-3xl hover:bg-[#7e0578];
   }
 
   .QunatityButton {
-
-    @apply  w-5 h-5 hover:cursor-pointer hover:text-white hover:bg-black/40  transition flex   items-center justify-between 
+    @apply w-5 h-5 hover:cursor-pointer hover:text-white hover:bg-black/40  transition flex   items-center justify-between;
   }
 
   .qltyContainer {
-
-    @apply w-32 h-10  px-4 py-2 mt-2  border  border-gray-600 rounded-full  flex items-center justify-between
+    @apply w-32 h-10  px-4 py-2 mt-2  border  border-gray-600 rounded-full  flex items-center justify-between;
   }
 }
 
-
 /* Hero Brand Section */
 @layer components {
-
   .productContainer {
-  @apply
-    w-full
+    @apply w-full
     mb-3
     grid
     grid-cols-1
@@ -383,15 +329,10 @@
     sm:px-6
     lg:px-8
     text-black;
-}
+  }
 
-
-
- .brandContainer {
-  @apply
-
-  
-    w-full
+  .brandContainer {
+    @apply w-full
     h-56
     sm:h-52
     lg:h-64
@@ -415,157 +356,123 @@
     transition-all
     duration-300
     cursor-pointer;
-    
-}
+  }
 
-.BrandImageContainer
-{
-
-  @apply 
-  h-36 
+  .BrandImageContainer {
+    @apply h-36 
   sm:h-40  
   flex items-center 
   justify-center
   relative
   transition-all
   ease-in-out;
-}
+  }
 
-.ImageCard {
+  .ImageCard {
+    @apply object-contain  p-2 w-full;
+  }
 
-  @apply object-contain  p-2 w-full;
+  .BrandButton {
+    /* Initial hidden state */
+    @apply opacity-0 translate-y-6 relative z-30;
 
-   
-}
-
-
-.BrandButton {
-
-  /* Initial hidden state */
-  @apply opacity-0 translate-y-6 relative z-30;
-
-  @apply will-change-transform;
+    @apply will-change-transform;
 
     /* Clip hidden state */
-  @apply [clip-path:inset(0_0_100%_0)];
+    @apply [clip-path:inset(0_0_100%_0)];
 
-  /* Reveal on hover */
-  @apply group-hover:[clip-path:inset(0_0_0_0)];
+    /* Reveal on hover */
+    @apply group-hover:[clip-path:inset(0_0_0_0)];
 
+    /* Hover state */
+    @apply group-hover:opacity-100 group-hover:translate-y-2;
 
-  /* Hover state */
-  @apply group-hover:opacity-100 group-hover:translate-y-2;
+    /* Position */
+    @apply absolute bottom-8 left-1/2 -translate-x-1/2;
 
-  /* Position */
-  @apply absolute bottom-8 left-1/2 -translate-x-1/2;
+    /* Style */
+    @apply bg-white text-black hover:text-white hover:cursor-pointer hover:bg-purple-600 rounded-lg w-3/4 py-2 text-center;
 
-  /* Style */
-  @apply bg-white text-black hover:text-white hover:cursor-pointer hover:bg-purple-600 rounded-lg w-3/4 py-2 text-center;
+    /* Animation */
+    @apply transition-all duration-400 ease-out;
+  }
 
-  /* Animation */
-  @apply transition-all duration-400 ease-out;
-}
+  .CardMask {
+    /* Cover entire card */
+    @apply absolute inset-0 w-full rounded-xl z-10;
 
-.CardMask {
+    /* Purple theme background */
+    @apply bg-black/30;
 
-  /* Cover entire card */
-  @apply absolute inset-0 w-full rounded-xl z-10;
-
-  /* Purple theme background */
-  @apply bg-black/30 ;
-
-  /* Clip animation (smooth + performance safe) */
-  @apply motion-safe:transition-[clip-path] 
+    /* Clip animation (smooth + performance safe) */
+    @apply motion-safe:transition-[clip-path] 
          motion-safe:duration-900
            will-change-[clip-path]
          ease-out;
 
-  /* Initial state → small circle bottom-right */
-  @apply [clip-path:circle(12%_at_120%_120%)];
+    /* Initial state → small circle bottom-right */
+    @apply [clip-path:circle(12%_at_120%_120%)];
 
-  /* On hover → expand fully */
-  @apply group-hover:[clip-path:circle(200%_at_120%_120%)];
-
+    /* On hover → expand fully */
+    @apply group-hover:[clip-path:circle(200%_at_120%_120%)];
+  }
 }
-
-
-}
-
-
 
 @layer components {
-
   .productlistCard {
-
-    @apply w-full p-5 shadow-2xl bg-white rounded-2xl flex flex-col    gap-4
+    @apply w-full p-5 shadow-2xl bg-white rounded-2xl flex flex-col    gap-4;
   }
 
   .imageContainer {
-
-    @apply w-full h-56 flex items-center justify-center  gap-2 rounded-2xl 
+    @apply w-full h-56 flex items-center justify-center  gap-2 rounded-2xl;
   }
 
   .detailsContainer {
-
-    @apply  flex-1 flex-col gap-4
+    @apply flex-1 flex-col gap-4;
   }
 
   .btnGlobal {
-
-    @apply font-semibold border rounded-xl px-4 py-2 bg-purple-700/80 text-white hover:bg-white hover:text-purple-800  hover:cursor-pointer transition
+    @apply font-semibold border rounded-xl px-4 py-2 bg-purple-700/80 text-white hover:bg-white hover:text-purple-800  hover:cursor-pointer transition;
   }
 
   .cartBtn {
-
-    @apply font-semibold border rounded-xl px-4 py-2 bg-orange-600/80 text-white hover:bg-white hover:text-orange-500  hover:cursor-pointer transition
+    @apply font-semibold border rounded-xl px-4 py-2 bg-orange-600/80 text-white hover:bg-white hover:text-orange-500  hover:cursor-pointer transition;
   }
 }
 
-/* Filters */ 
+/* Filters */
 @layer components {
-
   .range-thumb {
-  @apply absolute w-full h-2 bg-transparent appearance-none pointer-events-none;
-}
+    @apply absolute w-full h-2 bg-transparent appearance-none pointer-events-none;
+  }
 
-.range-thumb::-webkit-slider-thumb {
-  @apply appearance-none h-4 w-4 bg-purple-600 rounded-full pointer-events-auto cursor-pointer;
-}
+  .range-thumb::-webkit-slider-thumb {
+    @apply appearance-none h-4 w-4 bg-purple-600 rounded-full pointer-events-auto cursor-pointer;
+  }
 
+  .ProductListPageContainer {
+    @apply w-full max-w-7xl mx-auto grid grid-cols-[260px_1fr] gap-8 px-6 items-start;
+  }
 
-.ProductListPageContainer {
-  @apply w-full max-w-7xl mx-auto grid grid-cols-[260px_1fr] gap-8 px-6 items-start;
-}
-
-
-.sideFilter {
-  @apply sticky top-24 flex flex-col 
+  .sideFilter {
+    @apply sticky top-20 flex flex-col 
          max-h-[calc(100vh-6rem)] 
          bg-white 
          rounded-xl 
          w-80
-         ml-6
          shadow-lg;
-         
-         
-}
+  }
 
-
-.filterSection {
-
-  @apply grid grid-cols-2 gap-2
-}
-
+  .filterSection {
+    @apply grid grid-cols-2 gap-2;
+  }
 }
 
 /* ====SpecsContainer=== */
 
 @layer components {
-
- .specContainer{
-
-   @apply 
-   w-full
+  .specContainer {
+    @apply w-full
    max-w-7xl
    mx-auto
    bg-white
@@ -574,13 +481,10 @@
    rounded-2xl
    shadow-2xl
    mt-5;
-   
- }
+  }
 
- .reviewForm {
-
-  @apply 
-  w-full
+  .reviewForm {
+    @apply w-full
   max-w-7xl
   mx-auto
   px-4 py-4
@@ -588,13 +492,12 @@
   rounded-2xl
   mt-10
   shadow-2xl;
- }
+  }
 }
 
 /* =====Custom DropDown filter ==== */
 
 @layer components {
-
   .customDropDown {
     @apply py-6  relative w-full max-w-xl;
   }
@@ -612,98 +515,96 @@
   }
 }
 
-
 /* ===== PROFILE SECTION STYLES ===== */
 @layer components {
-
   /* Banner Section */
   .profile-banner {
-    @apply relative w-full h-40 sm:h-48 mb-12 rounded-t-2xl overflow-hidden bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300
+    @apply relative w-full h-40 sm:h-48 mb-12 rounded-t-2xl overflow-hidden bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300;
   }
 
   /* Avatar Container */
   .profile-avatar-wrapper {
-    @apply relative -mt-28 sm:-mt-24
+    @apply relative -mt-28 sm:-mt-24;
   }
 
   .profile-avatar-image {
-    @apply relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg
+    @apply relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg;
   }
 
-   .profile-avatar-image-edit {
-    @apply relative w-32 h-32  sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg
+  .profile-avatar-image-edit {
+    @apply relative w-32 h-32  sm:w-40 sm:h-40 rounded-full border-4 border-purple-600 overflow-hidden bg-white shadow-lg;
   }
 
   /* Profile Info Container */
   .profile-info-wrapper {
-    @apply px-4 sm:px-8 pb-8
+    @apply px-4 sm:px-8 pb-8;
   }
 
   .profile-header-row {
-    @apply flex flex-col sm:flex-row sm:items-center gap-6 mb-8
+    @apply flex flex-col sm:flex-row sm:items-center gap-6 mb-8;
   }
 
   .profile-name-section {
-    @apply flex-1
+    @apply flex-1;
   }
 
   .profile-name-title {
-    @apply text-3xl sm:text-4xl font-bold text-black 
+    @apply text-3xl sm:text-4xl font-bold text-black;
   }
 
   .profile-badge {
-    @apply text-purple-600 font-semibold text-sm mt-1
+    @apply text-purple-600 font-semibold text-sm mt-1;
   }
 
   /* Edit Button */
   .profile-edit-btn {
-    @apply bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-fit
+    @apply bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors w-fit;
   }
 
   /* Info Cards Grid */
   .profile-cards-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4;
   }
 
   .profile-card {
-    @apply bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow
+    @apply bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow;
   }
 
   .profile-card-header {
-    @apply flex items-center gap-3 mb-3
+    @apply flex items-center gap-3 mb-3;
   }
 
   .profile-card-icon {
-    @apply w-6 h-6 text-gray-500
+    @apply w-6 h-6 text-gray-500;
   }
 
   .profile-card-label {
-    @apply text-gray-600 font-medium text-sm
+    @apply text-gray-600 font-medium text-sm;
   }
 
   .profile-card-value {
-    @apply text-gray-900 font-semibold
+    @apply text-gray-900 font-semibold;
   }
 
   /* ===== FORM FIELDS ===== */
 
   /* Form Container */
   .profile-form-wrapper {
-    @apply w-full
+    @apply w-full;
   }
 
   .profile-form-title {
-    @apply text-2xl font-bold text-black mb-6
+    @apply text-2xl font-bold text-black mb-6;
   }
 
   /* Form Row */
   .profile-form-row {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-6
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-6;
   }
 
   /* Field Wrapper */
   .profile-field-wrapper {
-    @apply relative p-4
+    @apply relative p-4;
   }
 
   /* Input Field */
@@ -722,22 +623,22 @@
 
   /* Field Label */
   .profile-label-float {
-    @apply absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600
+    @apply absolute left-4 top-2 text-sm font-semibold text-gray-700 bg-white px-1 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-purple-600;
   }
 
   /* Select Dropdown Arrow */
   .profile-select-arrow {
-    @apply absolute right-4 top-3.5 text-gray-400 pointer-events-none text-lg
+    @apply absolute right-4 top-3.5 text-gray-400 pointer-events-none text-lg;
   }
 
   /* Error Message */
   .profile-error {
-    @apply text-red-500 text-xs mt-1
+    @apply text-red-500 text-xs mt-1;
   }
 
   /* Postal Code Row */
   .profile-postal-wrapper {
-    @apply mb-8
+    @apply mb-8;
   }
 
   /* Action Buttons */
@@ -752,35 +653,24 @@
   .profile-btn-cancel {
     @apply min-h-11 px-4 rounded-lg border hover:cursor-pointer transition flex-1 bg-white text-black border-2 border-gray-300;
   }
-
 }
-
 
 /* ==== CheckOut Page ==== */
 
 @layer components {
-
-
   .checkoutContainer {
-
-    @apply  min-h-screen flex flex-col
+    @apply min-h-screen flex flex-col;
   }
 
   .addressContainer {
-
-    @apply   
-    
-   
-    drop-shadow-2xl 
+    @apply drop-shadow-2xl 
     w-full  
     gap-4
-    py-4; 
+    py-4;
   }
 
   .addressForm {
-
-    @apply  
-    w-full 
+    @apply w-full 
     grid 
     grid-cols-2 
     gap-10 
@@ -788,24 +678,19 @@
   }
 
   .addressInput {
-
-    @apply 
-    w-full 
+    @apply w-full 
     border 
     rounded-lg 
     py-2 
-    px-4 ;
+    px-4;
   }
 
   .fullWidth {
-
     @apply md:col-span-2;
   }
 
-  .checkoutWrapper{
-
-    @apply
-     max-w-7xl
+  .checkoutWrapper {
+    @apply max-w-7xl
      flex
      flex-col
      lg:flex-row
@@ -815,39 +700,28 @@
   }
 
   .checkoutRight {
-
-    @apply 
-    lg:w-96
+    @apply lg:w-96
     w-full;
   }
 
-  .checkoutLeft{
-
+  .checkoutLeft {
     @apply flex-1 space-y-8 shadow-2xl rounded-2xl;
   }
-
-
 }
 
 .checkBox {
-
-  @apply accent-purple-600 h-6 w-6 hover:accent-purple-800/40  hover:cursor-pointer ;
+  @apply accent-purple-600 h-6 w-6 hover:accent-purple-800/40  hover:cursor-pointer;
 }
 
 .radioButton {
-
-  @apply accent-purple-600 h-4 w-4 ;
+  @apply accent-purple-600 h-4 w-4;
 }
-
 
 /* Ratings and Reviews Component */
 
 @layer components {
-
   .ratingCardContainer {
-
-    @apply 
-    flex 
+    @apply flex 
     items-center 
     w-full  
     py-4 
@@ -855,9 +729,7 @@
   }
 
   .ratingsSection {
-
-    @apply 
-    flex
+    @apply flex
     flex-col
     sm:items-center
     sm:flex-row
@@ -865,34 +737,25 @@
     ml-2 
     bg-white
     rounded-2xl
-    p-6 sm:p-8
-    ;
+    p-6 sm:p-8;
   }
 
-
   .starIcon {
-
     @apply text-yellow-600/70 h-8 w-10 mt-6;
   }
 
   .progressBar {
-
     @apply h-full bg-linear-to-r from-purple-600 to-purple-400 rounded-full transition-all duration-700 ease-out;
   }
 
   .barContainer {
-
-    @apply  flex-1 h-5 bg-gray-200 rounded-full ;
+    @apply flex-1 h-5 bg-gray-200 rounded-full;
   }
-
 }
-
-
 
 /* ===SuccessPage=== */
 
 @layer components {
-
   /* ===== MAIN CONTAINER ===== */
   .successComponentContainer {
     @apply relative min-h-screen overflow-hidden bg-gray-50 mt-4;
@@ -900,8 +763,8 @@
 
   /* ===== HERO SECTION ===== */
   .successSection {
-  @apply relative bg-gradient-to-br from-purple-600 via-purple-500 to-purple-400 text-white pt-24 pb-40 px-6 overflow-hidden;
-}
+    @apply relative bg-gradient-to-br from-purple-600 via-purple-500 to-purple-400 text-white pt-24 pb-40 px-6 overflow-hidden;
+  }
 
   /* ===== HERO CONTENT WRAPPER ===== */
   .successHero {
@@ -910,7 +773,7 @@
 
   /* ===== ICON ===== */
   .successIcon {
-    @apply  text-purple-400 bg-white rounded-full p-2 ;
+    @apply text-purple-400 bg-white rounded-full p-2;
   }
 
   /* ===== HEADINGS ===== */
@@ -922,40 +785,32 @@
     @apply mt-4 text-lg text-purple-100;
   }
 
-
-   .successWave {
+  .successWave {
     @apply absolute bottom-0 left-0 w-full;
   }
 
   .successWaveSvg {
     @apply w-full h-24 md:h-32;
   }
-
 }
 
 /* ===OrderTimeLine=== */
 
 @layer components {
-
   .TimeLineConatiner {
-
-    @apply flex justify-between   ;
-
+    @apply flex justify-between;
   }
 
-  .TimeLineMain{
-
+  .TimeLineMain {
     @apply relative  rounded-3xl shadow-2xl p-10 max-w-5xl mx-auto mb-10   bg-white/90 backdrop-blur-sm;
   }
 
   .TimeBackgroundLine {
-
-    @apply absolute top-4 left-0 right-0 h-1 bg-gray-200 rounded-full ;
+    @apply absolute top-4 left-0 right-0 h-1 bg-gray-200 rounded-full;
   }
 
-  @TimeLineIcon {
-
-    @apply w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center ;
+  @timelineicon {
+    @apply w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center;
   }
 
   .orderCardTitle {
@@ -966,12 +821,123 @@
     @apply text-gray-500 mt-1;
   }
 
-    .orderCardHeader {
+  .orderCardHeader {
     @apply flex items-start gap-6 mb-8;
   }
 
   .orderCardIcon {
     @apply w-14 h-14 flex items-center justify-center rounded-full bg-green-500 text-white;
   }
-  
 }
+
+/* ===Recommendation Panel=== */
+
+@layer components {
+  .wrapper {
+    @apply mt-10;
+  }
+
+  .titleBox {
+    @apply mb-1;
+  }
+
+  .titleTag {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  .cardContainer {
+    @apply flex overflow-x-auto scroll-smooth gap-4 p-2;
+  }
+
+  .reccomndCard {
+    @apply min-w-60
+  bg-white
+  rounded-xl
+  border
+  border-gray-200
+  shadow-sm
+  hover:shadow-md
+  transition-all
+  duration-300
+  hover:-translate-y-1;
+  }
+
+  .ImageCardContainer {
+    @apply h-36 bg-gray-50 rounded-t-xl flex items-center justify-center p-4;
+  }
+
+  .ImageCard {
+
+    @apply max-h-full object-contain transition-transform duration-300 hover:scale-105;
+  }
+
+  .contentContainer {
+
+    @apply p-4;
+  }
+
+  .ProductName {
+
+    @apply 
+    text-sm
+    font-medium
+    text-gray-800
+    line-clamp-2
+    min-h-10;
+  }
+
+  .detailsContainer {
+
+    @apply mt-3 flex items-center justify-between;
+  }
+
+  .productPrice {
+
+    @apply text-purple-600 font-semibold text-base;
+  }
+
+  .productRatings {
+
+    @apply  text-yellow-500 text-xs font-medium ;
+  }
+
+  .productFeatures {
+
+    @apply mt-3 ;
+  }
+
+  .features {
+
+    @apply text-[11px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md font-medium;
+  }
+
+  .HoveUnderline {
+
+    @apply hover:underline transition-all ease-in-out duration-150  ;
+  }
+
+
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* ===Reusable classes and effects=== */
+
+@layer components {
+
+  .hoverText {
+
+    @apply hover:bg-purple-400 hover:px-4 hover:text-white transition-colors ease-in duration-200;
+  }
+}
+

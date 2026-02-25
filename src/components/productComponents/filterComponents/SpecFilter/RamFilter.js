@@ -17,7 +17,7 @@ export default function RamFilter({rams=[]}) {
 
         <>
 
-        <div className="flex  flex-col gap-2">
+        <div className="flex  flex-col gap-2 p-2 shadow-xl rounded-2xl">
 
 
            {rams.map((ram) => (
@@ -32,7 +32,7 @@ export default function RamFilter({rams=[]}) {
                     onChange={() => toggleFilter("ram",ram)}
                     />
 
-                    <span className="capitalize">{ram}</span>
+                    <span className="capitalize hoverText">{ram}</span>
 
 
                 </label>
