@@ -7,6 +7,8 @@ import ProductDetailsClient from "@/components/productComponents/productDetailsC
 import ProductRatings from "@/components/reviewComponent/productRatings";
 import ReviewCommentsCard from "@/components/reviewComponent/ComponentsCard";
 import RatingsBar from "@/components/reviewComponent/ratingBar";
+import RecommendationPanel from "@/components/productComponents/recommendationPanel";
+import { getRecommendations } from "@/app/actions/Services/recommendationServices";
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
@@ -15,6 +17,8 @@ export default async function ProductPage({ params }) {
   const userEmail = session?.user?.email;
 
   const product = await getProductById(id);
+  const recommendations = await getRecommendations(id);
+  // console.log("recc",recommendations)
 
   if (!product) {
     return (
@@ -37,51 +41,57 @@ export default async function ProductPage({ params }) {
   }, {});
 
   return (
-    <main className="bg-stone-700/20 text-black min-h-screen px-6 py-10">
-      <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14">
+   <main className="bg-stone-700/20 text-black min-h-screen px-6 py-10">
+  <section className="max-w-7xl mx-auto">
 
-        {/* LEFT COLUMN */}
-        <div>
-          <div className="bg-[#111111] rounded-xl p-6 h-100">
-            <CartCarousel images={plainProduct.images} />
-          </div>
-
-          {/* REVIEWS CARD (Same as old design) */}
-          <section className="bg-white rounded-2xl p-6 mt-10 w-full shadow-2xl">
-            <ProductRatings
-              rating={plainProduct.rating}
-              reviewCount={totalReviews}
-            />
-
-            {[5, 4, 3, 2, 1].map((star) => {
-              const count = ratingBreakdown[star] || 0;
-              const percent = totalReviews
-                ? Math.round((count / totalReviews) * 100)
-                : 0;
-
-              return (
-                <RatingsBar
-                  key={star}
-                  star={star}
-                  percent={percent}
-                />
-              );
-            })}
-
-            <ReviewCommentsCard reviews={plainProduct.reviews} />
-          </section>
+    {/* PRODUCT GRID */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
+      
+      {/* LEFT COLUMN */}
+      <div>
+        <div className="bg-[#111111] rounded-xl p-6 h-100">
+          <CartCarousel images={plainProduct.images} />
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div>
-          <ProductDetailsClient
-            product={plainProduct}
-            session={session}
-            userEmail={userEmail}
+        <section className="bg-white rounded-2xl p-6 mt-10 w-full shadow-2xl">
+          <ProductRatings
+            rating={plainProduct.rating}
+            reviewCount={totalReviews}
           />
-        </div>
 
-      </section>
-    </main>
+          {[5, 4, 3, 2, 1].map((star) => {
+            const count = ratingBreakdown[star] || 0;
+            const percent = totalReviews
+              ? Math.round((count / totalReviews) * 100)
+              : 0;
+
+            return (
+              <RatingsBar
+                key={star}
+                star={star}
+                percent={percent}
+              />
+            );
+          })}
+
+          <ReviewCommentsCard reviews={plainProduct.reviews} />
+        </section>
+      </div>
+
+      {/* RIGHT COLUMN */}
+      <div>
+        <ProductDetailsClient
+          product={plainProduct}
+          session={session}
+          userEmail={userEmail}
+        />
+      </div>
+    </div>
+
+    {/* 🔥 RECOMMENDATION SECTION (Full Width) */}
+    <RecommendationPanel products={recommendations} />
+
+  </section>
+</main>
   );
 }
