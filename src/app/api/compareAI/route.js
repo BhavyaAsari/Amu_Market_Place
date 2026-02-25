@@ -2,13 +2,17 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/libs/db";
 import Product from "@/models/Product";
 
-import { normalizedProduct } from "@/libs/normalizationProductData.js/normalizedData";
+import { normalizedProduct } from "@/libs/normalizationProductData/normalizedData";
 import { deriveMetrics } from "@/libs/ScoringMetrics/deriveMetric";
 import { calculatePriceScore } from "@/libs/ScoringMetrics/priceScore";
 import { calculatePurposeScore } from "@/libs/ScoringMetrics/purposeScore";
 import { purposeWeights } from "@/libs/ScoringMetrics/purposeWeights";
 import { calculateFinalScore } from "@/libs/ScoringMetrics/FinalScore";
 import { generateExplanation } from "@/utils/AiExplanation";
+
+import { buildSummary } from "@/libs/presentation/buildSummary";
+import { formatProducts } from "@/libs/presentation/formatProduct";
+import { buildSpecsComparison } from "@/libs/presentation/buildSpecsComparision";
 
 export async function POST(req) {
   try {
@@ -95,7 +99,7 @@ export async function POST(req) {
     const scored = processed.map(({ product, metrics }) => {
       const purposeScore = calculatePurposeScore(metrics, purpose);
 
-      const finaleScore = calculateFinalScore({
+      const finalScore = calculateFinalScore({
         purposeScore,
         price: product.price,
         mode: decisionMode,
@@ -105,13 +109,19 @@ export async function POST(req) {
         product,
         metrics,
         purposeScore,
-        finaleScore,
+        finalScore,
       };
     });
 
-    scored.sort((a, b) => b.finaleScore - a.finaleScore);
+    scored.sort((a, b) => b.finalScore - a.finalScore);
 
     const winner = scored[0];
+
+    console.log("Winner object:", winner);
+
+    const summary = buildSummary(winner);
+const formattedProducts = formatProducts(scored);
+const specsComparison = buildSpecsComparison(scored);
 
     const explanation = await generateExplanation({
       purpose,
@@ -129,13 +139,13 @@ export async function POST(req) {
     });
 
     return NextResponse.json({
-      mode: "compare",
-      purpose,
-      decisionMode,
-      winnerId: winner.product.id,
-      products: scored,
-      explanation,
-    });
+  mode: "compare",
+  summary,
+  products: formattedProducts,
+  specsComparison,
+  explanation
+});
+
   } catch (error) {
     console.error("Compare api error:", error);
 

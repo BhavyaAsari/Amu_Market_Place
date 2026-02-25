@@ -19,8 +19,21 @@ export function deriveMetrics(product) {
   // ---------------------------
   // CPU Performance (0–10)
   // ---------------------------
-  const rawCpu = (cpuTier * 2) + cpuGeneration;
-  const cpuPerformanceScore = Math.min(rawCpu, 10);
+  
+const tierNormalized = (cpuTier / 4) * 10;
+
+const minGen = 8;
+const maxGen = 14;
+
+const generationNormalized =
+  ((cpuGeneration - minGen) / (maxGen - minGen)) * 10;
+
+const generationScore =
+  Math.max(0, Math.min(generationNormalized, 10));
+
+const cpuPerformanceScore =
+  (tierNormalized * 0.7) +
+  (generationScore * 0.3);
 
   // ---------------------------
   // GPU Performance (0–10)
