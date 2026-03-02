@@ -941,3 +941,124 @@
   }
 }
 
+/* ===AI Comparision === */
+
+@layer components {
+
+  .ui-header {
+
+    @apply   text-center space-y-6;
+  }
+
+  .ui-title-hero {
+
+    @apply text-3xl    ;
+  }
+
+  .ui-tab-group {
+
+    @apply  justify-center gap-3 flex-wrap ;
+  }
+
+  .ui-tab {
+    @apply  px-5 py-2 rounded-full text-sm font-medium
+           bg-white border border-gray-200
+           text-gray-600
+           hover:bg-gray-50
+           transition;
+  }
+
+  .ui-tab-active {
+    @apply bg-gray-900 text-white border-gray-900;
+  }
+
+  .ui-hilight {
+
+    @apply  flex justify-center mt-4 mb-4 ;
+  }
+
+  .ui-hilight-content {
+
+    @apply max-w-6xl;
+  }
+
+  .hilight-title {
+
+    @apply font-semibold;
+  }
+
+  .ui-subtext {
+
+    @apply  text-lg;
+  
+  }
+
+   .ui-card {
+    @apply bg-white/80 backdrop-blur rounded-2xl border border-gray-200 shadow-sm p-6;
+  }
+
+  .ui-tag-success {
+
+    @apply text-yellow-400 ;
+  }
+
+  .ui-compareLayout {
+
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ;
+  }
+
+  .ui-compareProduct {
+
+    @apply space-y-5 relative ;
+  }
+
+  .ui-score {
+
+    @apply 
+    absolute 
+    top-4 
+    right-4 
+    bg-purple-100
+    text-purple-700
+    px-3 py-1 
+    rounded-full 
+    text-sm
+    font-semibold ;
+  }
+
+  .ui-product-title {
+
+    @apply text-gray-900;
+  }
+
+  .ui-rating {
+
+    @apply  text-sm text-gray-500;
+  }
+
+  .ui-spec-list {
+
+    @apply text-sm text-gray-700 ;
+  }
+
+  .ui-product-image {
+
+    @apply w-full h-32 object-contain ;
+  }
+
+  .ui-price {
+
+    @apply  text-2xl font-semibold text-gray-900;
+  }
+
+  .ui-ai-panel {
+
+    @apply 
+    bg-linear-to-br
+    from-white to-gray-50
+    border-gray-200
+    space-y-6 ;
+  }
+
+}
+
