@@ -80,6 +80,7 @@ export async function POST(req) {
         bestScore: breakdown[bestPurpose],
       });
     }
+    
 
     //Compare Mode of 2-3 products
 
