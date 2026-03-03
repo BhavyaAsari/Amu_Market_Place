@@ -39,15 +39,16 @@ export  default function SpecsComparisionSection({data}) {
 
         <>
 
-        <section>
-            <div>
-                <h2>specs Comparision</h2>
-                <button></button>
+        <section className="ui-specs-panel ui-card mt-5">
+            <div className="ui-specs-header">
+                <h2 className="ui-specs-title">specs Comparision</h2>
+                <button onClick={() => setExpanded(!expanded)}>
+                    {expanded ? "Collapse" : "Expand"}</button>
             </div>
 
             {expanded && (
 
-                <div className="">
+                <div className="ui-specs-grid">
 
                     {specs.map(([specName,values]) => {
 
@@ -55,13 +56,15 @@ export  default function SpecsComparisionSection({data}) {
 
                         return (
 
-                             <div key={specName}>
+                             <div key={specName} className="specs-row">
 
-                                 <div>{specName}</div>
+                                 <div className="spec-name">{specName}</div>
 
                                  {values.map((value,index) => (
 
-                                     <div key={index}>
+                                     <div key={index}
+                                     className={`ui-spec-value
+                                     ${index === bestIndex ? "ui-spec-best":""}`}>
 
                                         {value || "-"}
 
