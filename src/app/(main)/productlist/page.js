@@ -7,6 +7,7 @@ import SideBarFilter from "@/components/productComponents/filterComponents/SideB
 import SortDropDown from "@/components/productComponents/filterComponents/sortDropDown";
 import Image from "next/image";
 import Breadcrumb from "@/components/heroComponents/breadCrum";
+import ProductListClient from "@/components/productComponents/productListClient";
 
 
 export default async function ProductListPage({ searchParams }) {
@@ -39,11 +40,7 @@ export default async function ProductListPage({ searchParams }) {
            </section>
            </div>
           }
-            <div className="grid grid-cols-1 sm:grid-cols-3  gap-6 ">
-              {laptops.map((laptop) => (
-                <ProductListCard key={laptop._id} product={laptop} />
-              ))}
-            </div>
+            <ProductListClient laptops={laptops} />
           </div>
         </section>
       </div>
