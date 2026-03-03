@@ -6,6 +6,8 @@ export default function ProductComparisonGrid({ data }) {
 
   if (!data?.products) return null;
 
+  console.log("product",data.products.image)
+
   return (
     <section>
 
@@ -24,7 +26,7 @@ export default function ProductComparisonGrid({ data }) {
 
             {/* Title + Rating */}
             <div>
-              <h3 className="ui-product-title">
+              <h3 className="ui-product-title line-clamp-1">
                 {product.name}
               </h3>
               <p className="ui-rating">
@@ -40,12 +42,14 @@ export default function ProductComparisonGrid({ data }) {
             </ul>
 
             {/* Image */}
-            <Image
+            <div className="relative h-20 w-40">
+               <Image
               src={product.image}
-              alt={product.name}
+              alt={product.brand}
               fill
-              className="ui-product-image"
+              className=" object-contain "
             />
+            </div>
 
             {/* Price */}
             <div>
