@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/libs/db";
 import Product from "@/models/Product";
+import mongoose from "mongoose";
 
 import { normalizedProduct } from "@/libs/normalizationProductData/normalizedData";
 import { deriveMetrics } from "@/libs/ScoringMetrics/deriveMetric";
@@ -37,8 +38,10 @@ export async function POST(req) {
 
     //Fetching Products
     const products = await Product.find({
-      id: { $in: productIds },
-    }).lean();
+  _id: {
+    $in: productIds.map(id => new mongoose.Types.ObjectId(id))
+  },
+}).lean();
 
     console.log("id", productIds);
 
@@ -118,33 +121,33 @@ export async function POST(req) {
 
     const winner = scored[0];
 
-    console.log("Winner object:", winner);
+    // console.log("Winner object:", winner);
 
     const summary = buildSummary(winner);
 const formattedProducts = formatProducts(scored);
 const specsComparison = buildSpecsComparison(scored);
 
-    const explanation = await generateExplanation({
-      purpose,
-      mode: decisionMode,
-      products: scored.map((p) => ({
-        name: p.product.title,
-        cpuScore: p.metrics.cpuPerformanceScore,
-        ramScore: p.metrics.memoryScore,
-        storageScore: p.metrics.storageScore,
-        batteryScore: p.metrics.batteryScore,
-        portabilityScore: p.metrics.portabilityScore,
-        finalScore: p.finalScore,
-        price: p.product.price,
-      })),
-    });
+    // const explanation = await generateExplanation({
+    //   purpose,
+    //   mode: decisionMode,
+    //   products: scored.map((p) => ({
+    //     name: p.product.title,
+    //     cpuScore: p.metrics.cpuPerformanceScore,
+    //     ramScore: p.metrics.memoryScore,
+    //     storageScore: p.metrics.storageScore,
+    //     batteryScore: p.metrics.batteryScore,
+    //     portabilityScore: p.metrics.portabilityScore,
+    //     finalScore: p.finalScore,
+    //     price: p.product.price,
+    //   })),
+    // });
 
     return NextResponse.json({
   mode: "compare",
   summary,
   products: formattedProducts,
   specsComparison,
-  explanation
+  explanation:null
 });
 
   } catch (error) {
