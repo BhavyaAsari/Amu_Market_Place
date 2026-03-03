@@ -6,7 +6,7 @@
   return (
     <section className="ui-header">
       <div>
-        <h1>AI-Powered Laptop Comparision</h1>
+        <h1 className="title-headerSec">AI-Powered Laptop Comparision</h1>
       </div>
       <div className="ui-tab-group">
         {tabs.map((tab,index) => (
