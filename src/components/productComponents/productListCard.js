@@ -2,10 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard } from "react-icons/lu";
 import AddToCartButton from "./addToCartButton";
+import Compare_Button from "../AI_Components/CompareButton";
+import Compare_checkBox from "../AI_Components/compare_checkBox";
 
 
 
-export default function ProductListCard ({product}) {
+export default function ProductListCard ({product,selectedProducts,
+  toggleProduct}) {
 
 // Extracting brand name and capitalizing first letter
 const brand =
@@ -29,7 +32,7 @@ const storage = product.specs.storage.replace(/\s+/g, " ").replace(" ", "");
 
 // Final display title
 const displayTitle = `${brand} ${series} ${screenSize}inch`;
-
+const isSelected = selectedProducts.includes(product._id);
 // console.log("product",product._id)
 
 // console.log(displayTitle);
@@ -42,9 +45,22 @@ const displayTitle = `${brand} ${series} ${screenSize}inch`;
 return (
 
     <>
-    <div className="productlistCard ">
+    <div className="productlistCard relative group mt-4 ">
+
+        <div className={`ml-auto flex  transition-opacity duration-200
+          ${isSelected ? "opacity-100": "opacity-0 group-hover:opacity-100"}`}>
+  <p className="font-semibold text-purple-400">select products for comparision</p>
+  <Compare_checkBox
+    isSelected={isSelected}
+    onToggle={() => toggleProduct(product._id)}
+  />
+
+
+</div>
+
 
     <div className="imageContainer bg-slate-200 ">
+    
       <Image
         src={product.image || "/products/default.png"}
         alt="Product Image"
@@ -66,7 +82,7 @@ return (
       <div className="flex flex-col justify-between sm:flex-row mt-5 ">
           
 <Link
-  href={`/products/${product._id}`}
+  href={`/products/${product.id}`}
   className="border rounded-xl px-4 py-2 text-center
              hover:cursor-pointer bg-black/50 text-white
              hover:text-black hover:bg-white/10 transition font-semibold  hover:no-underline"
