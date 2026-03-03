@@ -6,17 +6,27 @@ import HighLightSection from "./HighlightSection";
 import ProductComparisonGrid from "./ProductComparisionGrid";
 import SpecsComparisionSection from "./specsComparision";
 
-export default function AI_Page({data}) {
+export default function AI_Page({ data }) {
 
-    return (
+  if (!data) return null;
 
+  const isCompare = data.mode === "compare";
+  const isInsight = data.mode === "insight";
+
+  return (
+    <>
+      <HeaderSection data={data} />
+
+      <HighLightSection data={data} />
+
+      {isCompare && (
         <>
-
-        <HeaderSection data={data}/>
-        <HighLightSection data={data}/>
-        <ProductComparisonGrid data={data}/>
-        <AI_Reccomendation data={data} />
-        <SpecsComparisionSection data={data} />
+          <ProductComparisonGrid data={data} />
+          <SpecsComparisionSection data={data} />
         </>
-    )
+      )}
+
+      <AI_Reccomendation data={data} />
+    </>
+  );
 }
