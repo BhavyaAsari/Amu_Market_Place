@@ -2,37 +2,36 @@
 
 import { useRouter } from "next/navigation";
 
+export default function CompareTextButton({ selectedProducts }) {
+  const router = useRouter();
 
-export default function Compare_Button({selectedProducts}) {
-    
-    const router = useRouter();
+  const count = selectedProducts?.length || 0;
 
-    console.log("Selected Products:", selectedProducts);
+  console.log("selectedProducts:", selectedProducts);
+console.log("Type:", typeof selectedProducts[0]);
 
-    function handleCompare() {
-
-        if(!selectedProducts?.length) return;
-
-        if(selectedProducts.length >3) {
-
-            alert("You can compare maximum 3 laptops");
-            return;
-        }
-
-        const ids = selectedProducts.map(p => p.id).join(" ,");
-        console.log("products being sent",ids)
-
-        router.push(`/comparision_ai?ids=${ids}`);
+  function handleCompare() {
+    if (!count) {
+      alert("Select at least one laptop");
+      return;
     }
 
-    return (
+    // FIXED HERE
+    const ids = selectedProducts.join(",");
 
-        <button onClick={handleCompare} className="ui-btn-primary">
-            Compare
-        </button>
-    )
+    router.push(`/comparision_ai?ids=${ids}`);
+  }
 
-
-
-
+  return (
+    <span
+      onClick={handleCompare}
+      className={`cursor-pointer text-2xl p font-semibold transition ${
+        count > 0
+          ? "text-purple-600 hover:underline"
+          : "text-gray-400 cursor-not-allowed"
+      }`}
+    >
+      Compare {count > 0 && `(${count})`}
+    </span>
+  );
 }
