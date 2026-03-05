@@ -1,32 +1,27 @@
 import { purposeWeights } from "./purposeWeights";
 
+export function calculatePurposeScore(metrics, purpose) {
+  const weights = purposeWeights[purpose];
 
-export function calculatePurposeScore(metric,purpose) {
+  if (!weights) return 0;
 
-    const weights = purposeWeights[purpose];
+  let totalScore = 0;
+  let totalWeight = 0;
 
-    if(!weights) return 0;
+  Object.keys(weights).forEach((key) => {
+    const metricValue = metrics[key];
+    const weight = weights[key];
 
-    let totalScore  =0;
-    let totalWeight =0;
+    if (metricValue !== null && metricValue !== undefined) {
+      totalScore += metricValue * weight;
+      totalWeight += weight;
+    }
+  });
 
-    Object.keys(weights).forEach(key => {
+  //  Proper guard
+  if (totalWeight === 0) {
+    return 0;
+  }
 
-        const metricValue = metric[key];
-        const weight = weights[key];
-
-        if(metricValue !== null && metricValue !== undefined) {
-
-            totalScore +=metricValue*weight;
-            totalWeight +=weight;
-        }
-    });
-
-    if(totalWeight === 0);
-
-    return totalScore/totalWeight;
-
-
-
-
+  return totalScore / totalWeight;
 }

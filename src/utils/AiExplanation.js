@@ -1,22 +1,21 @@
-export async function generateExplanation({ purpose, mode, products }) {
+export default async function generateExplanation({ purpose, mode, products }) {
   try {
     if (!products || products.length === 0) {
       return "No products available for analysis.";
     }
 
-    // Sort products by finalScore
+    const isInsight = mode === "insight";
+
     const sorted = [...products].sort(
       (a, b) => b.finalScore - a.finalScore
     );
 
     const winner = sorted[0];
 
-    // Build readable internal comparison text (hidden from user)
     const formattedProducts = sorted
       .map((p, index) => {
         return `
 Product ${index + 1}: ${p.name}
-Final Score: ${p.finalScore}
 Price: ₹${p.price}
 
 Component Strength Indicators:
@@ -29,6 +28,104 @@ Portability: ${p.portabilityScore}
       })
       .join("\n");
 
+    // -------- SYSTEM PROMPT --------
+    const systemPrompt = isInsight
+      ? `
+You are a premium laptop performance analyst.
+
+Strict Rules:
+- DO NOT write paragraphs.
+- Use bullet points ONLY.
+- Every explanation line must start with •
+- Do NOT display numerical scores.
+- Do NOT show raw score comparisons.
+- Do NOT invent specifications.
+- Keep each bullet concise (1–2 lines max).
+- Maintain a professional analytical tone.
+`
+      : `
+You are an expert laptop comparison analyst.
+
+Strict Rules:
+- Use bullet points only.
+- Do NOT display numerical scores.
+- Do NOT mention score comparisons.
+- Do NOT show markdown symbols.
+- Keep content concise and structured.
+- Maximum 180 words.
+Tone: confident, analytical, premium.
+`;
+
+    // -------- USER PROMPT --------
+    const userPrompt = isInsight
+      ? `
+Purpose: ${purpose}
+
+Product Analyzed:
+${formattedProducts}
+
+Write the response using ONLY bullet points in the exact structure below.
+
+🧠 Performance Overview
+• 3–4 bullets about overall positioning and capability
+
+⚙ Processor & Multitasking
+• 3–4 bullets about CPU & RAM real-world impact
+
+💾 Storage & Responsiveness
+• 2–3 bullets about speed and daily workflow impact
+
+🔋 Battery & Mobility
+• 2–3 bullets about portability and endurance
+
+🎯 Real-World Suitability
+• 3–4 bullets about ideal users and usage scenarios
+
+📊 Strategic Positioning
+• 2–3 bullets about market segment and value
+
+Important:
+- NO paragraphs.
+- ONLY bullet points.
+- Each bullet must begin with •
+- Do not show numbers or raw metrics.
+`
+      : `
+Purpose: ${purpose}
+Decision Mode: ${mode}
+
+System Ranking:
+Winner: ${winner.name}
+
+Comparison Data:
+${formattedProducts}
+
+Write the response using ONLY bullet points in this structure:
+
+🏆 Best Overall
+• One strong reason it ranks first
+
+💼 Ideal Use Cases
+• 3–4 user types
+
+✅ Key Advantages
+• 3–5 clear strengths
+
+⚖ Considerations
+• 2–3 trade-offs
+
+🤝 Where Other Options May Be Better
+• 2–3 scenarios
+
+🎯 Final Recommendation
+• One decisive closing statement
+
+Important:
+- No paragraphs.
+- Bullet points only.
+- Do not show numbers.
+`;
+
     const response = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",
       {
@@ -39,69 +136,10 @@ Portability: ${p.portabilityScore}
         },
         body: JSON.stringify({
           model: "stepfun/step-3.5-flash",
-          temperature: 0.25,
+          temperature: isInsight ? 0.35 : 0.25,
           messages: [
-            {
-              role: "system",
-              content: `
-You are an expert laptop comparison analyst.
-
-Strict Rules:
-- Do NOT display any numerical scores.
-- Do NOT mention score values or comparisons like "5 vs 3".
-- Do NOT show asterisks or markdown symbols.
-- Do NOT infer specs not provided.
-- Do NOT calculate totals.
-- Do NOT change ranking.
-
-Output Requirements:
-- Use clean GPT-style formatting.
-- Use emojis appropriately.
-- Use section headings without markdown symbols.
-- Keep paragraphs short and readable.
-- Maximum 180 words.
-Tone: confident, analytical, premium.
-              `,
-            },
-            {
-              role: "user",
-              content:`Purpose: ${purpose}
-Decision Mode: ${mode}
-
-System Ranking:
-Winner: ${winner.name}
-
-Comparison Data:
-${formattedProducts}
-
-Write the response in the following exact structure:
-
-🏆 Best Overall
-• One clear line explaining why it ranks first
-• Mention the type of performance strength it has
-
-💼 Ideal Use Cases
-• List 3–4 types of users or workloads it is best suited for
-
-✅ Key Advantages
-• Bullet points explaining strengths
-• Focus on real-world benefits
-
-⚖ Considerations
-• Mention trade-offs briefly
-
-🤝 Where Other Options May Be Better
-• Mention scenarios where alternatives make more sense
-
-🎯 Final Recommendation
-• One decisive closing statement
-
-Important:
-Do not show numbers.
-Do not write long paragraphs.
-Use bullet points only.
-Keep it clean and structured.`,
-            },
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt },
           ],
         }),
       }

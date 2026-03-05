@@ -1,14 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { LuScale } from "react-icons/lu";
 
 export default function CompareTextButton({ selectedProducts }) {
   const router = useRouter();
-
   const count = selectedProducts?.length || 0;
-
-  console.log("selectedProducts:", selectedProducts);
-console.log("Type:", typeof selectedProducts[0]);
 
   function handleCompare() {
     if (!count) {
@@ -16,22 +13,24 @@ console.log("Type:", typeof selectedProducts[0]);
       return;
     }
 
-    // FIXED HERE
     const ids = selectedProducts.join(",");
-
     router.push(`/comparision_ai?ids=${ids}`);
   }
 
   return (
-    <span
+    <button
       onClick={handleCompare}
-      className={`cursor-pointer text-2xl p font-semibold transition ${
+      disabled={!count}
+      className={`sticky top-4 z-40 flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-medium transition
+      ${
         count > 0
-          ? "text-purple-600 hover:underline"
-          : "text-gray-400 cursor-not-allowed"
+          ? "bg-white text-purple-600 hover:bg-purple-100 shadow-sm cursor-pointer"
+          : "bg-gray-100 text-gray-400 cursor-not-allowed"
       }`}
     >
       Compare {count > 0 && `(${count})`}
-    </span>
+            <LuScale size={18} />
+
+    </button>
   );
 }

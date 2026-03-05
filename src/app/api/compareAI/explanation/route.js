@@ -1,34 +1,37 @@
 import { unstable_cache } from "next/cache";
-import { generateExplanation } from "@/utils/AiExplanation";
-
+import generateExplanation from "@/utils/AiExplanation";
 export async function POST(req) {
 
-    const {purpose,mode,products} = await req.json();
+  const body = await req.json();
 
-    //Cache key 
-    const key = [
-        "compare-explanation",
-        purpose,
-        mode,
-        ...products.map(p => p.name).sort()
-    ];
+  const { purpose, mode, products } = body;
 
-    const getcachedExplanation = unstable_cache(
-
-        async () => {
-
-            console.log("calling LLM");
-            return await generateExplanation({products,mode,purpose});
-        },
-        key,
-        {
-
-            revalidate:60*60
-        }
+  // 🛑 SAFETY CHECK
+  if (!products || !Array.isArray(products) || products.length === 0) {
+    return Response.json(
+      { explanation: "No valid product data provided." },
+      { status: 400 }
     );
+  }
 
-    const explanation = await getcachedExplanation();
+  const signature = [
+    purpose,
+    mode,
+    ...products
+      .map(p => `${p.name}-${p.price}-${p.finalScore}`)
+      .sort()
+  ].join("|");
 
-    return Response.json({explanation});
-    
+  const getCachedExplanation = unstable_cache(
+    async () => {
+      console.log("Calling LLM...");
+      return await generateExplanation({ products, mode, purpose });
+    },
+    ["compare-explanation", signature],
+    { revalidate: 60 * 60 }
+  );
+
+  const explanation = await getCachedExplanation();
+
+  return Response.json({ explanation });
 }

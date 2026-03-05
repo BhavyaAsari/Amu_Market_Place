@@ -6,16 +6,26 @@ import HighLightSection from "./HighlightSection";
 import ProductComparisonGrid from "./ProductComparisionGrid";
 import SpecsComparisionSection from "./specsComparision";
 
-export default function AI_Page({ data }) {
+export default function AI_Page({
+  data,
+  selectedPurpose,
+  setSelectedPurpose,
+  selectedMode,
+  setSelectedMode
+}) {
 
   if (!data) return null;
 
   const isCompare = data.mode === "compare";
-  const isInsight = data.mode === "insight";
 
   return (
     <>
-      <HeaderSection data={data} />
+      <HeaderSection
+        selectedPurpose={selectedPurpose}
+        setSelectedPurpose={setSelectedPurpose}
+        selectedMode={selectedMode}
+        setSelectedMode={setSelectedMode}
+      />
 
       <HighLightSection data={data} />
 

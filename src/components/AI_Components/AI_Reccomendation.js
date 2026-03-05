@@ -14,25 +14,18 @@ export default function AI_Reccomendation({ data }) {
     );
   }
 
-  const isCompare = data.mode === "compare";
-  const isExplanationLoading = isCompare && !data.explanation;
-
-  const previewText =
-    data.explanation?.length > 300
-      ? data.explanation.substring(0, 270) + "..."
-      : data.explanation;
+  const isLoading = !data.explanation;
 
   return (
-    <section className="ui-ai-panel ui-card ">
-      <div className="">
-
+    <section className="ui-ai-panel ui-card">
+      <div>
         {/* HEADER */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
             <div className="h-11 w-11 relative">
               <Image
                 src="/robo_icon.png"
-                alt="robo_Icon"
+                alt="robo_icon"
                 fill
                 className="object-contain"
               />
@@ -43,79 +36,60 @@ export default function AI_Reccomendation({ data }) {
             </h2>
           </div>
 
-          {isCompare && data.explanation && (
-            <div className="flex items-center gap-2">
+          {/* Toggle appears if explanation exists */}
+          {data.explanation && (
+            <div className="flex items-center gap-3">
               <span className="text-sm text-gray-500">
-                Show Detailed Explanation
+                Detailed View
               </span>
 
               <button
-                onClick={() => setShowFull(prev => !prev)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-300
-                  ${showFull ? "bg-purple-600" : "bg-gray-300"}`}
+                onClick={() => setShowFull((prev) => !prev)}
+                className={`relative w-12 h-6 rounded-full transition-colors duration-300
+                ${showFull ? "bg-purple-600" : "bg-gray-300"}`}
               >
                 <span
                   className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full
-                    transition-transform duration-300
-                    ${showFull ? "translate-x-5" : ""}`}
+                  transition-transform duration-300
+                  ${showFull ? "translate-x-6" : ""}`}
                 />
               </button>
             </div>
           )}
         </div>
-{!showFull && (
-  <div className="absolute bottom-0 left-0 right-0 h-10 
-    bg-linear-to-t from-white to-transparent pointer-events-none" />
-)}
+
         {/* CONTENT */}
         <div className="relative">
-
-          {isCompare && isExplanationLoading && (
+          {isLoading && (
             <p className="animate-pulse text-gray-500">
               🧠 Generating AI explanation...
             </p>
           )}
 
-          {isCompare && data.explanation && (
+          {data.explanation && (
             <div
-              className={`overflow-hidden transition-all duration-500 ease-in-out
-                ${showFull ? "max-h-500" : "max-h-40"}`}
+              className={`relative overflow-hidden transition-all duration-500 ease-in-out
+              ${showFull ? "max-h-300" : "max-h-48"}`}
             >
               <div
-                className="whitespace-pre-line leading-relaxed 
-                           bg-white/70 
-                           backdrop-blur-sm 
-                           border border-gray-200 
-                           rounded-xl 
-                           p-6 
-                           shadow-sm"
+                className="whitespace-pre-line leading-relaxed
+                bg-white/70 backdrop-blur-sm
+                border border-gray-200
+                rounded-xl p-6 shadow-sm"
               >
-                {showFull ? data.explanation : previewText}
+                {data.explanation}
               </div>
-            </div>
-          )}
 
-          {!isCompare && (
-            <div
-              className="whitespace-pre-line leading-relaxed 
-                         bg-white/70 
-                         border border-gray-200 
-                         rounded-xl 
-                         p-6 
-                         shadow-sm"
-            >
-              🏆 Best Use Case  
-              • This laptop performs best for {data.bestPurpose}  
-              • Optimized for workloads aligned with this purpose  
-
-              {"\n\n"}
-
-              🎯 Recommendation  
-              • Ideal choice if your primary focus is {data.bestPurpose}
+              {/* Fade overlay when collapsed */}
+              {!showFull && (
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-16
+                  bg-lineart-to-t from-white to-transparent pointer-events-none"
+                />
+              )}
             </div>
           )}
         </div>
-
       </div>
     </section>
   );

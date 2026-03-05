@@ -1,6 +1,6 @@
  "use  client";
  
- export default function HeaderSection() {
+ export default function HeaderSection({selectedPurpose,setSelectedPurpose}) {
 
     const tabs = ["Programming","Gaming","Student","Office","Editing"];
   return (
@@ -13,9 +13,10 @@
 
             <button
             key={tab}
-            className={`ui-tab ${index === 0 ? "ui-tab-active" : ""}`}>
+            onClick={() => setSelectedPurpose(tab)}
+            className={`ui-tab ${selectedPurpose === tab ? "ui-tab-active" : ""}`}>
 
-                {tab}
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
 
             </button>
         ))}
