@@ -10,8 +10,35 @@ import RatingsBar from "@/components/reviewComponent/ratingBar";
 import RecommendationPanel from "@/components/productComponents/recommendationPanel";
 import { getRecommendations } from "@/app/actions/Services/recommendationServices";
 
+import {
+  LuCpu,
+  LuMemoryStick,
+  LuHardDrive,
+  LuMonitor,
+  LuPalette,
+  LuBatteryFull,
+  LuWeight,
+  LuCircuitBoard,
+  LuAppWindow,
+} from "react-icons/lu";
+
+const specIconMap = {
+  processor: LuCpu,
+  ram: LuMemoryStick,
+  storage: LuHardDrive,
+  graphics: LuCircuitBoard,
+  display: LuMonitor,
+  os: LuAppWindow,
+  color: LuPalette,
+  weight: LuWeight,
+  battery: LuBatteryFull,
+};
+
+
+
 export default async function ProductPage({ params }) {
   const { id } = await params;
+  console.log("productId",id)
 
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
@@ -41,53 +68,93 @@ export default async function ProductPage({ params }) {
   }, {});
 
   return (
-   <main className="bg-stone-700/20 text-black min-h-screen px-6 py-10">
+   <main className="bg-white text-black  px-6 py-10">
   <section className="max-w-7xl mx-auto">
 
     {/* PRODUCT GRID */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-14 items-start">
       
       {/* LEFT COLUMN */}
       <div>
-        <div className="bg-[#111111] rounded-xl p-6 h-100">
+        <div className="bg-black/30 h-80 p-10 rounded-2xl lg:col-span-1">
           <CartCarousel images={plainProduct.images} />
         </div>
 
-        <section className="bg-white rounded-2xl p-6 mt-10 w-full shadow-2xl">
-          <ProductRatings
-            rating={plainProduct.rating}
-            reviewCount={totalReviews}
-          />
-
-          {[5, 4, 3, 2, 1].map((star) => {
-            const count = ratingBreakdown[star] || 0;
-            const percent = totalReviews
-              ? Math.round((count / totalReviews) * 100)
-              : 0;
-
-            return (
-              <RatingsBar
-                key={star}
-                star={star}
-                percent={percent}
-              />
-            );
-          })}
-
-          <ReviewCommentsCard reviews={plainProduct.reviews} />
-        </section>
+       
       </div>
 
       {/* RIGHT COLUMN */}
-      <div>
+      <div className="lg:sticky lg:top-24">
         <ProductDetailsClient
           product={plainProduct}
           session={session}
           userEmail={userEmail}
         />
       </div>
+       {/* SPECS */}
+      <div className="specContainer ">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-semibold mt-3">
+            System Specs
+          </h2>
+        </div>
+
+        <div className="flex flex-col py-2 gap-3">
+          {Object.entries(product.specs).map(([key, value]) => {
+            const Icon = specIconMap[key];
+
+            return (
+              <div key={key} className="flex items-center gap-2 text-lg">
+                {Icon && (
+                  <Icon className="text-black text-xl shrink-0" />
+                )}
+
+                <div>
+                  <span className="font-semibold capitalize text-sm">
+                    {key}:
+                  </span>{" "}
+                  <span className="text-purple-800 font-semibold text-sm">
+                    {value}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
 
+            <div className="flex w-full gap-8 mt-10">
+
+  {/* LEFT SIDE - Rating Summary */}
+  <section className="bg-white rounded-2xl p-6 shadow-2xl w-[35%]">
+    <ProductRatings
+      rating={plainProduct.rating}
+      reviewCount={totalReviews}
+    />
+
+    {[5, 4, 3, 2, 1].map((star) => {
+      const count = ratingBreakdown[star] || 0;
+      const percent = totalReviews
+        ? Math.round((count / totalReviews) * 100)
+        : 0;
+
+      return (
+        <RatingsBar
+          key={star}
+          star={star}
+          percent={percent}
+        />
+      );
+    })}
+  </section>
+
+  {/* RIGHT SIDE - Reviews */}
+  <section className="bg-white rounded-2xl  shadow-2xl flex-1">
+    <ReviewCommentsCard reviews={plainProduct.reviews} />
+  </section>
+
+</div>
     {/* 🔥 RECOMMENDATION SECTION (Full Width) */}
     <RecommendationPanel products={recommendations} />
 

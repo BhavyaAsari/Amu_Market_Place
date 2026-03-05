@@ -2,6 +2,8 @@
 
 import { useCart } from "@/app/context/CartContext";
 import { useRouter } from "next/navigation";
+import { LuShoppingCart } from "react-icons/lu";
+
 
 export default function AddToCartButton({ product }) {
   const { additionToCart } = useCart();
@@ -13,8 +15,9 @@ export default function AddToCartButton({ product }) {
   };
 
   return (
-    <button onClick={handleAdd} className="cartBtn">
-      Add to cart
+    <button onClick={handleAdd} className="cartBtn flex">
+      <LuShoppingCart size={20} className=""/>
+     <span className="ml-2 "> Add to cart</span>
     </button>
   );
 }

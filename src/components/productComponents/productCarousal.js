@@ -33,7 +33,7 @@ return (
     {images.map((img, index) => (
       <div
         key={index}
-        className=" w-32 h-52   sm:w-64 sm:h-72"
+        className=" w-32 h-52   sm:w-54 sm:h-52"
       >
         <Image
           src={img}

@@ -2,31 +2,9 @@
 
 import AddButton from "@/components/productComponents/addToCartButton";
 import ReviewCard from "@/components/reviewComponent/reviewCard";
+import { LuTruck, LuShoppingBag, LuRotateCcw } from "react-icons/lu";
 import { useRouter } from "next/navigation";
-import {
-  LuCpu,
-  LuMemoryStick,
-  LuHardDrive,
-  LuMonitor,
-  LuPalette,
-  LuBatteryFull,
-  LuWeight,
-  LuCircuitBoard,
-  LuAppWindow,
-} from "react-icons/lu";
-
-const specIconMap = {
-  processor: LuCpu,
-  ram: LuMemoryStick,
-  storage: LuHardDrive,
-  graphics: LuCircuitBoard,
-  display: LuMonitor,
-  os: LuAppWindow,
-  color: LuPalette,
-  weight: LuWeight,
-  battery: LuBatteryFull,
-};
-
+import { LuShieldCheck, LuRepeat, LuCreditCard } from "react-icons/lu";
 export default function ProductDetailsClient({ product, session, userEmail }) {
   const brand =
     product.brand.charAt(0).toUpperCase() +
@@ -37,79 +15,77 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
   const router = useRouter();
 
   const handleBuyNow = () => {
-  router.push(`/checkout?buyNow=true&productId=${product._id}&qty=1`);
-};
+    router.push(`/checkout?buyNow=true&productId=${product._id}&qty=1`);
+  };
 
   return (
     <>
-      {/* TITLE */}
-      <h1 className="text-2xl sm:text-4xl font-semibold">
-        {displayTitle}
-      </h1>
-
-      {/* PRICE */}
-      <p className="text-lg sm:text-2xl font-bold mt-4">
-        ₹{product.price}
-      </p>
-
-      <p className="text-lg text-black mt-1">
-        Incl. shipping & taxes
-      </p>
-
-      <div className="mt-2 text-lg text-black/90 space-y-1">
-        <p>• Exchange offer available</p>
-        <p>• No cost EMI options</p>
-      </div>
-
-      {/* BUTTONS */}
-      <div className="mt-6 flex gap-4">
-        <AddButton product={product} />
-
-        <button className="border rounded-xl px-4 py-2 bg-[#7C3AED] text-white hover:text-purple-600 hover:bg-white transition"
-        onClick={handleBuyNow}>
-          Buy Now
-        </button>
-      </div>
-
-      {/* SPECS */}
-      <div className="specContainer mt-6">
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-semibold mt-3">
-            System Specs
-          </h2>
+      <div className="  ">
+        <div className="">
+          {/* TITLE */}
+          <h1 className="text-2xl sm:text-4xl font-semibold">{displayTitle}</h1>
+          <div className="text-gray-500  mt-1">Power • Performance • Style</div>
         </div>
 
-        <div className="flex flex-col py-2 gap-3">
-          {Object.entries(product.specs).map(([key, value]) => {
-            const Icon = specIconMap[key];
+        <div className="flex items-center mt-2 ">
+          {/* PRICE */}
+          <p className="text-lg sm:text-2xl font-bold ">₹{product.price}</p>
 
-            return (
-              <div key={key} className="flex items-center gap-4 text-lg">
-                {Icon && (
-                  <Icon className="text-black text-3xl shrink-0" />
-                )}
+          <p className="text-[13px] text-black mt-3 ml-2 rounded-2xl shadow-2xl bg-purple-200 w-35  text-center">
+            Incl. shipping & Taxes
+          </p>
+        </div>
 
-                <div>
-                  <span className="font-semibold capitalize">
-                    {key}:
-                  </span>{" "}
-                  <span className="text-purple-800 font-semibold">
-                    {value}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="mt-4 text-sm  text-black/90 space-y-1 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <LuShieldCheck size={20} className="text-purple-500" />
+            <span className="font-bold">Warranty </span>Available
+          </div>{" "}
+          <div className="flex items-center gap-2">
+            <LuRepeat size={18} className="text-purple-500" />
+            <span className="font-bold">Exchange offer </span>available
+          </div>
+          <div className="flex items-center gap-2">
+            <LuCreditCard size={18} className="text-purple-500" />
+            <span>
+              No cost EMI ~ upto <b>12 Months</b>
+            </span>
+          </div>
+        </div>
+
+        {/* BUTTONS */}
+        <div className="mt-4 flex gap-4">
+          <AddButton product={product} />
+
+          <button
+            className="border rounded-xl px-5   text-black hover:text-purple-600 hover:bg-white transition"
+            onClick={handleBuyNow}
+          >
+            Buy Now
+          </button>
+        </div>
+
+        <div className="mt-2 rounded-xl text-sm flex items-center gap-6 text-gray-600 bg-purple-100 h-10 px-1 py-2">
+          <div className="flex items-center gap-1 ">
+            <LuTruck size={18} />
+            <span className="text-black">Free Delivery</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <LuShoppingBag size={18} />
+            <span className="text-black">Secure Payment</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <LuRotateCcw size={18} />
+            <span className="text-black">7-Day Returns</span>
+          </div>
         </div>
       </div>
 
       {/* WRITE REVIEW CARD */}
       <section className="max-w-7xl mx-auto mt-16 bg-white rounded-2xl p-8 shadow-2xl">
-        <ReviewCard
-          session={session}
-          product={product}
-          userEmail={userEmail}
-        />
+        <ReviewCard session={session} product={product} userEmail={userEmail} />
       </section>
     </>
   );
