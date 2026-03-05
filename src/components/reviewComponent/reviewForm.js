@@ -38,9 +38,9 @@ export default function ReviewForm({ productId, email, onSubmitSuccess }) {
     <>
       <form onSubmit={handleSubmit} className="">
         <div className="flex flex-col gap-4 items-center justify-center">
-          <span className="text-3xl font-semibold">Share your expirence</span>
+          <span className="text-xl font-semibold">Share your expirence</span>
 
-          <div className="flex gap-2 text-3xl cursor-pointer ">
+          <div className="flex gap-2 text-xl cursor-pointer ">
             {[1, 2, 3, 4, 5].map((starValue) => (
               <FaStar
                 key={starValue}
@@ -60,7 +60,7 @@ export default function ReviewForm({ productId, email, onSubmitSuccess }) {
             placeholder="Write your review..."
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            className="w-full p-3 rounded resize  focus:outline-0   "
+            className="w-full p-3 rounded resize  focus:outline-0 border  "
             required
           />
 

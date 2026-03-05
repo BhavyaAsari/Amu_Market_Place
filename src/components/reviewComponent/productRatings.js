@@ -18,7 +18,7 @@ export default function ProductRatings({ rating, reviewCount }) {
       <div className="ratingsSection">
 
         {/*  Average Rating */}
-        <span className="text-7xl font-semibold">
+        <span className="text-4xl font-semibold mt-4">
           {safeRating.toFixed(1)}
         </span>
 
@@ -26,17 +26,17 @@ export default function ProductRatings({ rating, reviewCount }) {
         <div className="flex mt-6">
           {[1, 2, 3, 4, 5].map((i) => {
             if (rounded >= i)
-              return <FaStar key={i} className="text-yellow-500 text-2xl" />;
+              return <FaStar key={i} className="text-yellow-500 text-xl" />;
             if (rounded === i - 0.5)
-              return <FaStarHalfAlt key={i} className="text-yellow-500 text-2xl" />;
+              return <FaStarHalfAlt key={i} className="text-yellow-500 text-xl" />;
             return <FaRegStar key={i} className="text-gray-300 text-2xl" />;
           })}
         </div>
 
         {/*  Review Count */}
-        <span className="mt-6 ml-2 text-xl text-gray-500 font-semibold">
+        <div className="mt-6  text-lg text-gray-500 font-semibold">
           ({safeReviewCount} reviews)
-        </span>
+        </div>
 
       </div>
 
