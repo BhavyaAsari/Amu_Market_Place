@@ -82,7 +82,7 @@ return (
       <div className="flex flex-col justify-between sm:flex-row mt-5 ">
           
 <Link
-  href={`/products/${product.id}`}
+  href={`/products/${product._id}`}
   className="border rounded-xl px-4 py-2 text-center
              hover:cursor-pointer bg-black/50 text-white
              hover:text-black hover:bg-white/10 transition font-semibold  hover:no-underline"
