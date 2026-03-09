@@ -12,61 +12,64 @@ import { connectDB } from "@/libs/db";
 /* ---------------------------------------- */
 
 async function getOrCreateCart() {
-  await connectDB();
+await connectDB();
 
-  const session = await getServerSession(authOptions);
-  const cookieStore = await cookies();   // ✅ await added
+const session = await getServerSession(authOptions);
+const cookieStore = await cookies();
 
-  // Logged-in user
-  if (session?.user?.id) {
-    let userCart = await Cart.findOne({ userId: session.user.id }); // ✅ renamed to userCart
+// Logged-in user
+if (session?.user?.id) {
+let userCart = await Cart.findOne({ userId: session.user.id });
 
-    if (!userCart) {
-      userCart = await Cart.create({
-        userId: session.user.id,
-        items: [],
-      });
-    }
 
-    return { cart: userCart, newGuestId: null };
-  }
+if (!userCart) {
+  userCart = await Cart.create({
+    userId: session.user.id,
+    items: [],
+  });
+}
 
-  // Guest user
-  let guestId = cookieStore.get("guest_id")?.value;
-  let newGuestId = null;   // ✅ track if we need to set a new cookie
+return { cart: userCart, newGuestId: null };
 
-  if (!guestId) {
-    guestId = uuid();
-    newGuestId = guestId;  // ✅ will be set on response later
-  }
 
-  let guestCart = await Cart.findOne({ guestId }); // ✅ renamed to guestCart
+}
 
-  if (!guestCart) {
-    guestCart = await Cart.create({
-      guestId,
-      items: [],
-    });
-  }
+// Guest user
+let guestId = cookieStore.get("guest_id")?.value;
+let newGuestId = null;
 
-  return { cart: guestCart, newGuestId }; // ✅ return both
+if (!guestId) {
+guestId = uuid();
+newGuestId = guestId;
+}
+
+let guestCart = await Cart.findOne({ guestId });
+
+if (!guestCart) {
+guestCart = await Cart.create({
+guestId,
+items: [],
+});
+}
+
+return { cart: guestCart, newGuestId };
 }
 
 /* ---------------------------------------- */
-/* 🔹 Helper: Set guest cookie on response */
+/* 🔹 Helper: Set guest cookie */
 /* ---------------------------------------- */
 
 function withGuestCookie(response, newGuestId) {
-  if (newGuestId) {
-    response.cookies.set("guest_id", newGuestId, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
-  }
-  return response;
+if (newGuestId) {
+response.cookies.set("guest_id", newGuestId, {
+httpOnly: true,
+secure: process.env.NODE_ENV === "production",
+sameSite: "lax",
+path: "/",
+maxAge: 60 * 60 * 24 * 7,
+});
+}
+return response;
 }
 
 /* ---------------------------------------- */
@@ -74,20 +77,38 @@ function withGuestCookie(response, newGuestId) {
 /* ---------------------------------------- */
 
 export async function GET() {
-  try {
-    const { cart, newGuestId } = await getOrCreateCart();
+try {
+const { cart, newGuestId } = await getOrCreateCart();
 
-    await cart.populate("items.product");
 
-const plainCart = JSON.parse(JSON.stringify(cart));
+await cart.populate({
+  path: "items.product",
+  select: "title image price shortDescription",
+});
+
+// remove broken products
+cart.items = (cart.items || []).filter((item) => item.product !== null);
+
+await cart.save();
+
+const plainCart = cart.toObject();
 
 const response = NextResponse.json(plainCart);
 
-    return withGuestCookie(response, newGuestId); // ✅ set cookie on response
-  } catch (error) {
-    console.error("GET /api/cart error:", error);
-    return NextResponse.json({ error: "Failed to fetch cart" }, { status: 500 });
-  }
+return withGuestCookie(response, newGuestId);
+
+
+} catch (error) {
+console.error("GET /api/cart error:", error);
+
+
+return NextResponse.json(
+  { error: "Failed to fetch cart" },
+  { status: 500 }
+);
+
+
+}
 }
 
 /* ---------------------------------------- */
@@ -95,30 +116,60 @@ const response = NextResponse.json(plainCart);
 /* ---------------------------------------- */
 
 export async function POST(req) {
-  try {
-    const { productId, quantity = 1 } = await req.json();
-    const { cart, newGuestId } = await getOrCreateCart();
+try {
+const { productId, quantity = 1 } = await req.json();
 
-    const existing = cart.items.find(
-      (item) => item.product.toString() === productId
-    );
 
-    if (existing) {
-      existing.quantity += quantity;
-    } else {
-      cart.items.push({ product: productId, quantity });
-    }
+// check product exists
+const product = await Product.findById(productId);
 
-    await cart.save();
-    await cart.populate("items.product");
+if (!product) {
+  return NextResponse.json(
+    { error: "Product not found" },
+    { status: 404 }
+  );
+}
 
-const plainCart = JSON.parse(JSON.stringify(cart));
+const { cart, newGuestId } = await getOrCreateCart();
+
+const existing = cart.items.find(
+  (item) => item.product.toString() === productId
+);
+
+if (existing) {
+  existing.quantity += quantity;
+} else {
+  cart.items.push({ product: productId, quantity });
+}
+
+await cart.save();
+
+await cart.populate({
+  path: "items.product",
+  select: "title image price shortDescription",
+});
+
+// remove broken products
+cart.items = (cart.items || []).filter((item) => item.product !== null);
+
+await cart.save();
+
+const plainCart = cart.toObject();
 
 const response = NextResponse.json(plainCart);
 
-    return withGuestCookie(response, newGuestId); //  set cookie on response
-  } catch (error) {
-    console.error("POST /api/cart error:", error);
-    return NextResponse.json({ error: "Failed to add to cart" }, { status: 500 });
-  }
+return withGuestCookie(response, newGuestId);
+
+
+} catch (error) {
+console.error("POST /api/cart error:", error);
+
+
+return NextResponse.json(
+  { error: "Failed to add to cart" },
+  { status: 500 }
+);
+
+
+}
 }

@@ -100,10 +100,12 @@ export function CartProvider({ children }) {
   /* 🔹 Total Price */
   /* ------------------------------------ */
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+ const total = Array.isArray(cart)
+  ? cart.reduce((sum, item) => {
+      if (!item?.product) return sum;
+      return sum + item.product.price * item.quantity;
+    }, 0)
+  : 0;
 
   return (
     <CartContext.Provider
