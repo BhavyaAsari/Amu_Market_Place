@@ -1,10 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {LuCpu,LuHardDrive,LuLaptop,LuCircuitBoard } from "react-icons/lu";
 import AddToCartButton from "./addToCartButton";
 import Compare_Button from "../AI_Components/CompareButton";
 import Compare_checkBox from "../AI_Components/compare_checkBox";
-
+import { useState } from "react";
 
 
 export default function ProductListCard ({product,selectedProducts,
@@ -17,6 +19,10 @@ const brand =
 
 // Extracting series name (use DB value directly)
 const series = product.series;
+
+const [imgSrc, setImgSrc] = useState(
+  product.image || "/products/default.png"
+);
 
 // Extracting screen size (ONLY like "15.6 Inch")
 const display = product.specs.display || "";
@@ -40,7 +46,9 @@ const isSelected = selectedProducts.includes(product._id);
 // useEffect(() => {
 //   window.scrollTo({ top: 0, behavior: "smooth" });
 // }, []);
-
+// const [imgSrc, setImgSrc] = useState(
+//   product.image || "/products/default.png"
+// );
 
 return (
 
@@ -61,13 +69,14 @@ return (
 
     <div className="imageContainer bg-slate-200 ">
     
-      <Image
-        src={product.image || "/products/default.png"}
-        alt="Product Image"
-        width={200}
-        height={200}
-        className="object-contain w-66 h-56 p-4"
-      />
+     <Image
+  src={imgSrc}
+  alt="Preview Loading..."
+  width={200}
+  height={200}
+  className="object-contain w-66 h-56 p-4"
+  onError={() => setImgSrc("/products/default.png")}
+/>
       </div>
     <div className="detailsContainerProduct HoveUnderline">
         <p className="font-semibold text-2xl">{displayTitle}</p>

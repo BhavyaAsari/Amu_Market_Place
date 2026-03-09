@@ -9,6 +9,7 @@ import ReviewCommentsCard from "@/components/reviewComponent/ComponentsCard";
 import RatingsBar from "@/components/reviewComponent/ratingBar";
 import RecommendationPanel from "@/components/productComponents/recommendationPanel";
 import { getRecommendations } from "@/app/actions/Services/recommendationServices";
+import ReviewCard from "@/components/reviewComponent/reviewCard";
 
 import {
   LuCpu,
@@ -84,12 +85,15 @@ export default async function ProductPage({ params }) {
       </div>
 
       {/* RIGHT COLUMN */}
-      <div className="lg:sticky lg:top-24">
+      <div className="">
         <ProductDetailsClient
           product={plainProduct}
           session={session}
           userEmail={userEmail}
         />
+         <section className="max-w-7xl mx-auto mt-4 bg-white rounded-2xl p-8 shadow-2xl">
+        <ReviewCard session={session} product={product} userEmail={userEmail} />
+      </section>
       </div>
        {/* SPECS */}
       <div className="specContainer ">
@@ -124,10 +128,10 @@ export default async function ProductPage({ params }) {
       </div>
     </div>
 
-            <div className="flex w-full gap-8 mt-10">
+            <div className="flex  w-full gap-8 mt-10  ">
 
   {/* LEFT SIDE - Rating Summary */}
-  <section className="bg-white rounded-2xl p-6 shadow-2xl w-[35%]">
+  <section className="bg-white rounded-2xl p-6 shadow-2xl sm:w-[35%] w-full ">
     <ProductRatings
       rating={plainProduct.rating}
       reviewCount={totalReviews}

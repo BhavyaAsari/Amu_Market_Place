@@ -18,16 +18,19 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
     router.push(`/checkout?buyNow=true&productId=${product._id}&qty=1`);
   };
 
+  console.log("product",product._id)
+
+
   return (
     <>
       <div className="  ">
         <div className="">
           {/* TITLE */}
           <h1 className="text-2xl sm:text-4xl font-semibold">{displayTitle}</h1>
-          <div className="text-gray-500  mt-1">Power • Performance • Style</div>
+          <div className="text-gray-500  mt-2">Power • Performance • Style</div>
         </div>
 
-        <div className="flex items-center mt-2 ">
+        <div className="flex items-center mt-3 ">
           {/* PRICE */}
           <p className="text-lg sm:text-2xl font-bold ">₹{product.price}</p>
 
@@ -36,7 +39,7 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
           </p>
         </div>
 
-        <div className="mt-4 text-sm  text-black/90 space-y-1 flex flex-col gap-1">
+        <div className="mt-3 text-sm  text-black/90 space-y-1 flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <LuShieldCheck size={20} className="text-purple-500" />
             <span className="font-bold">Warranty </span>Available
@@ -54,7 +57,7 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
         </div>
 
         {/* BUTTONS */}
-        <div className="mt-4 flex gap-4">
+        <div className="mt-6 flex gap-4">
           <AddButton product={product} />
 
           <button
@@ -65,7 +68,7 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
           </button>
         </div>
 
-        <div className="mt-2 rounded-xl text-sm flex items-center gap-6 text-gray-600 bg-purple-100 h-10 px-1 py-2">
+        <div className="mt-6 rounded-xl text-sm flex items-center gap-6 text-gray-600 bg-purple-100 h-10 px-1 py-2">
           <div className="flex items-center gap-1 ">
             <LuTruck size={18} />
             <span className="text-black">Free Delivery</span>
@@ -84,9 +87,7 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
       </div>
 
       {/* WRITE REVIEW CARD */}
-      <section className="max-w-7xl mx-auto mt-16 bg-white rounded-2xl p-8 shadow-2xl">
-        <ReviewCard session={session} product={product} userEmail={userEmail} />
-      </section>
+     
     </>
   );
 }
