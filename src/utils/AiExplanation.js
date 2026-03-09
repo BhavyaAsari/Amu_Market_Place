@@ -135,7 +135,7 @@ Important:
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "stepfun/step-3.5-flash",
+          model: "z-ai/glm-4.5-air:free",
           temperature: isInsight ? 0.35 : 0.25,
           messages: [
             { role: "system", content: systemPrompt },
@@ -146,6 +146,12 @@ Important:
     );
 
     const data = await response.json();
+    console.log("data",data);
+
+    if (!response.ok) {
+  console.error("OpenRouter error:", data);
+  return "AI service temporarily unavailable.";
+}
 
     return (
       data?.choices?.[0]?.message?.content ||
