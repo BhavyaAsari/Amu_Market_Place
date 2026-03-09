@@ -1,43 +1,62 @@
+"use client";
+
 import Image from "next/image";
 
 export default function HeroBanner() {
   return (
     <section
       className="banner"
-      style={{
-        background:
-          "linear-gradient(to right, #eef0f3 0%, #f3e8ff 45%, #7c3aed 100%)",
-      }}
-    >
+  style={{
+  background: `
+    radial-gradient(circle at 75% 50%, rgba(143,103,214,0.35), transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(255,255,255,0.25), transparent 20%),
+    linear-gradient(90deg,#f4f3f8 0%,#e8e2f3 40%,#c9b6ea 70%,#8f67d6 100%)
+  `
+}}>
+        <div className="hero-bg"></div>
       <div className="layout-container layout-hero">
 
         {/* LEFT CONTENT */}
-        <div className="max-w-xl">
+        <div className="max-w-lg">
+
           <h1 className="hero-title">
-            AMU TECH FEST ~26
+            Find Your Perfect Laptop.
           </h1>
 
           <p className="hero-subtitle">
-            Smarter choices for all
+            Performance. Power. Precision.
           </p>
 
-          <ul className="hero-list">
-            <li>Compare smarter. Buy better.</li>
-            <li>Find the best specs for your budget.</li>
-            <li>Grab exclusive deals in one place.</li>
-          </ul>
+          <p className="hero-desc">
+            Explore our curated collection of premium laptops tailored
+            to meet your needs.
+          </p>
+
+          <div className="hero-cta">
+
+            <button className="hero-btn-primary">
+              Shop Now
+            </button>
+
+            <button className="hero-btn-secondary">
+              Explore Deals
+            </button>
+
+          </div>
+
         </div>
 
         {/* RIGHT IMAGE */}
         <div className="hero-image">
+
           <Image
-            src="/herobanner.png"
-            alt="Hero illustration showing laptop comparison"
+            src="/herobanner1.png"
+            alt="Laptop showcase"
             fill
-            className="object-contain"
-            quality={100}
+            className="object-contain scale-200"
             priority
           />
+
         </div>
 
       </div>

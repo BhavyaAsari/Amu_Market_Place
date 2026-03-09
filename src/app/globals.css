@@ -56,43 +56,61 @@
   }
 
   /* ---------- HERO ---------- */
-  .banner {
-    @apply w-full;
-    background: linear-gradient(
-      to right,
-      #eef0f3 0%,
-      #f3e8ff 45%,
-      #7c3aed 100%
-    );
-  }
-
-  .layout-hero {
-    @apply flex
-      flex-col
-      gap-10
-      py-8
-      md:py-16
-      md:flex-row
-      md:items-center
-      md:justify-between;
-  }
-
-  .hero-title {
-    @apply text-3xl md:text-5xl font-bold mb-4;
-  }
-
-  .hero-subtitle {
-    @apply text-lg md:text-2xl text-gray-700 mb-6;
-  }
-
-  .hero-list {
-    @apply text-base md:text-lg list-disc ml-5 space-y-3 text-gray-800;
-  }
-
-  .hero-image {
-    @apply relative w-full max-w-md h-64 md:h-96;
-  }
+ .banner {
+  @apply w-full py-16 md:py-24 overflow-hidden relative;
 }
+.hero-bg {
+  @apply absolute inset-0 -z-10;
+
+  background:
+    radial-gradient(circle at 75% 50%, rgba(124,58,237,0.35), transparent 40%),
+    linear-gradient(90deg,#f8fafc 0%,#ede9fe 55%,#7c3aed 100%);
+}
+.layout-hero {
+  @apply flex flex-col md:flex-row items-center justify-between gap-10;
+}
+
+.hero-title {
+  @apply text-4xl md:text-5xl font-bold mb-4 text-gray-900;
+}
+.hero-subtitle {
+  @apply text-lg md:text-xl text-gray-600 mb-4;
+}
+  .hero-list {
+  @apply text-base md:text-lg list-disc ml-5 space-y-3 text-gray-700 leading-relaxed;
+}
+
+ 
+.hero-image {
+  @apply relative w-80 h-80 md:w-96 md:h-96;
+}
+
+.hero-image::before {
+  content: "";
+  @apply absolute w-[400px] h-[400px] bg-purple-400/20 blur-3xl rounded-full;
+}
+
+.hero-desc {
+  @apply text-gray-500 mb-8 max-w-md;
+}
+
+.hero-cta {
+  @apply flex gap-4;
+}
+
+.hero-btn-primary {
+  @apply px-6 py-3 bg-gray-900 text-white rounded-lg shadow hover:bg-black transition;
+}
+
+.hero-btn-secondary {
+  @apply px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition;
+}
+
+.hero-tags {
+  @apply flex gap-6 mt-6 text-sm text-gray-600;
+}
+}
+
 
 @layer components {
   .search-wrapper {
@@ -313,10 +331,35 @@
   }
 }
 
+/* ===Hero Visuals=== */
+@layer components {
+
+  .hero-section {
+
+    @apply m-1 bg-purple-50 h-20 w-full p-4 shadow-sm rounded-xl ;
+  }
+
+  .ui-hero-text {
+
+    @apply px-3 mt-1 text-xl font-semibold text-black/80;
+  }
+
+  .ui-hero-icons {
+
+    @apply bg-purple-200 w-15 h-8 rounded-full text-purple-500 ;
+  }
+
+  .ui-text {
+
+    @apply text-sm text-center text-purple-500/80 font-semibold;
+  }
+}
+
+
 /* Hero Brand Section */
 @layer components {
   .productContainer {
-    @apply w-full
+    @apply w-full 
     mb-3
     grid
     grid-cols-1
@@ -361,7 +404,7 @@
   .BrandImageContainer {
     @apply h-36 
   sm:h-40  
-  flex items-center 
+  flex  flex-1 items-center 
   justify-center
   relative
   transition-all
@@ -969,7 +1012,8 @@
     @apply  px-6  py-2 rounded-full text-sm font-medium
            bg-white border border-gray-200
            text-gray-600
-           hover:bg-gray-50
+           hover:text-black
+           hover:bg-gray-200
            transition;
   }
 

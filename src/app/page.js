@@ -10,6 +10,7 @@ import getAllLaptops from "./actions/productAction/getAllLaptops";
 import getFeaturedProducts from "./actions/productAction/getFeaturedProducts";
 import { Suspense } from "react";
 import Breadcrumb from "@/components/heroComponents/breadCrum";
+import HeroDecc from "@/components/heroComponents/heroVisual";
 
 export default async function Home() {
   const dbBrands = await getBrands();
@@ -19,6 +20,9 @@ export default async function Home() {
       name: meta?.name || brand.toUpperCase(),
       tagline: meta?.tagline || "Quality Laptops & Devices",
       image: meta?.image || "/products/default.png",
+       color: meta?.color || "#999",
+      categories: meta?.categories || ["Budget"],
+      logo:meta?.logo || "/products/default.png"
     };
   });
 
@@ -40,9 +44,11 @@ export default async function Home() {
            </Suspense>
         </section>
         <Breadcrumb/>
-        <section className="flex justify-center mt-8 mb-8">
+        <section className="flex flex-col justify-center mt-8 mb-8">
           <HeroBanner />
+          <HeroDecc/>
         </section>
+
 
         <h1 className="font-bold text-3xl text-black/70 mb-2">
           Featured Products
