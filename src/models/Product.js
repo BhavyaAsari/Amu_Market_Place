@@ -72,6 +72,10 @@ const productSchema = new mongoose.Schema(
 
     title: { type: String, required: true },
     shortDescription: { type: String, required: true },
+    aiDescription: {
+  type: String,
+  default: null,
+},
     price: { type: Number, required: true },
     rating: { type: Number, default: 0 },
 
