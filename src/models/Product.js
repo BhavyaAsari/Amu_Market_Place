@@ -38,6 +38,15 @@ const reviewSchema = new mongoose.Schema(
     min:1,
     max:5
   },
+  isFeatured: {
+  type: Boolean,
+  default: false
+},
+
+stock: {
+  type: Number,
+  default: 0
+},
 
   comment : {
 
