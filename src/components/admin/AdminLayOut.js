@@ -16,9 +16,11 @@ import InsightBrandsChart from "./InsigthBrandsChart";
 import PriceBreakdown from "./PriceBreakdownChart";
 import UserSegment from "./UserSegment/userSection";
 import SideMenuAdmin from "./SideBarMenu";
+import AdminCard from "./adminCard";
 
-export default function AdminLayout({ stats, revenueData, users }) {
+export default function AdminLayout({ stats, revenueData, users,userStats }) {
   const [active, setActive] = useState("dashboard");
+  console.log("users",userStats);
 
   const menuItems = [
     {
@@ -77,14 +79,21 @@ export default function AdminLayout({ stats, revenueData, users }) {
       <div className="flex flex-col gap-8">
         {active === "dashboard" && (
           <>
-            <StatsGrid items={statsItems} /> 
+        <div className="flex flex-col gap-3">
+           <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
+         <p className="text-gray-500 text-sm ">Managing the Admin Panel</p>
+        </div>
+         <AdminCard bgColor="bg-gradient-to-r from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
+           
+             <StatsGrid items={statsItems} /> 
+         </AdminCard>
             <GraphRevenue data={revenueData} />
             <PriceBreakdown />
             <InsightBrandsChart />
           </>
         )}
 
-        {active === "users" && <UserSegment users={users} />}
+        {active === "users" && <UserSegment users={users} userStats={userStats} />}
 
         {active === "products" && <div>Products Section</div>}
 
