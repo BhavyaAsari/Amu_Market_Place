@@ -15,6 +15,7 @@ export const authOptions = {
   },
 
   providers: [
+
     /* ---------------- GOOGLE ---------------- */
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -24,16 +25,24 @@ export const authOptions = {
     /* ---------------- CREDENTIALS ---------------- */
     CredentialsProvider({
       name: "Credentials",
+
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials) {
+
         await connectDB();
 
         const user = await User.findOne({ email: credentials.email });
+
         if (!user || !user.password) return null;
+
+        //  Prevent blocked users
+        if (user.status === "blocked") {
+          throw new Error("Your account has been blocked");
+        }
 
         const isMatch = await bcrypt.compare(
           credentials.password,
@@ -46,20 +55,30 @@ export const authOptions = {
           id: user._id.toString(),
           email: user.email,
           name: user.username,
+          role: user.role,
+          status: user.status
         };
       },
     }),
   ],
 
   callbacks: {
+
     /* ---------------- SIGN IN ---------------- */
     async signIn({ user, account }) {
+
       await connectDB();
 
       try {
-        // If Google login, ensure user exists
+
         if (account.provider === "google") {
+
           let existingUser = await User.findOne({ email: user.email });
+
+          //  prevent blocked google users
+          if (existingUser?.status === "blocked") {
+            return false;
+          }
 
           if (!existingUser) {
             existingUser = await User.create({
@@ -70,10 +89,12 @@ export const authOptions = {
           }
 
           user.id = existingUser._id.toString();
+          user.role = existingUser.role;
+          user.status = existingUser.status;
         }
 
-        /*  MERGE GUEST CART HERE */
-        const cookieStore = await cookies();
+        /*  MERGE GUEST CART */
+        const cookieStore = cookies();
         const guestId = cookieStore.get("guest_id")?.value;
 
         if (guestId && user.id) {
@@ -89,17 +110,25 @@ export const authOptions = {
 
     /* ---------------- JWT ---------------- */
     async jwt({ token, user }) {
+
       if (user) {
         token.id = user.id;
+        token.role = user.role;
+        token.status = user.status;
       }
+
       return token;
     },
 
     /* ---------------- SESSION ---------------- */
     async session({ session, token }) {
+
       if (token?.id) {
         session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.status = token.status;
       }
+
       return session;
     },
   },
