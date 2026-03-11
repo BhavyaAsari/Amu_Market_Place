@@ -36,6 +36,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: false, // Google users won't have it
     },
+    
+    status: {
+  type: String,
+  enum: ["active", "blocked"],
+  default: "active"
+},
 
     image: {
       type: String, // profile picture URL
