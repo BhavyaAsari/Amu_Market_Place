@@ -1166,7 +1166,7 @@
   }
 
   .Icon-stats {
-    @apply ml-auto mr-2 text-purple-500/70 bg-purple-200 rounded-sm p-2 h-10 shadow-lg;
+    @apply ml-auto mr-2 text-purple-800 bg-purple-200 rounded-sm p-2 h-10 shadow-lg;
   }
 
   .admin-card {
@@ -1231,7 +1231,7 @@
      hover:border-b-4 border-white;
   }
 
-  .BtnAction {
+  .BtnActionEdit {
 
     @apply m-1;
   }
