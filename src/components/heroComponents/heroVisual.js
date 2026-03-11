@@ -21,7 +21,7 @@ export default function  HeroDecc() {
                </div>
                <span className="ui-text">Enjoy all orders  with premium shipping</span>
             </div>
-            <hr className="border "/>
+            
             <div className="hero-section"> 
                <div className="flex ">
                  <LuTag size={30} className="ui-hero-icons"/>
