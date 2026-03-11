@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { LuChevronDown } from "react-icons/lu";
 
 export default function LocalDropDown({
@@ -10,11 +10,32 @@ export default function LocalDropDown({
   onChange,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const selectedOption = options.find(o => o.value === value);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+
+  }, []);
+
   return (
-    <section className="customDropDown relative">
+    <section
+      ref={dropdownRef}
+      className="customDropDown relative"
+    >
 
       <label className="font-semibold text-lg mr-2">
         {label}
@@ -49,6 +70,7 @@ export default function LocalDropDown({
           ))}
         </div>
       )}
+
     </section>
   );
 }
