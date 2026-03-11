@@ -38,7 +38,7 @@ export default function LocalDropDown({
           {options.map((option) => (
             <div
               key={option.value}
-              className="optnLabel p-2 hover:bg-purple-100 cursor-pointer"
+              className="optnLabel p-2 hover:bg-purple-100 cursor-pointer hover:-translate-y-1 hover:px-6 hover-effect"
               onClick={() => {
                 onChange(option.value);
                 setIsOpen(false);
