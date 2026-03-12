@@ -18,7 +18,7 @@ import UserSegment from "./UserSegment/userSection";
 import SideMenuAdmin from "./SideBarMenu";
 import AdminCard from "./adminCard";
 
-export default function AdminLayout({ stats, revenueData, users,userStats }) {
+export default function AdminLayout({ stats, revenueData, users,userStats,usersGrowth }) {
   const [active, setActive] = useState("dashboard");
   console.log("users",userStats);
 
@@ -84,7 +84,7 @@ export default function AdminLayout({ stats, revenueData, users,userStats }) {
          <p className="text-gray-500 text-sm ">Managing the Admin Panel</p>
         </div>
          <AdminCard bgColor="bg-gradient-to-r from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
-           
+              <h1 className="text-xl mb-2 font-semibold text-white">Admin Insights </h1>
              <StatsGrid items={statsItems} /> 
          </AdminCard>
             <GraphRevenue data={revenueData} />
@@ -93,7 +93,7 @@ export default function AdminLayout({ stats, revenueData, users,userStats }) {
           </>
         )}
 
-        {active === "users" && <UserSegment users={users} userStats={userStats} />}
+        {active === "users" && <UserSegment users={users} userStats={userStats}  usersGrowth={usersGrowth}/>}
 
         {active === "products" && <div>Products Section</div>}
 
