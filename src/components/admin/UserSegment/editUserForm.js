@@ -48,81 +48,131 @@ export default function EditUserForm({ user }) {
   const lastName = user.username?.split(" ")[1] || "";
 
   return (
-    <main className="profile-container   flex justify-center mt-4 p-4 shadow-xl">
-      <section>
-        <form
-          onSubmit={handleSubmit}
-          className="formContainer  bg-linear-to-b from-purple-400 via-violet-600 to-purple-800"
-        >
-          <div className="flex gap-4">
-            <LuUserRoundPen className="icons-AdminMenu h-13 w-13" />
-            <h2 className="profile-form-title text-white font-semibold text-3xl mt-2">
+    <main className="editAdminContainer ">
+
+      <section className=" editAdminWrapper">
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+
+          {/* USER DETAILS */}
+          <div className="editTitleWrapper">
+            <LuUserRoundPen className="h-13 w-13 p-2 bg-white/20 rounded-lg text-white" />
+            <h2 className="text-2xl font-semibold text-white">
               User Details
             </h2>
           </div>
-         
-            <input
-              name="firstName"
-              className="profile-input"
-              placeholder="First Name"
-              defaultValue={firstName}
-              required
-            />
 
-            <input
-              name="lastName"
-              className="profile-input"
-              placeholder="Last Name"
-              defaultValue={lastName}
-              required
-            />
+          <div className="grid grid-cols-2 gap-6">
 
-            <input
-              name="email"
-              type="email"
-              className="profile-input"
-              defaultValue={user.email}
-              disabled
-            />
+            {/* First Name */}
+            <div className="relative">
+              <label className=" editInputLabel">
+                First Name
+              </label>
+              <input
+                name="firstName"
+                defaultValue={firstName}
+                required
+                placeholder="Enter First Name"
+                className="editInput "
+              />
+            </div>
 
-            <input
-              type="tel"
-              name="phone"
-              className="profile-input"
-              placeholder="Contact No."
-              defaultValue={user.phone}
-            />
+            {/* Email */}
+            <div className="relative">
+              <label className="editInputLabel absolute -top-2 left-3 bg-white px-1 text-sm text-gray-600">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                defaultValue={user.email}
+                disabled
+                className="editInput"
+                placeholder="Enter Email"
+              />
+            </div>
 
+            {/* Last Name */}
+            <div className="relative">
+              <label className="editInputLabel  ">
+                Last Name
+              </label>
+              <input
+                name="lastName"
+                defaultValue={lastName}
+                required
+                className="editInput "
+                placeholder="Enter Last Name"
+              />
+            </div>
+
+            {/* Phone */}
+            <div className="relative">
+              <label className="editInputLabel  ">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                defaultValue={user.phone}
+                className="editInput "
+                placeholder="Enter Contact No."
+              />
+            </div>
+
+          </div>
+
+          {/* Postal Code */}
+          <div className="relative">
+            <label className="editInputLabel   ">
+              Postal Code
+            </label>
             <input
               name="postalCode"
-              className="profile-input"
-              placeholder="Postal Code"
               defaultValue={user.postalCode}
+              className="editInput "
+              placeholder="Enter Postal Code"
             />
-          {" "}
-          <div className="flex gap-4 mt-6">
-            <LuUserRoundCog className="icons-AdminMenu h-13 w-13" />
-            <span className="profile-form-title text-white font-semibold text-3xl mt-2">
-              Account Controls
-            </span>
           </div>
-          <LocalDropDown
-            label="Role"
-            options={roleOptions}
-            value={role}
-            onChange={setRole}
-          />
-          <LocalDropDown
-            label="Status"
-            options={statusOptions}
-            value={status}
-            onChange={setStatus}
-          />
-          <button type="submit" className="btn-primary">
+
+          {/* ACCOUNT CONTROLS */}
+          <div className="flex items-center gap-3 pt-4">
+            <LuUserRoundCog className="h-13 w-13 p-2 bg-white/20 rounded-lg text-white" />
+            <h2 className="text-2xl font-semibold text-white">
+              Account Controls
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+
+            <LocalDropDown
+              label="Role"
+              options={roleOptions}
+              value={role}
+              onChange={setRole}
+            />
+
+            <LocalDropDown
+              label="Status"
+              options={statusOptions}
+              value={status}
+              onChange={setStatus}
+            />
+
+          </div>
+
+          <button
+            type="submit"
+            className="mt-4 w-full rounded-lg bg-purple-600 py-3 font-semibold text-white transition hover:bg-purple-700"
+          >
             Save Changes
           </button>
+
         </form>
+
       </section>
+
     </main>
   );
 }

@@ -15,7 +15,7 @@ export default async function UserEdit({ params }) {
   }
 
   return (
-    <main>
+    <main className="">
       <EditUserForm user={JSON.parse(JSON.stringify(user))} />
     </main>
   );
