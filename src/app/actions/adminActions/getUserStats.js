@@ -3,53 +3,79 @@
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
 
-export async  function getUserStats()  {
+export async function getUserStats() {
 
+  await connectDB();
 
-    await connectDB();
+  try {
 
-    try {
+    const totalUsers = await User.countDocuments();
 
-        //Blocked users
-        const blockedUsers = await User.countDocuments({
+    const blockedUsers = await User.countDocuments({
+      status: "blocked"
+    });
 
-            status:"blocked"
-        });
+    const activeUsers = await User.countDocuments({
+      status: "active"
+    });
 
-        //Active Users
-        const activeUsers = await User.countDocuments({
+    // Last 7 days signup
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-            status:"active"
-        });
+    const newSignups = await User.countDocuments({
+      createdAt: { $gte: sevenDaysAgo }
+    });
 
-        //New Sinups
-        const sevenDaysAgo  = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    // Current month users
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-        const newSignups = await User.countDocuments({
+    const usersThisMonth = await User.countDocuments({
+      createdAt: { $gte: startOfMonth }
+    });
 
-            createdAt:{$gte:sevenDaysAgo}
-        });
+    // Previous month users
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
 
-        return {
+    const usersLastMonth = await User.countDocuments({
+      createdAt: {
+        $gte: startOfLastMonth,
+        $lte: endOfLastMonth
+      }
+    });
 
-            blockedUsers,
-            activeUsers,
-            newSignups
+    // Growth percentage
+    let growthPercent = "0%";
 
-        };
+    if (usersLastMonth > 0) {
+      const growth =
+        ((usersThisMonth - usersLastMonth) / usersLastMonth) * 100;
 
+      growthPercent = `${growth.toFixed(1)}%`;
+    }
 
-    } catch (error) {
+    return {
+      totalUsers,
+      activeUsers,
+      blockedUsers,
+      newSignups,
+      usersThisMonth,
+      growthPercent
+    };
 
-        console.error("Message",error);
+  } catch (error) {
 
-         return {
+    console.error("User stats error:", error);
+
+    return {
       totalUsers: 0,
       activeUsers: 0,
       blockedUsers: 0,
-      newSignups: 0
+      newSignups: 0,
+      usersThisMonth: 0,
+      growthPercent: "0%"
     };
-    }
-
+  }
 }
