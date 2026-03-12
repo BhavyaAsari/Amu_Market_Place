@@ -9,12 +9,40 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { toggleUserStatus } from "@/app/actions/adminActions/toggleUserStatus";
 import StatsTabUser from "./statsTabs";
+import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyticalChartLayout";
+import AdminCard from "../adminCard";
+import LocalDropDown from "@/components/productComponents/localDropDown";
+import { useState, useEffect } from "react";
 
-export default function UserSegment({ users,userStats }) {
+export default function UserSegment({ users, userStats, usersGrowth }) {
 
   const router = useRouter();
 
-  console.log("userStats finded",userStats);
+  const [filter, setFilter] = useState("weekly");
+  const [growthData, setGrowthData] = useState(usersGrowth);
+
+  const filterOptions = [
+    { label: "Weekly", value: "weekly" },
+    { label: "Monthly", value: "monthly" },
+    { label: "Yearly", value: "yearly" }
+  ];
+
+  // fetch chart data when filter changes
+  useEffect(() => {
+
+    async function fetchGrowth() {
+
+      const res = await fetch(`/api/admin/usersGrowth?range=${filter}`);
+      const data = await res.json();
+
+      setGrowthData(data);
+
+    }
+
+    fetchGrowth();
+
+  }, [filter]);
+
 
   async function handleBlock(userId) {
 
@@ -24,10 +52,11 @@ export default function UserSegment({ users,userStats }) {
       toast.error(result.message);
     } else {
       toast.success("User status updated");
-      router.refresh(); // refresh table
+      router.refresh();
     }
 
   }
+
 
   const formattedRows = users.map((user, index) => ({
     id: user._id,
@@ -40,35 +69,20 @@ export default function UserSegment({ users,userStats }) {
     joined: new Date(user.createdAt).toLocaleDateString()
   }));
 
+
   const columns = [
 
     {
       key: "image",
       label: "#",
-      render: (value, row) => (
-
-        <div>
-
-          {row.image ? (
-            <div className="relative w-15 h-15">
-              <Image
-                fill
-                src={row.image}
-                alt="user"
-                className="rounded-full object-cover"
-              />
-            </div>
-          ) : (
-            <div className="relative w-15 h-15">
-              <Image
-                fill
-                src="/default.png"
-                alt="user"
-                className="rounded-full object-cover"
-              />
-            </div>
-          )}
-
+      render: (_, row) => (
+        <div className="relative w-12 h-12">
+          <Image
+            fill
+            src={row.image || "/default.png"}
+            alt="user"
+            className="rounded-full object-cover"
+          />
         </div>
       )
     },
@@ -100,17 +114,17 @@ export default function UserSegment({ users,userStats }) {
 
         if (value === "google") {
           return (
-            <div className="items-center flex bg-purple-200 rounded-lg p-1 gap-2">
-              <FcGoogle size={30}/>
-              <span className="text-[15px]">Google</span>
+            <div className="flex items-center bg-purple-200 rounded-lg p-1 gap-2">
+              <FcGoogle size={28}/>
+              <span>Google</span>
             </div>
           );
         }
 
         return (
           <div className="flex rounded-lg bg-violet-200 items-center p-1 gap-2">
-            <MdEmail size={30} className="text-purple-600"/>
-            <span className="text-[15px] font-sans">Email</span>
+            <MdEmail size={28} className="text-purple-600"/>
+            <span>Email</span>
           </div>
         );
 
@@ -142,7 +156,6 @@ export default function UserSegment({ users,userStats }) {
 
         <div className="flex items-center gap-2">
 
-          {/* EDIT */}
           <button
             className="BtnAction text-purple-500 hover:text-purple-800"
             onClick={() => router.push(`/admin/Users/edit/${row.id}`)}
@@ -150,7 +163,6 @@ export default function UserSegment({ users,userStats }) {
             <LuPencil size={18}/>
           </button>
 
-          {/* BLOCK */}
           <button
             className="BtnAction text-red-600 hover:text-red-800"
             onClick={() => handleBlock(row.id)}
@@ -165,9 +177,10 @@ export default function UserSegment({ users,userStats }) {
 
   ];
 
+
   return (
 
-    <main>
+    <main className="flex flex-col gap-10">
 
       <div className="mb-6">
 
@@ -175,13 +188,42 @@ export default function UserSegment({ users,userStats }) {
           Users
         </h1>
 
-        <p className="text-gray-500 text-sm">
+        <p className="text-gray-700 text-sm">
           Manage all registered users.
         </p>
 
       </div>
 
-      <StatsTabUser userStats={userStats}/>
+      <StatsTabUser userStats={userStats} />
+
+      {/* User Growth Chart */}
+
+      <AdminCard>
+<section className="flex justify-between items-center mb-4 ">
+        <p className="font-semibold text-lg">User Stats</p>
+
+       <div className=" w-60  h-20 rounded-xl mb-4 ">
+         <LocalDropDown
+          options={filterOptions}
+          value={filter}
+          onChange={setFilter}
+        />
+       </div>
+      </section>
+
+        <AnalyticalChartLayout
+          title="User Growth"
+          subtitle={`${filter} user growth`}
+          statValue={userStats.usersThisMonth}
+          statChange={`${userStats.growthPercent}% this month`}
+          totalValue={userStats.totalUsers}
+          totalLabel="Total users"
+          data={growthData}
+          dataKey="users"
+          unit="users"
+        />
+
+      </AdminCard>
 
       <Table columns={columns} rows={formattedRows} />
 

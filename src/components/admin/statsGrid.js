@@ -15,11 +15,11 @@ export default function StatsGrid({ items }) {
               className="admin-stats-card hover-effect border"
             >
               <div className="flex flex-col ml-2">
-                <p className="font-semibold text-purple-300 text-sm">
+                <p className="font-bold text-purple-300 text-sm">
                   {item.label}
                 </p>
 
-                <h3 className="text-xl text-white ">
+                <h3 className="text-xl text-white font-semibold ">
                   {item.value}
                 </h3>
               </div>
