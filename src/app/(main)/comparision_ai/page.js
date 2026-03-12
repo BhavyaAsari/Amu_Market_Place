@@ -8,8 +8,8 @@ export default async function Comparision_AI({ searchParams }) {
     ? resolvedSearchParams.ids.split(",")
     : [];
 
-  console.log("ids from URL:", ids);
-  console.log("Server received ids:", resolvedSearchParams?.ids);
+  // // console.log("ids from URL:", ids);
+  // console.log("Server received ids:", resolvedSearchParams?.ids);
 
   return <Comparision_AI_Client ids={ids} />;
 }

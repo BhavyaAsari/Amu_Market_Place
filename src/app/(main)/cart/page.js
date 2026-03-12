@@ -8,7 +8,7 @@ import Breadcrumb from "@/components/heroComponents/breadCrum";
 
 export default function CartPage() {
   const { cart, removeFromCart, increaseQty, decreaseQty, total } = useCart();
-  console.log("cart data",cart)
+  // console.log("cart data",cart)
 
   return (
     <>
