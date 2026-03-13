@@ -12,7 +12,7 @@ export default function StatsSection({
   const change = Number(statChange) || 0;
   const isIncrease = change >= 0;
 
-  console.log("statechange",statChange)
+  // console.log("statechange",statChange)
 
   return (
     <main className="flex gap-8 mb-8">

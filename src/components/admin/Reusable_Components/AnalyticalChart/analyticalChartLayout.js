@@ -18,6 +18,8 @@ export default function AnalyticalChartLayout({
   return (
     <div className="analyticalChartContainer">
 
+      
+
       <ChartHeader title={title} subtitle={subtitle} />
 
       <StatsSection
