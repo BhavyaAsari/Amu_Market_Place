@@ -49,7 +49,7 @@ export async function addReview(productId, email, rating, comment) {
   // Update average rating
   product.rating =product.reviews.reduce((acc, r) => acc + r.rating, 0) /product.reviewCount;
 
-    console.log("reviews of product",product.reviews)
+    // console.log("reviews of product",product.reviews)
 
   await product.save();
 
