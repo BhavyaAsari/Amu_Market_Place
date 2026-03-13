@@ -1,13 +1,23 @@
-"Use Client";
+"Use client";
 
 import AdminCard from "../adminCard";
+import SearchBarAdmin from "./SearchBarAdmin";
+import PaginationButton from "./PaginationButton";
 
-export default function Table({ columns, rows }) {
+export default function Table({ columns, rows,totalPages }) {
+
+  // console.log("Rows of user",rows)
+  console.log("Total Number Pages: ",totalPages); 
 
   return (
     <AdminCard>
 
    <div className="overflow-x-auto shadow-sm">
+
+    <section className="px-4 py-10 flex justify-end">
+          <SearchBarAdmin/>
+
+    </section>
        <table className="w-full text-sm  min-w-200 ">
 
         <thead className="  bg-linear-to-b from-purple-400 to-purple-800 ">
@@ -45,10 +55,22 @@ export default function Table({ columns, rows }) {
             </tr>
           ))}
 
+          {rows.length === 0 && (
+  <tr>
+    <td colSpan={columns.length} className="text-center py-6 text-gray-500">
+      No results found
+    </td>
+  </tr>
+)}
+
         </tbody>
 
       </table>
+
+      
    </div>
+
+  <div className="flex justify-center py-4"> <PaginationButton totalPages={totalPages}/></div>
 
     </AdminCard>
   );

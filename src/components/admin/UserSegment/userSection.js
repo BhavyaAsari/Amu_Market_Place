@@ -13,8 +13,9 @@ import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyt
 import AdminCard from "../adminCard";
 import LocalDropDown from "@/components/productComponents/localDropDown";
 import { useState, useEffect } from "react";
+import SearchBarAdmin from "../Reusable_Components/SearchBarAdmin";
 
-export default function UserSegment({ users, userStats, usersGrowth }) {
+export default function UserSegment({ users, userStats, usersGrowth,totalPages }) {
 
   const router = useRouter();
 
@@ -56,6 +57,8 @@ export default function UserSegment({ users, userStats, usersGrowth }) {
     }
 
   }
+
+  // console.log("users",users)
 
 
   const formattedRows = users.map((user, index) => ({
@@ -198,34 +201,45 @@ export default function UserSegment({ users, userStats, usersGrowth }) {
 
       {/* User Growth Chart */}
 
-      <AdminCard>
-<section className="flex justify-between items-center mb-4 ">
-        <p className="font-semibold text-lg">User Stats</p>
+      
+<section className="relative flex flex-col justify-between items-center mt-30">
 
-       <div className=" w-60  h-20 rounded-xl mb-4 ">
-         <LocalDropDown
-          options={filterOptions}
-          value={filter}
-          onChange={setFilter}
-        />
-       </div>
-      </section>
+  <div className="absolute z-100 -top-25 w-full 
+  bg-linear-to-bl from-purple-400 via-purple-500 to-purple-700 
+  flex items-center justify-between px-4 py-3 rounded-xl">
 
-        <AnalyticalChartLayout
-          title="User Growth"
-          subtitle={`${filter} user growth`}
-          statValue={userStats.usersThisMonth}
-          statChange={`${userStats.growthPercent}% this month`}
-          totalValue={userStats.totalUsers}
-          totalLabel="Total users"
-          data={growthData}
-          dataKey="users"
-          unit="users"
-        />
+    <span className="font-semibold text-white text-3xl">
+      User Stats
+    </span>
 
-      </AdminCard>
+    <div className="w-72">
+      <LocalDropDown
+        options={filterOptions}
+        value={filter}
+        onChange={setFilter}
+      />
+    </div>
 
-      <Table columns={columns} rows={formattedRows} />
+  </div>
+
+  <AnalyticalChartLayout
+    title="User Growth"
+    subtitle={`${filter} user growth`}
+    statValue={userStats.usersThisMonth}
+    statChange={`${userStats.growthPercent}% this month`}
+    totalValue={userStats.totalUsers}
+    totalLabel="Total users"
+    data={growthData}
+    dataKey="users"
+    unit="users"
+  />
+
+</section>       
+
+
+      {/* <SearchBarAdmin/> */}
+
+      <Table columns={columns} rows={formattedRows} totalPages={totalPages}/>
 
     </main>
 
