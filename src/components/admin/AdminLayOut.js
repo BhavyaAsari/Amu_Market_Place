@@ -18,9 +18,9 @@ import UserSegment from "./UserSegment/userSection";
 import SideMenuAdmin from "./SideBarMenu";
 import AdminCard from "./adminCard";
 
-export default function AdminLayout({ stats, revenueData, users,userStats,usersGrowth }) {
+export default function AdminLayout({ stats, revenueData, users,userStats,usersGrowth,totalPages }) {
   const [active, setActive] = useState("dashboard");
-  console.log("users",userStats);
+  // console.log("users",userStats);
 
   const menuItems = [
     {
@@ -93,7 +93,7 @@ export default function AdminLayout({ stats, revenueData, users,userStats,usersG
           </>
         )}
 
-        {active === "users" && <UserSegment users={users} userStats={userStats}  usersGrowth={usersGrowth}/>}
+        {active === "users" && <UserSegment users={users} userStats={userStats}  usersGrowth={usersGrowth} totalPages={totalPages}/>}
 
         {active === "products" && <div>Products Section</div>}
 
