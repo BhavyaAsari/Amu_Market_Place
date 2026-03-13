@@ -1282,8 +1282,9 @@
       mb-4
       backdrop-blur-md
       border-white/10
-      bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800
       p-10
+            bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800
+
       shadow-sm;
   }
 
