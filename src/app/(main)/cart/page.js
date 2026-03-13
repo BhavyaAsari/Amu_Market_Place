@@ -104,9 +104,19 @@ export default function CartPage() {
               ) : (
                   <div className="text-center py-12">
 
-              <p className="text-lg text-gray-500 mb-4">
+                       <p className="text-xl font-semibold text-gray-500 mb-4">
                 Your cart is empty
               </p>
+
+                     <div className="relative w-80 h-80  flex ml-auto mr-auto ">
+                      <Image
+                      fill
+                      src="/emptyCart.png"
+                      alt="empty Cart"
+                      className="object-contain "/>
+                     </div>
+
+             
 
               <Link href="/productlist">
                 <button className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
