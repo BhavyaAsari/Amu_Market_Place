@@ -18,7 +18,7 @@ export default function ProductDetailsClient({ product, session, userEmail }) {
     router.push(`/checkout?buyNow=true&productId=${product._id}&qty=1`);
   };
 
-  console.log("product",product._id)
+  // console.log("product",product._id)
 
 
   return (

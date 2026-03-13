@@ -39,7 +39,7 @@ const specIconMap = {
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
-  console.log("productId",id)
+  // console.log("productId",id)
 
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
