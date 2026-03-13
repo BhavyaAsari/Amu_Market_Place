@@ -6,7 +6,7 @@ export default function ProductComparisonGrid({ data }) {
 
   if (!data?.products) return null;
 
-  console.log("product",data.products.image)
+  // console.log("product",data.products.image)
 
   return (
     <section>
