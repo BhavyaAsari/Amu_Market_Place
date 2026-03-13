@@ -11,7 +11,7 @@ export default async  function successPage({params}) {
 
   const order = await Orders.findById(id).lean();
 
-    console.log("orders",order);
+    // console.log("orders",order);
 
      if (!order) {
     return <div>Order not found</div>;
