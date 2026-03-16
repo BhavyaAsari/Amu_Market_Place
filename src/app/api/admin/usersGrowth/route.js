@@ -1,4 +1,4 @@
-import { getUsersGrowth } from "@/app/actions/adminActions/getUsersGrowth";
+import { getUsersGrowth } from "@/app/actions/adminActions/userActions/getUsersGrowth";
 
 export async function GET(req) {
 
