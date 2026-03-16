@@ -10,6 +10,8 @@ export default function SearchBarAdmin() {
 
   const initialValue = searchParams.get("search") || "";
 
+  console.log("value",initialValue);
+
   const [value, setValue] = useState(initialValue);
 
   const handleSearch = (e) => {
