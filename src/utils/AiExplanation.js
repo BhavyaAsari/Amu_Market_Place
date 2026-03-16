@@ -33,27 +33,22 @@ Portability: ${p.portabilityScore}
       ? `
 You are a premium laptop performance analyst.
 
-Strict Rules:
-- DO NOT write paragraphs.
-- Use bullet points ONLY.
-- Every explanation line must start with •
-- Do NOT display numerical scores.
-- Do NOT show raw score comparisons.
-- Do NOT invent specifications.
-- Keep each bullet concise (1–2 lines max).
-- Maintain a professional analytical tone.
+Rules:
+• Bullet points only
+• No paragraphs
+• No numeric scores
+• No raw comparisons
+• Concise professional insights
 `
       : `
 You are an expert laptop comparison analyst.
 
-Strict Rules:
-- Use bullet points only.
-- Do NOT display numerical scores.
-- Do NOT mention score comparisons.
-- Do NOT show markdown symbols.
-- Keep content concise and structured.
-- Maximum 180 words.
-Tone: confident, analytical, premium.
+Rules:
+• Bullet points only
+• No numbers or scores
+• No markdown symbols
+• Maximum 180 words
+Tone: confident, analytical
 `;
 
     // -------- USER PROMPT --------
@@ -61,104 +56,101 @@ Tone: confident, analytical, premium.
       ? `
 Purpose: ${purpose}
 
-Product Analyzed:
+Products:
 ${formattedProducts}
 
-Write the response using ONLY bullet points in the exact structure below.
+Respond EXACTLY in this structure.
 
 🧠 Performance Overview
-• 3–4 bullets about overall positioning and capability
+• bullets
 
 ⚙ Processor & Multitasking
-• 3–4 bullets about CPU & RAM real-world impact
+• bullets
 
 💾 Storage & Responsiveness
-• 2–3 bullets about speed and daily workflow impact
+• bullets
 
 🔋 Battery & Mobility
-• 2–3 bullets about portability and endurance
+• bullets
 
 🎯 Real-World Suitability
-• 3–4 bullets about ideal users and usage scenarios
+• bullets
 
 📊 Strategic Positioning
-• 2–3 bullets about market segment and value
-
-Important:
-- NO paragraphs.
-- ONLY bullet points.
-- Each bullet must begin with •
-- Do not show numbers or raw metrics.
+• bullets
 `
       : `
 Purpose: ${purpose}
 Decision Mode: ${mode}
 
-System Ranking:
 Winner: ${winner.name}
 
-Comparison Data:
+Products:
 ${formattedProducts}
 
-Write the response using ONLY bullet points in this structure:
+Respond EXACTLY in this structure.
 
 🏆 Best Overall
-• One strong reason it ranks first
+• bullet
 
 💼 Ideal Use Cases
-• 3–4 user types
+• bullets
 
 ✅ Key Advantages
-• 3–5 clear strengths
+• bullets
 
 ⚖ Considerations
-• 2–3 trade-offs
+• bullets
 
 🤝 Where Other Options May Be Better
-• 2–3 scenarios
+• bullets
 
 🎯 Final Recommendation
-• One decisive closing statement
-
-Important:
-- No paragraphs.
-- Bullet points only.
-- Do not show numbers.
+• bullet
 `;
 
-    const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "z-ai/glm-4.5-air:free",
-          temperature: isInsight ? 0.35 : 0.25,
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: userPrompt },
-          ],
-        }),
+    // -------- API CALL --------
+
+    const callAI = async (model) => {
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            temperature: isInsight ? 0.35 : 0.25,
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt },
+            ],
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error?.message || "AI request failed");
       }
-    );
 
-    const data = await response.json();
-    // console.log("data",data);
+      return data?.choices?.[0]?.message?.content;
+    };
 
-    if (!response.ok) {
-  console.error("OpenRouter error:", data);
-  return "AI service temporarily unavailable.";
-}
+    try {
+      return await callAI("meta-llama/llama-3.1-8b-instruct");
+    } catch (error) {
+      console.warn("Primary model failed. Trying fallback model...");
 
-    return (
-      data?.choices?.[0]?.message?.content ||
-      "Explanation could not be generated."
-    );
+      // fallback model
+      return await callAI("mistralai/mistral-7b-instruct");
+    }
+
   } catch (error) {
     console.error("AI Explanation error:", error);
-    return "Explanation unavailable.";
+    return "AI explanation currently unavailable.";
   }
 }
