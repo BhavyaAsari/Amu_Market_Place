@@ -4,7 +4,7 @@ import LocalDropDown from "@/components/productComponents/localDropDown";
 import { LuUserRoundCog, LuUserRoundPen } from "react-icons/lu";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { updateUsersAdmin } from "@/app/actions/adminActions/updateUser";
+import { updateUsersAdmin } from "@/app/actions/adminActions/userActions/updateUser";
 
 export default function EditUserForm({ user }) {
   const [role, setRole] = useState(user.role);
