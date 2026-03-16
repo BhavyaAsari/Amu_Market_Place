@@ -72,6 +72,12 @@ if (!series) return; // skip bad rows
   image: "/products/default.png",
   images: [],
 
+  stock:0,
+  soldCount:0,
+  discount:0,
+  status:"active",
+  category:"Laptop",
+
   specs: {
     processor: `${row["Processor Brand"] || ""} ${
       row["Processor Name"] || ""
