@@ -18,14 +18,14 @@ export default function Table({ columns, rows,totalPages }) {
           <SearchBarAdmin/>
 
     </section>
-       <table className="w-full text-sm  min-w-200 ">
+       <table className="w-full text-sm min-w-[900px] ">
 
         <thead className="  bg-linear-to-b from-purple-400 to-purple-800 ">
           <tr>
             {columns.map((col, index) => (
               <th
                 key={index}
-                className="text-left p-3  text-gray-700 text-sm "
+                className="text-left px-10 py-2 text-gray-700 text-sm "
               >
                 {col.label}
               </th>
@@ -42,7 +42,7 @@ export default function Table({ columns, rows,totalPages }) {
             >
 
               {columns.map((col, j) => (
-                <td key={j} className="p-3">
+                <td key={j} className="px-10 py-2">
 
                   {col.render
                     ? col.render(row[col.key], row)
