@@ -1,7 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 
-const specSchema = new mongoose.Schema ({
-
+const specSchema = new mongoose.Schema(
+  {
     processor: String,
     ram: String,
     storage: String,
@@ -14,48 +14,37 @@ const specSchema = new mongoose.Schema ({
     audio: String,
     security: String,
     connectivity: String,
-},
+  },
 
-{_id:false}
+  { _id: false },
 );
 
-
 const reviewSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
- {
+    rating: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
 
-   user: {
-
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"User",
-    required:true,
+    comment: {
+      type: String,
+      required: true,
+    },
   },
 
-  rating : {
-
-    type:Number,
-    required:true,
-    min:1,
-    max:5
-  },
-  isFeatured: {
-  type: Boolean,
-  default: false
-},
-
-stock: {
-  type: Number,
-  default: 0
-},
-
-  comment : {
-
-    type:String,
-    required:true,
-  },
- },
-
- {timestamps:true}
+  { timestamps: true },
 );
 
 const productSchema = new mongoose.Schema(
@@ -82,30 +71,57 @@ const productSchema = new mongoose.Schema(
     title: { type: String, required: true },
     shortDescription: { type: String, required: true },
     aiDescription: {
-  type: String,
-  default: null,
-},
+      type: String,
+      default: null,
+    },
     price: { type: Number, required: true },
     rating: { type: Number, default: 0 },
 
-
-    reviewCount:{type:Number,default:0},
-    reviews:[reviewSchema],
+    reviewCount: { type: Number, default: 0 },
+    reviews: [reviewSchema],
 
     image: { type: String, required: true },
     images: { type: [String], default: [] },
 
+    stock: {
+      type: Number,
+      default: 0,
+    },
+
+    soldCount: {
+
+      type:Number,
+      default:0
+    },
+status: {
+  type: String,
+  enum: ["active", "inactive", "archived"],
+  default: "active",
+  index: true
+},
+
+    category : {
+
+      type:String,
+      index:true
+    },
+
+    discount : {
+
+      type:Number,
+      default:0
+    },
+
     specs: specSchema,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 //  ADD INDEXES HERE (NOT INSIDE schema fields)
 productSchema.index({ brand: 1, series: 1 });
 productSchema.index({ price: 1 });
-productSchema.index({rating:-1,price:1});
+productSchema.index({ rating: -1, price: 1 });
 productSchema.index({ createdAt: -1 });
 
-
-
-export default mongoose.models.Product || mongoose.model("Product",productSchema);
+export default mongoose.models.Product ||
+  mongoose.model("Product", productSchema);
