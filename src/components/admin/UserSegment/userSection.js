@@ -7,7 +7,7 @@ import { LuPencil, LuBan } from "react-icons/lu";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { toggleUserStatus } from "@/app/actions/adminActions/toggleUserStatus";
+import { toggleUserStatus } from "@/app/actions/adminActions/userActions/toggleUserStatus";
 import StatsTabUser from "./statsTabs";
 import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyticalChartLayout";
 import AdminCard from "../adminCard";
@@ -187,11 +187,11 @@ export default function UserSegment({ users, userStats, usersGrowth,totalPages }
 
       <div className="mb-6">
 
-        <h1 className="text-2xl font-semibold text-gray-800">
+        <h1 className=" AdminTitle">
           Users
         </h1>
 
-        <p className="text-gray-700 text-sm">
+        <p className=" subTitleAdmin">
           Manage all registered users.
         </p>
 
