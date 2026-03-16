@@ -17,8 +17,9 @@ import PriceBreakdown from "./PriceBreakdownChart";
 import UserSegment from "./UserSegment/userSection";
 import SideMenuAdmin from "./SideBarMenu";
 import AdminCard from "./adminCard";
+import ProductSection from "./Product_Segment/productSection";
 
-export default function AdminLayout({ stats, revenueData, users,userStats,usersGrowth,totalPages }) {
+export default function AdminLayout({ stats, revenueData, users,userStats,usersGrowth,totalPages ,productAnalytics,productsDetails,productPages}) {
   const [active, setActive] = useState("dashboard");
   // console.log("users",userStats);
 
@@ -95,7 +96,7 @@ export default function AdminLayout({ stats, revenueData, users,userStats,usersG
 
         {active === "users" && <UserSegment users={users} userStats={userStats}  usersGrowth={usersGrowth} totalPages={totalPages}/>}
 
-        {active === "products" && <div>Products Section</div>}
+        {active === "products" && <ProductSection productAnalytics={productAnalytics} productsDetails={productsDetails} productPages={productPages}/>}
 
         {active === "orders" && <div>Orders Section</div>}
       </div>
