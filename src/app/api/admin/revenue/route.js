@@ -1,4 +1,4 @@
-import { getRevenueData } from "@/app/actions/productActions/getRevenueData";
+import { getRevenueData } from "@/app/actions/adminActions/productActions/getRevenueData";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
