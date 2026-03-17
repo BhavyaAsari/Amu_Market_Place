@@ -24,6 +24,29 @@ function parsePrice(value) {
   return Number.isNaN(price) ? null : price;
 }
 
+
+//Random Generators 
+function getRandomSold() {
+  const rand = Math.random();
+
+  if (rand > 0.8) return Math.floor(Math.random() * 100); // top products
+  if (rand > 0.5) return Math.floor(Math.random() * 60);
+  return Math.floor(Math.random() * 30);
+}
+
+function getStockFromSold(sold) {
+
+  const baseStock = 10 - Math.floor(sold/5);
+  return Math.max(0,baseStock);
+}
+
+function getDiscount(sold) {
+
+  if(sold > 30) return Math.floor(Math.random() * 15);
+  return Math.random() > 0.5
+  ? Math.floor(Math.random() * 30) : 0;
+}
+
 /* ----------------------------------
    Main
 ---------------------------------- */
@@ -45,6 +68,12 @@ fs.createReadStream("./src/scripts/laptopData.csv")
     .split(" ")[0]
     .replace(/[^a-zA-Z]/g, "")
     .toLowerCase();
+
+      //  Generate realistic values
+    const sold = getRandomSold();
+    const stock = getStockFromSold(sold);
+    const discount = getDiscount(sold);
+
 
     
 const series = row["Series"]?.trim();
@@ -72,9 +101,10 @@ if (!series) return; // skip bad rows
   image: "/products/default.png",
   images: [],
 
-  stock:0,
-  soldCount:0,
-  discount:0,
+  stock,
+  soldCount:sold,
+  discount,
+
   status:"active",
   category:"Laptop",
 
