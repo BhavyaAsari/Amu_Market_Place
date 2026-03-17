@@ -19,13 +19,13 @@ export async function getUserStats() {
       status: "active"
     });
 
-    // Last 7 days signup
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  
 
-    const newSignups = await User.countDocuments({
-      createdAt: { $gte: sevenDaysAgo }
-    });
+    //Current Day's signup
+    const startOfToday = new Date();  
+    startOfToday.setHours(0,0,0,0);
+
+    const newSignups = await User.countDocuments({createdAt:{$gte:startOfToday}}) 
 
     // Current month users
     const now = new Date();

@@ -1,34 +1,39 @@
 import AdminCard from "../adminCard";
-import StatsGrid from "../statsGrid";
-import { LuUser, LuBan, LuUserPlus } from "react-icons/lu"
+import StatsGrid from "../Reusable_Components/statsGrid";
+import { LuUser, LuBan, LuUserPlus } from "react-icons/lu";
 
-export default function StatsTabUser({userStats}) {
+export default function StatsTabUser({ userStats }) {
+  const today = new Date();
 
-    const items = [
+  const formattedDate = today.toLocaleDateString("en-Us", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+
+  const items = [
     {
       label: "Active Users",
       value: userStats.activeUsers,
-      icon: LuUser
+      icon: LuUser,
     },
     {
       label: "Blocked Users",
       value: userStats.blockedUsers,
-      icon: LuBan
+      icon: LuBan,
     },
     {
-      label: "New Signups",
+      label: `Today's Signups`,
+      subLabel:`(${formattedDate})`,
       value: userStats.newSignups,
-      icon: LuUserPlus
-    }
+      icon: LuUserPlus,
+    },
   ];
 
-    return (
-
-    
-   <AdminCard  bgColor="bg-gradient-to-b from-[#4c1d95] via-[#6d28d9 #9333ea] to-[#9333ea]">
-       <h1 className="font-semibold text-white text-xl mb-3">User Insights</h1>
-      <StatsGrid  items={items}/>
-   </AdminCard>
-     
-    )
+  return (
+    <AdminCard bgColor="bg-gradient-to-b from-[#4c1d95] via-[#6d28d9 #9333ea] to-[#9333ea]">
+      <h1 className="font-semibold text-white text-xl mb-3">User Insights</h1>
+      <StatsGrid items={items} />
+    </AdminCard>
+  );
 }
