@@ -28,7 +28,7 @@ export default function SuccessOrder({order}) {
       <LuCheck size={74} />
     </div>
 
-    <h1 className="successTitle">
+    <h1 className="text-glow   successTitle text-4xl ">
       Order Successful!
     </h1>
 
