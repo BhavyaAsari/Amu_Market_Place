@@ -104,7 +104,7 @@ export async function POST(req) {
     let items = [];
 
     // ===============================
-    // 🟣 BUY NOW FLOW
+    //  BUY NOW FLOW
     // ===============================
     if (buyNow) {
       if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
@@ -143,7 +143,7 @@ export async function POST(req) {
     } else {
 
       // ===============================
-      // 🟢 CART FLOW
+      //  CART FLOW
       // ===============================
 
       const cart = await Cart.findOne({
@@ -183,7 +183,7 @@ export async function POST(req) {
     }
 
     // ===============================
-    // 💰 PRICE CALCULATION (SERVER ONLY)
+    //  PRICE CALCULATION (SERVER ONLY)
     // ===============================
     const subtotal = items.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -195,7 +195,7 @@ export async function POST(req) {
     const total = subtotal + tax + shippingFee;
 
     // ===============================
-    // 📦 CREATE ORDER
+    //  CREATE ORDER
     // ===============================
     const order = await Orders.create({
       orderNumber: generateOrderNumber(),
@@ -212,7 +212,7 @@ export async function POST(req) {
     });
 
     // ===============================
-    // 💵 COD FLOW
+    //  COD FLOW
     // ===============================
     if (paymentMethod === "cod") {
 
@@ -227,7 +227,7 @@ export async function POST(req) {
     }
 
     // ===============================
-    // 💳 STRIPE FLOW
+    //  STRIPE FLOW
     // ===============================
 
     const stripeSession = await stripe.checkout.sessions.create({
