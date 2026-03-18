@@ -18,7 +18,7 @@ export default function StatsSection({
     <main className="flex gap-8 mb-8">
 
       <div>
-        <p className="statsFont">{statValue}</p>
+        <p className="statsFont textDropShadow">{statValue}</p>
 
         <p
           className={`statChangeFont font-semibold flex items-center gap-1 ${
@@ -31,8 +31,8 @@ export default function StatsSection({
       </div>
 
       <div>
-        <p className="statsFont">{totalValue}</p>
-        <p className="statChangeFont font-semibold">{totalLabel}</p>
+        <p className="statsFont textDropShadow">{totalValue}</p>
+        <p className="statChangeFont font-semibold textDropShadow">{totalLabel}</p>
       </div>
 
     </main>
