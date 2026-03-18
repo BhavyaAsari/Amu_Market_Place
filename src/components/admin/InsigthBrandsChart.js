@@ -16,8 +16,8 @@ export default function InsightBrandsChart() {
   return (
     <div>
       <AdminCard bgColor="bg-gradient-to-br from-purple-500 via-violet-800 to-purple-500">
-       <h2 className="text-lg font-semibold mb-4">
-          Top Selling Brands
+       <h2 className="text-2xl font-medium  mb-4 textDropShadow text-white">
+          Top Selling Brands across the globe
         </h2>
         <ReusableBarChart data={data} />
       </AdminCard>
