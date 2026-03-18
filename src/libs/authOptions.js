@@ -94,7 +94,7 @@ export const authOptions = {
         }
 
         /*  MERGE GUEST CART */
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         const guestId = cookieStore.get("guest_id")?.value;
 
         if (guestId && user.id) {
