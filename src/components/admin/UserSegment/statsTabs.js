@@ -32,7 +32,7 @@ export default function StatsTabUser({ userStats }) {
 
   return (
     <AdminCard bgColor="bg-gradient-to-b from-[#4c1d95] via-[#6d28d9 #9333ea] to-[#9333ea]">
-      <h1 className="font-semibold text-white text-xl mb-3">User Insights</h1>
+      <h1 className="font-semibold text-white text-xl mb-3 textDropShadow">User Insights</h1>
       <StatsGrid items={items} />
     </AdminCard>
   );
