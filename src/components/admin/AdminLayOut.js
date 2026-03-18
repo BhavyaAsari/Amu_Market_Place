@@ -22,8 +22,13 @@ import ProductSection from "./Product_Segment/productSection";
 export default function AdminLayout({ data }) {
   const [active, setActive] = useState("dashboard");
 
+
+
   //  FIX 1: Extract data FIRST
-  const { stats, revenue, users, products } = data;
+  const { stats, revenue, users, products ,stock} = data;
+
+      console.log("charts",stock.stocksTrend);
+
 
   const menuItems = [
     { key: "dashboard", name: "Dashboard", icon: LuLayoutDashboard },
@@ -74,7 +79,7 @@ export default function AdminLayout({ data }) {
             </div>
 
             <AdminCard bgColor="bg-gradient-to-r from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
-              <h1 className="text-xl mb-2 font-semibold text-white">
+              <h1 className="text-xl mb-2 font-semibold text-white textDropShadow">
                 Admin Insights
               </h1>
               <StatsGrid items={statsItems} />
@@ -89,7 +94,7 @@ export default function AdminLayout({ data }) {
         {/*  FIX 2 */}
         {active === "users" && <UserSegment data={users} />}
 
-        {active === "products" && <ProductSection data={products} />}
+        {active === "products" && <ProductSection data={products}   stockTrendsData={stock.stocksTrend}/>}
 
         {active === "orders" && <div>Orders Section</div>}
       </div>
