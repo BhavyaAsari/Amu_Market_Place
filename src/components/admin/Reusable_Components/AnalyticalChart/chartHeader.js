@@ -10,11 +10,11 @@ export default function ChartHeader({ title, subtitle }) {
               
                 </div>
 
-                <h2 className="text-2xl font-extrabold text-white">
+                <h2 className="text-2xl font-extrabold text-white textDropShadow text-glow ">
                       {title}
                 </h2>
 
-                <p className="text-sm text-gray-800 mt-3 font-bold">{subtitle}</p>
+                <p className="text-sm text-gray-800 mt-3 font-bold textDropShadow">{subtitle}</p>
 
             </div>
         </main>
