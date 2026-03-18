@@ -173,7 +173,7 @@ const growthData = usersGrowth?.[filter] || usersGrowth;
           bg-linear-to-bl from-purple-400 via-purple-500 to-purple-700 
           flex items-center justify-between px-4 py-3 rounded-xl">
 
-          <span className="font-semibold text-white text-2xl">
+          <span className="font-semibold text-white text-2xl textDropShadow text-glow ">
             User Stats
           </span>
 
