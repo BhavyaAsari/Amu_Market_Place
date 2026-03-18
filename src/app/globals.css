@@ -802,7 +802,7 @@
 
   /* ===== HERO SECTION ===== */
   .successSection {
-    @apply relative bg-gradient-to-br from-purple-600 via-purple-500 to-purple-400 text-white pt-24 pb-40 px-6 overflow-hidden;
+    @apply relative bg-linear-to-br from-violet-600 via-purple-500 to-violet-500 text-white pt-24 pb-40 px-6 overflow-hidden;
   }
 
   /* ===== HERO CONTENT WRAPPER ===== */
@@ -1332,8 +1332,22 @@
 
   @apply text-gray-700 text-sm;
 }
+
 }
 
 
-/* ===Reusable Table === */
+/* ===Random === */
+
+@layer components {
+
+  .textDropShadow {
+
+    @apply drop-shadow-[0px_2px_2px_rgba(0,0,0,0.3)];
+  }
+
+    .text-glow {
+    @apply text-sm font-medium text-white/90;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+  }
+}
 
