@@ -2,7 +2,7 @@
 import AdminLayout from "@/components/admin/AdminLayOut";
 
 
-import { getDashBoardData } from "@/app/actions/adminActions/productActions/getDashBoardData";
+import { getDashBoardData } from "@/app/actions/adminActions/AdminDashBoardAction/getDashBoardData";
 
 export default async function AdminDashBoard({searchParams}) {
 
