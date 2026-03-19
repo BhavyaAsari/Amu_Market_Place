@@ -16,9 +16,13 @@ export default function InsightBrandsChart() {
   return (
     <div>
       <AdminCard bgColor="bg-gradient-to-br from-purple-500 via-violet-800 to-purple-500">
-       <h2 className="text-2xl font-medium  mb-4 textDropShadow text-white">
+       
+        <section className="flex gap-2 p-4">
+              <div className="titleContainer mt-3"></div>
+            <h2 className="text-2xl font-medium  mb-4 textDropShadow text-glow text-white">
           Top Selling Brands across the globe
         </h2>
+            </section>
         <ReusableBarChart data={data} />
       </AdminCard>
     </div>
