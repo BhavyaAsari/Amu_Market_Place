@@ -1,16 +1,14 @@
+import AdminClientWrapper from "@/utils/adminWrapper";
 
 
-export default function AdminLayout({children}) {
+export default function AdminLayout({ children }) {
+  return (
 
-    return (
+    <AdminClientWrapper>
+            {children}
 
-
-        <>
-        <main className="admin-layout">
-            <section>
-                {children}
-            </section>
-        </main>
-        </>
-    )
+    </AdminClientWrapper>
+    
+    
+  );
 }
