@@ -13,6 +13,7 @@ import { getStockTrend } from "../productActions/getStockVsSoldTopProducts";
 import { getUsersDetails } from "../userActions/getUserDetails";
 import { getUsersGrowth } from "../userActions/getUsersGrowth";
 import { getUserStats } from "../userActions/getUserStats";
+import { getPriceBreakDown } from "./getPriceBreakDownWithInsights";
 
 export async function getDashBoardData({search,page}) {
 
@@ -29,7 +30,8 @@ export async function getDashBoardData({search,page}) {
   usersData,
   userStats,
   usersGrowth,
-  stockVsSoldData
+  stockVsSoldData,
+  priceBreakDownAnalytics
 ] = await Promise.all([
   getProductStats(),
   getRevenueData(),
@@ -39,7 +41,8 @@ export async function getDashBoardData({search,page}) {
   getUsersDetails({ search, page }),
   getUserStats(),
   getUsersGrowth(),
-  getStockTrend()
+  getStockTrend(),
+  getPriceBreakDown()
 ]);
 
       return {
@@ -63,6 +66,10 @@ export async function getDashBoardData({search,page}) {
 
   stock:{
     stocksTrend:stockVsSoldData
+  },
+
+  analyticsData: {
+     priceAnalysis:priceBreakDownAnalytics
   }
 };
 
