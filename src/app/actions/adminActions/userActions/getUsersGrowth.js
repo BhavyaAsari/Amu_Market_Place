@@ -14,48 +14,58 @@ export async function getUsersGrowth(range = "monthly") {
   ];
 
   // WEEKLY
-  if (range === "weekly") {
+  
 
     const weeklyCounts = Array(7).fill(0);
 
-    users.forEach(user => {
-      const dayIndex = new Date(user.createdAt).getDay();
-      weeklyCounts[dayIndex] += 1;
+    const today = new Date();
+
+    const endDate = new Date(today);
+    endDate.setDate(today.getDate() -1);
+
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - 6);
+
+users.forEach(user => {
+
+  const userDate = new Date(user.createdAt);
+
+  if (userDate >= startDate && userDate <= endDate) {
+
+    const diff = Math.floor(
+      (endDate - userDate) / (1000 * 60 * 60 * 24)
+    );
+
+    const index = 6 - diff;
+
+    if (index >= 0 && index < 7) {
+      weeklyCounts[index] += 1;
+    }
+  }
+});
+
+   const weekly = [];
+
+   for(let i=0; i<  7; i++) {
+
+    const date = new Date(endDate);
+    date.setDate(endDate.getDate() - (6 - i));
+
+    const dayName = date.toLocaleDateString("en-us", {
+
+      weekday:"short"
     });
 
-    return days.map((day, index) => ({
-      label: day,
-      users: weeklyCounts[index]
-    }));
+    weekly.push({
 
-  }
-
-  // YEARLY
-  if (range === "yearly") {
-
-    const yearMap = {};
-
-    users.forEach(user => {
-
-      const year = new Date(user.createdAt).getFullYear();
-
-      if (!yearMap[year]) {
-        yearMap[year] = 0;
-      }
-
-      yearMap[year] += 1;
-
+      label:dayName,
+      users:weeklyCounts[i],
+      date: date.toISOString()
+    
     });
+   }
 
-    return Object.entries(yearMap)
-      .sort((a,b) => a[0] - b[0])
-      .map(([year, count]) => ({
-        label: year,
-        users: count
-      }));
-
-  }
-
+  
   // MONTHLY (default)
 
   const monthlyCounts = Array(12).fill(0);
@@ -70,19 +80,49 @@ export async function getUsersGrowth(range = "monthly") {
   let runningTotal = 0;
   const currentMonth = new Date().getMonth();
 
-  const cumulativeGrowth = months
-    .slice(0, currentMonth + 1)
-    .map((month, index) => {
+  const monthly = months
+  .slice(0,currentMonth +1)
+  .map((month,index) => {
 
-      runningTotal += monthlyCounts[index];
+    runningTotal += monthlyCounts[index];
 
-      return {
-        label: month,
-        users: runningTotal
-      };
+    return {
 
+      label:month,
+      users:runningTotal
+    };
+  });
+
+
+  // YEARLY
+    const yearMap = {};
+
+    users.forEach(user => {
+
+      const year = new Date(user.createdAt).getFullYear();
+      yearMap[year] = (yearMap[year] || 0) + 1;
+
+    
     });
 
-  return cumulativeGrowth;
+    const yearly = Object.entries(yearMap)
+    .sort((a,b) => a[0] - b[0])
+    .map(([year,count]) => ({
+
+      label:year,
+      users:count
+    }));
+
+
+  
+
+
+  return {
+
+    weekly,
+    monthly,
+    yearly
+  }
+    
 
 }
