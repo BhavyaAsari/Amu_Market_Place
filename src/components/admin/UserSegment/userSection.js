@@ -29,7 +29,7 @@ export default function UserSegment({ data }) {
     { label: "Yearly", value: "yearly" }
   ];
 
-const growthData = usersGrowth?.[filter] || usersGrowth;
+const growthData = usersGrowth?.[filter] || [];
   //  Optimized mapping
   const formattedRows = useMemo(() => 
     users.map((user, index) => ({
