@@ -15,6 +15,8 @@ import AdminCard from "../adminCard";
 import ProductTable from "./productTable";
 import ReusableBarChart from "../Reusable_Components/BarChart";
 import Scattergraph from "../Reusable_Components/ScatterGraph";
+import AddProductActionButton from "./addProductButton";
+import { LuPlus } from "react-icons/lu";
 
 export default function ProductSection({ data, stockTrendsData }) {
   //  Extract domain data
@@ -64,7 +66,7 @@ export default function ProductSection({ data, stockTrendsData }) {
     [topSellingData],
   );
 
-  console.log("charts", stockTrendsData);
+  // console.log("charts", stockTrendsData);
 
   return (
     <main className="flex flex-col gap-8">
@@ -73,6 +75,13 @@ export default function ProductSection({ data, stockTrendsData }) {
         <h1 className="AdminTitle">Products</h1>
         <p className="subTitleAdmin">Manage all the products</p>
       </div>
+
+      <AddProductActionButton href="/admin/createProduct">
+    <div className="flex items-center gap-2">
+      <LuPlus size={25} />
+      <span className="text-lg">Add Product</span>
+    </div>
+  </AddProductActionButton>
 
       {/* Stats */}
       <AdminCard bgColor="bg-gradient-to-b from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">

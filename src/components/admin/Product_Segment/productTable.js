@@ -1,6 +1,7 @@
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 import Table from "../Reusable_Components/Table";
+import { LuBan, LuPencil } from "react-icons/lu";
 
 export default function ProductTable({ productsDetails, totalPages }) {
 
@@ -17,7 +18,9 @@ export default function ProductTable({ productsDetails, totalPages }) {
   }));
 
 //   console.log("Images",formttedRows)
-console.log("Product Pages",totalPages);
+// console.log("Product Pages",totalPages);
+
+const router = useRouter();
 
   const columns = [
     {
@@ -83,6 +86,37 @@ console.log("Product Pages",totalPages);
 
                 <span className="font-bold text-sm text-gray-800">{value}</span>
             )
+    },
+
+    {
+
+      key:"actions",
+      label:"Actions",
+      render:(_,row) => (
+
+        <div className="adminActionButtonCntainer">
+
+
+          <button 
+          className="BtnAction text-purple-500 hover:text-purple-800"
+          onClick={() => router.push(`/admin/adminProduct/edit/${row.id}`)}>
+            <LuPencil size={18} />
+          </button>
+
+          <button
+          className="BtnAction text-red-600 hover:text-red-800">
+
+
+            <LuBan size={18} />
+          </button>
+
+
+        </div>
+
+
+      )
+
+
     }
 
 
