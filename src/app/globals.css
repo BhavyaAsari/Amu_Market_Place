@@ -1348,5 +1348,12 @@
     .text-glow {
     @apply text-sm font-medium text-white/90;
   }
+
+  .adminActionButtonCntainer {
+
+    @apply flex items-center gap-2;
+  }
+
+  
 }
 

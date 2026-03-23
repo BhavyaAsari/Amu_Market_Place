@@ -31,7 +31,7 @@ export default function AdminLayout({ data }) {
   const priceData = analyticsData?.priceAnalysis?.ChartAnalytics || [];
 const insights = analyticsData?.priceAnalysis?.inSights || {};
 
-  console.log("charts", stock.stocksTrend);
+  // console.log("charts", stock.stocksTrend);
 
   const menuItems = [
     { key: "dashboard", name: "Dashboard", icon: LuLayoutDashboard },
