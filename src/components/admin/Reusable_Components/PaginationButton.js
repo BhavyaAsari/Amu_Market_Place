@@ -4,7 +4,7 @@ import { useRouter,useSearchParams } from "next/navigation";
 
 export default function PaginationButton({totalPages}) {
 
-    console.log("Total Pages in Paginaton:",totalPages);
+    // console.log("Total Pages in Paginaton:",totalPages);
 
     const router = useRouter();
 

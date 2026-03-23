@@ -13,7 +13,7 @@ import {
 
 
 export default function Scattergraph({ data = [], xKey, yKey }) {
-  console.log("data of scatter", data);
+  // console.log("data of scatter", data);
 
   console.log("xKey:", xKey);
   console.log("yKey:", yKey);
