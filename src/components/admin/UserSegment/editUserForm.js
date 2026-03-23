@@ -48,9 +48,9 @@ export default function EditUserForm({ user }) {
   const lastName = user.username?.split(" ")[1] || "";
 
   return (
-    <main className="editAdminContainer ">
+    <main className="editAdminContainer">
 
-      <section className=" editAdminWrapper">
+      <section className="editAdminWrapper">
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
@@ -73,7 +73,7 @@ export default function EditUserForm({ user }) {
                 name="firstName"
                 defaultValue={firstName}
                 required
-                placeholder="Enter First Name"
+                placeholder=" First Name"
                 className="editInput "
               />
             </div>
@@ -89,7 +89,7 @@ export default function EditUserForm({ user }) {
                 defaultValue={user.email}
                 disabled
                 className="editInput"
-                placeholder="Enter Email"
+                placeholder=" Email"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function EditUserForm({ user }) {
                 defaultValue={lastName}
                 required
                 className="editInput "
-                placeholder="Enter Last Name"
+                placeholder=" Last Name"
               />
             </div>
 
@@ -117,7 +117,7 @@ export default function EditUserForm({ user }) {
                 name="phone"
                 defaultValue={user.phone}
                 className="editInput "
-                placeholder="Enter Contact No."
+                placeholder=" Contact No."
               />
             </div>
 
@@ -132,7 +132,7 @@ export default function EditUserForm({ user }) {
               name="postalCode"
               defaultValue={user.postalCode}
               className="editInput "
-              placeholder="Enter Postal Code"
+              placeholder=" Postal Code"
             />
           </div>
 

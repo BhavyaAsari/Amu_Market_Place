@@ -134,7 +134,7 @@ const growthData = usersGrowth?.[filter] || [];
       key: "actions",
       label: "Actions",
       render: (_, row) => (
-        <div className="flex items-center gap-2">
+        <div className=" adminActionButtonCntainer">
           <button
             className="BtnAction text-purple-500 hover:text-purple-800"
             onClick={() => router.push(`/admin/Users/edit/${row.id}`)}

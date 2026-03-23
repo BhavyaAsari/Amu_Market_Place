@@ -17,7 +17,7 @@ export default function ReviewForm({ productId, email, onSubmitSuccess }) {
 
     const result = await addReview(productId, email, rating, comment);
 
-    console.log("result", result);
+    // console.log("result", result);
 
     if (result.success) {
       toast.success("Review Added");

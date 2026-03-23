@@ -44,7 +44,7 @@ export async function updateUsersAdmin(userId,data) {
 
         revalidatePath("/admin/Users/edit/${row.id}");
 
-    return { success:true };
+    return { success:true, message:"User updated Successfully" };
 
   } catch (error) {
 

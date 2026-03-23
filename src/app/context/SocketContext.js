@@ -20,7 +20,7 @@ export function SocketProvider({ children }) {
       });
 
       socketInstance.on("connect", () => {
-        console.log("🔥 Connected:", socketInstance.id);
+        console.log(" Connected:", socketInstance.id);
       });
 
       setSocket(socketInstance);
