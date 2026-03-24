@@ -8,6 +8,7 @@ import { getTopSellingProducts } from "../productActions/getTopSellingProducts";
 import { getProductAnalytics } from "../productActions/getProductAnalytics";
 import { getProductDetails } from "../productActions/getProductDetails";
 import { getStockTrend } from "../productActions/getStockVsSoldTopProducts";
+import { getCustomersScatterData } from "./getDashBoardUserSpendingOnOrders";
 
 //Users
 import { getUsersDetails } from "../userActions/getUserDetails";
@@ -31,7 +32,8 @@ export async function getDashBoardData({search,page}) {
   userStats,
   usersGrowth,
   stockVsSoldData,
-  priceBreakDownAnalytics
+  priceBreakDownAnalytics,
+  UsersVsOrdersData,
 ] = await Promise.all([
   getProductStats(),
   getRevenueData(),
@@ -42,7 +44,8 @@ export async function getDashBoardData({search,page}) {
   getUserStats(),
   getUsersGrowth(),
   getStockTrend(),
-  getPriceBreakDown()
+  getPriceBreakDown(),
+  getCustomersScatterData(),
 ]);
 
       return {
@@ -70,7 +73,12 @@ export async function getDashBoardData({search,page}) {
 
   analyticsData: {
      priceAnalysis:priceBreakDownAnalytics
-  }
+  },
+
+  usersVsorders : {
+
+    scatterDataUsers:UsersVsOrdersData?.data || []
+  },
 };
 
     }  catch (error) {
