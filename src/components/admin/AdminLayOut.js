@@ -19,6 +19,7 @@ import SideMenuAdmin from "./SideBarMenu";
 import AdminCard from "./adminCard";
 import ProductSection from "./Product_Segment/productSection";
 import useSync from "@/hooks/useRealTimeRefresh";
+import Scattergraph from "./Reusable_Components/ScatterGraph";
 
 export default function AdminLayout({ data }) {
   const [active, setActive] = useState("dashboard");
@@ -26,7 +27,7 @@ export default function AdminLayout({ data }) {
   useSync();
 
   //  FIX 1: Extract data FIRST
-  const { stats, revenue, users, products, stock,analyticsData } = data;
+  const { stats, revenue, users, products, stock,analyticsData,usersVsorders } = data;
 
   const priceData = analyticsData?.priceAnalysis?.ChartAnalytics || [];
 const insights = analyticsData?.priceAnalysis?.inSights || {};
@@ -148,11 +149,13 @@ const insights = analyticsData?.priceAnalysis?.inSights || {};
 </AdminCard>
 
             <InsightBrandsChart />
+
+          
           </>
         )}
 
         {/*  FIX 2 */}
-        {active === "users" && <UserSegment data={users} />}
+        {active === "users" && <UserSegment data={users}  scatterData={usersVsorders?.scatterDataUsers} />}
 
         {active === "products" && (
           <ProductSection data={products} stockTrendsData={stock.stocksTrend} />
