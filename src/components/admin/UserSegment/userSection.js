@@ -13,12 +13,66 @@ import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyt
 import AdminCard from "../adminCard";
 import LocalDropDown from "@/components/productComponents/localDropDown";
 import { useState, useEffect, useMemo } from "react";
+import Scattergraph from "../Reusable_Components/ScatterGraph";
 
-export default function UserSegment({ data }) {
+export default function UserSegment({ data, scatterData }) {
+  console.log("data of Scatter", scatterData);
   const router = useRouter();
 
   //  Extract domain data
-  const { list: users, stats: userStats, growth: usersGrowth, totalPages } = data;
+  const {
+    list: users,
+    stats: userStats,
+    growth: usersGrowth,
+    totalPages,
+  } = data;
+
+const userScatterConfig = {
+  xKey: "totalOrders",
+  yKey: "totalSpent",
+  zKey: "totalItems",
+
+  title: "",
+  subtitle: "",
+
+  getColor: (item) => {
+    if (item.category === "high") return "#22c55e";
+    if (item.category === "medium") return "#facc15";
+    return "#ef4444";
+  },
+
+  tooltipRenderer: (item) => (
+    <div className="
+      backdrop-blur-md
+      bg-linear-to-br 
+      from-[#4c1d95]/90 
+      via-[#6d28d9]/90 
+      to-[#9333ea]/90
+      border border-white/20
+      rounded-xl
+      px-4 py-3
+      shadow-xl
+      text-white
+      text-xs
+      min-w-45
+    ">
+      {/* Title */}
+      <p className="font-semibold text-sm mb-1 textDropShadow text-glow">
+        👤 User Analytics
+      </p>
+
+      {/* Divider */}
+      <div className="h-px bg-white/20 my-1" />
+
+      {/* Data */}
+      <div className="space-y-1 text-purple-100 textDropShadow text-glow">
+        <p>📦 Orders: <span className="text-white">{item.totalOrders}</span></p>
+        <p>💰 Spent: <span className="text-white">₹{item.totalSpent.toLocaleString()}</span></p>
+        <p>🛒 Items: <span className="text-white">{item.totalItems}</span></p>
+      </div>
+    </div>
+  ),
+};
 
   const [filter, setFilter] = useState("weekly");
   const [loadingId, setLoadingId] = useState(null);
@@ -26,23 +80,25 @@ export default function UserSegment({ data }) {
   const filterOptions = [
     { label: "Weekly", value: "weekly" },
     { label: "Monthly", value: "monthly" },
-    { label: "Yearly", value: "yearly" }
+    { label: "Yearly", value: "yearly" },
   ];
 
-const growthData = usersGrowth?.[filter] || [];
+  const growthData = usersGrowth?.[filter] || [];
   //  Optimized mapping
-  const formattedRows = useMemo(() => 
-    users.map((user, index) => ({
-      id: user._id,
-      image: user.image,
-      number: index + 1,
-      name: user.username || user.email.split("@")[0],
-      email: user.email,
-      provider: user.provider,
-      status: user.status || "active",
-      joined: new Date(user.createdAt).toLocaleDateString()
-    })),
-  [users]);
+  const formattedRows = useMemo(
+    () =>
+      users.map((user, index) => ({
+        id: user._id,
+        image: user.image,
+        number: index + 1,
+        name: user.username || user.email.split("@")[0],
+        email: user.email,
+        provider: user.provider,
+        status: user.status || "active",
+        joined: new Date(user.createdAt).toLocaleDateString(),
+      })),
+    [users],
+  );
 
   //  Action with loading state
   async function handleBlock(userId) {
@@ -73,25 +129,21 @@ const growthData = usersGrowth?.[filter] || [];
             className="rounded-full object-cover"
           />
         </div>
-      )
+      ),
     },
     {
       key: "name",
       label: "Name",
       render: (value) => (
-        <span className="font-bold text-sm text-gray-800">
-          {value}
-        </span>
-      )
+        <span className="font-bold text-sm text-gray-800">{value}</span>
+      ),
     },
     {
       key: "email",
       label: "Email",
       render: (value) => (
-        <span className="font-semibold text-sm text-purple-700">
-          {value}
-        </span>
-      )
+        <span className="font-semibold text-sm text-purple-700">{value}</span>
+      ),
     },
     {
       key: "provider",
@@ -112,7 +164,7 @@ const growthData = usersGrowth?.[filter] || [];
             <span>Email</span>
           </div>
         );
-      }
+      },
     },
     {
       key: "status",
@@ -127,7 +179,7 @@ const growthData = usersGrowth?.[filter] || [];
         >
           {value}
         </span>
-      )
+      ),
     },
     { key: "joined", label: "Joined on" },
     {
@@ -150,13 +202,12 @@ const growthData = usersGrowth?.[filter] || [];
             <LuBan size={18} />
           </button>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
     <main className="flex flex-col gap-10">
-
       {/* Header */}
       <div className="mb-6">
         <h1 className="AdminTitle">Users</h1>
@@ -168,11 +219,11 @@ const growthData = usersGrowth?.[filter] || [];
 
       {/* Chart */}
       <section className="relative flex flex-col justify-between items-center mt-24">
-
-        <div className="absolute z-50 -top-24 w-full 
+        <div
+          className="absolute z-50 -top-24 w-full 
           bg-linear-to-bl from-purple-400 via-purple-500 to-purple-700 
-          flex items-center justify-between px-4 py-3 rounded-xl">
-
+          flex items-center justify-between px-4 py-3 rounded-xl"
+        >
           <span className="font-semibold text-white text-2xl textDropShadow text-glow ">
             User Stats
           </span>
@@ -197,14 +248,19 @@ const growthData = usersGrowth?.[filter] || [];
           dataKey="users"
           unit="users"
         />
-
       </section>
+
+      <AdminCard bgColor="bg-linear-to-br from-purple-600 via-purple-500 to-purple-800">
+        <Scattergraph
+          data={scatterData}
+ config={userScatterConfig}
+         />
+      </AdminCard>
 
       {/* Table */}
       <div className="max-h-125 overflow-y-auto rounded-xl">
         <Table columns={columns} rows={formattedRows} totalPages={totalPages} />
       </div>
-
     </main>
   );
 }
