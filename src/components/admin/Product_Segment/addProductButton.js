@@ -15,7 +15,7 @@ export default function AddProductActionButton ({
 
         const variants = {
 
-            primary:"bg-linear-to-br from-purple-400 via-violet-400 to-purple-400 text-white ",
+            primary:"bg-linear-to-b from-purple-400 via-violet-700 to-purple-600 text-white border border-black/5 hover:bg-linear-to-tl from-purple-400 via-purple-600 to-purple-300 transition-all duration-300 ",
             secondary:"bg-gray-500 text-white hover:bg-gray-600",
             danger:"bg-red-500 text-white hover:bg-red-600",
         };

@@ -5,8 +5,33 @@ import { connectDB } from "@/libs/db";
 import { authOptions } from "@/libs/authOptions";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { products } from "@/app/data/products";
+import crypto from "crypto";
 
+function generateProductId(title) {
+
+    const base = title
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+    return `${base}-${crypto.randomBytes(3).toString("hex")}`;
+}
+
+async function  generateUniqueId(title) {
+
+    let id;
+    let exists = true;
+
+    while(exists) {
+
+        id =  generateProductId(title);
+        exists = await Product.findOne({id});
+    }
+
+    return id;
+    
+}
 
 export async function createProduct (data) {
 
@@ -22,22 +47,30 @@ export async function createProduct (data) {
     try {
 
 
+        const id = await generateUniqueId(data.title);
+
         const newProduct = await Product.create({
 
+            id,
+
+
             title:data.title,
-            shortDescription:data.shortDescription || "",
+            brand:data.brand,
+            series:data.series,
+            shortDescription:data.shortDescription,
             price:data.price,
             stock:data.stock,
             discount:data.discount || 0,
             image:data.image,
-            images:data.images || [],
             status:data.status || "active",
+
+            specs:data.specs || {},
         });
 
 
         // revalidatePath("")
 
-        return {success:true,product: newProduct};
+        return {success:true,product: newProduct.toObject()};
 
 
     } catch(error) {
