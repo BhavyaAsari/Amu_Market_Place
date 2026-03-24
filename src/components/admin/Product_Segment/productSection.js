@@ -27,6 +27,27 @@ export default function ProductSection({ data, stockTrendsData }) {
     topSelling: topSellingData,
   } = data;
 
+  const productScatterConfig = {
+  xKey: "stock",
+  yKey: "sellThroughRate",
+  title: "",
+  subtitle: "",
+
+  getColor: (item) => {
+    if (item.highDemand && item.lowStock) return "#ef4444";
+    if (item.highDemand) return "#22c55e";
+    return "#facc15";
+  },
+
+  tooltipRenderer: (item) => (
+    <div className="bg-purple-700 text-white p-3 rounded text-xs">
+      <p>{item.title}</p>
+      <p>📦 Stock: {item.stock}</p>
+      <p>📊 Rate: {item.sellThroughRate}%</p>
+    </div>
+  ),
+};
+
   //  Stats items
   const items = [
     {
@@ -146,8 +167,7 @@ to-purple-500/30 backdrop-blur-md shadow-lg  p-2 rounded-lg  "
 
         <Scattergraph
           data={stockTrendsData?.data || []}
-          xKey="stock"
-          yKey="sellThroughRate"
+          config={productScatterConfig}
         />
 
         <div className="mt-4 text-sm text-purple-100 flex justify-between ">
