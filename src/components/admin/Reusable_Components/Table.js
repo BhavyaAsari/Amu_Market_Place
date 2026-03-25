@@ -10,9 +10,10 @@ export default function Table({ columns, rows,totalPages }) {
   console.log("Total Number Pages: ",totalPages); 
 
   return (
-    <AdminCard>
+   
+<>
 
-   <div className="overflow-x-auto shadow-sm">
+   <div className="overflow-x-auto ">
 
     <section className="px-4 py-10 flex justify-end">
           <SearchBarAdmin/>
@@ -72,6 +73,6 @@ export default function Table({ columns, rows,totalPages }) {
 
   <div className="flex justify-center py-4"> <PaginationButton totalPages={totalPages}/></div>
 
-    </AdminCard>
+    </>
   );
 }
