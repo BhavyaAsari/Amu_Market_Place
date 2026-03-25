@@ -38,7 +38,7 @@ export default function SearchBarAdmin() {
   };
 
   return (
- <div className="flex items-center border w-full sm:w-72 rounded-lg overflow-hidden shadow-2xl transition-all duration-200  focus-within:ring-2 focus-within:ring-purple-400">
+ <div className="flex items-center border w-full sm:w-full rounded-lg overflow-hidden shadow-md transition-all duration-200  focus-within:ring-2 focus-within:ring-purple-400">
 
   <div className="flex justify-center items-center bg-linear-to-br from-purple-700  via-purple-400 to-purple-500  w-12 h-10  border-r border-black shadow-md hover:shadow-[0_0_10px_rgba(168,85,247,0.6)]">
     <LuSearch size={20} className="text-white" />
@@ -46,7 +46,7 @@ export default function SearchBarAdmin() {
 
   <input
     type="text"
-    placeholder="Search here"
+    placeholder="Search here. . ."
     value={value}
     onChange={handleSearch}
     className="flex-1 px-3 py-2 outline-none border-none font-extralight text-gray-700 placeholder:font-normal placeholder:text-gray-500"
