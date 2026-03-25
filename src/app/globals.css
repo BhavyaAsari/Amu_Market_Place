@@ -1158,11 +1158,12 @@
   }
 
   .stats-card-container {
-    @apply grid grid-cols-4 gap-10 w-5xl mx-auto;
+    @apply grid grid-cols-4 gap-10 w-5xl mx-auto ;
   }
 
   .admin-stats-card {
-    @apply flex items-center  shadow-sm rounded-lg w-full h-20;
+    @apply flex items-center  shadow-sm rounded-lg w-full h-20 ;        /* was probably too short */
+  
   }
 
   .Icon-stats {
