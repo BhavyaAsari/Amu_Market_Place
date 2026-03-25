@@ -4,11 +4,9 @@ import { connectDB } from "@/libs/db";
 import Orders from "@/models/Orders";
 
 export async function getCustomersScatterData() {
-
-        await connectDB();
+  await connectDB();
 
   try {
-
     // 🔹 Step 1: Aggregate user data
     const usersData = await Orders.aggregate([
       {
@@ -29,26 +27,29 @@ export async function getCustomersScatterData() {
       },
     ]);
 
-    // 🔹 Step 2: Calculate averages
-    const totalUsers = usersData.length;
+    if (!usersData.length) return { success: true, data: [] };
 
-    const avgOrders =
-      usersData.reduce((sum, u) => sum + u.totalOrders, 0) / totalUsers;
+    // 🔹 Step 2: Median-based classification (outlier-resistant)
+    const mid = Math.floor(usersData.length / 2);
 
-    const avgSpent =
-      usersData.reduce((sum, u) => sum + u.totalSpent, 0) / totalUsers;
+    const medianSpent = [...usersData]
+      .sort((a, b) => a.totalSpent - b.totalSpent)[mid].totalSpent;
 
-    // 🔹 Step 3: Classify users dynamically
+    const medianOrders = [...usersData]
+      .sort((a, b) => a.totalOrders - b.totalOrders)[mid].totalOrders;
+
+    // 🔹 Step 3: Classify users using median thresholds
     const finalData = usersData.map((user) => {
       let category = "low";
 
       if (
-        user.totalOrders > avgOrders &&
-        user.totalSpent > avgSpent
+        user.totalOrders > medianOrders &&
+        user.totalSpent > medianSpent
       ) {
         category = "high";
       } else if (
-        user.totalSpent > avgSpent * 0.5
+        user.totalSpent > medianSpent * 0.5 ||
+        user.totalOrders > medianOrders * 0.5
       ) {
         category = "medium";
       }
@@ -58,7 +59,7 @@ export async function getCustomersScatterData() {
         totalOrders: user.totalOrders,
         totalSpent: user.totalSpent,
         totalItems: user.totalItems,
-        category, // 🔥 important
+        category,
       };
     });
 
@@ -66,7 +67,6 @@ export async function getCustomersScatterData() {
 
   } catch (error) {
     console.error("Scatter Data Error:", error);
-
     return {
       success: false,
       error: "Failed to fetch Customer Scatter data",
