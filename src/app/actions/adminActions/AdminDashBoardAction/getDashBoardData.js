@@ -16,6 +16,10 @@ import { getUsersGrowth } from "../userActions/getUsersGrowth";
 import { getUserStats } from "../userActions/getUserStats";
 import { getPriceBreakDown } from "./getPriceBreakDownWithInsights";
 
+//Orders
+import { getOrderStats } from "../OrdersAction/getOrderStats";
+import { getOrdersGrowth } from "../OrdersAction/getOrderGrowth";
+
 export async function getDashBoardData({search,page}) {
 
     await connectDB();
@@ -34,6 +38,8 @@ export async function getDashBoardData({search,page}) {
   stockVsSoldData,
   priceBreakDownAnalytics,
   UsersVsOrdersData,
+  orderStatsCard,
+  ordersGrowth,
 ] = await Promise.all([
   getProductStats(),
   getRevenueData(),
@@ -46,6 +52,8 @@ export async function getDashBoardData({search,page}) {
   getStockTrend(),
   getPriceBreakDown(),
   getCustomersScatterData(),
+  getOrderStats(),
+  getOrdersGrowth(),
 ]);
 
       return {
@@ -79,6 +87,12 @@ export async function getDashBoardData({search,page}) {
 
     scatterDataUsers:UsersVsOrdersData?.data || []
   },
+
+  ordersDataObject : {
+
+    orderStatsAnalytics:orderStatsCard,
+    orderGrowthAnalysis:ordersGrowth
+  }
 };
 
     }  catch (error) {
