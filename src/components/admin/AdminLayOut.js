@@ -20,6 +20,7 @@ import AdminCard from "./adminCard";
 import ProductSection from "./Product_Segment/productSection";
 import useSync from "@/hooks/useRealTimeRefresh";
 import Scattergraph from "./Reusable_Components/ScatterGraph";
+import OrderSegment from "./Orders_Segment/Orders_Segment";
 
 export default function AdminLayout({ data }) {
   const [active, setActive] = useState("dashboard");
@@ -27,10 +28,14 @@ export default function AdminLayout({ data }) {
   useSync();
 
   //  FIX 1: Extract data FIRST
-  const { stats, revenue, users, products, stock,analyticsData,usersVsorders } = data;
+  const { stats, revenue, users, products, stock,analyticsData,usersVsorders,ordersDataObject } = data;
 
   const priceData = analyticsData?.priceAnalysis?.ChartAnalytics || [];
 const insights = analyticsData?.priceAnalysis?.inSights || {};
+
+const orderInsights = ordersDataObject;
+
+console.log("order Insights: ",orderInsights);
 
   // console.log("charts", stock.stocksTrend);
 
@@ -161,7 +166,7 @@ const insights = analyticsData?.priceAnalysis?.inSights || {};
           <ProductSection data={products} stockTrendsData={stock.stocksTrend} />
         )}
 
-        {active === "orders" && <div>Orders Section</div>}
+        {active === "orders" && <OrderSegment data={orderInsights}/>}
       </div>
     </main>
   );
