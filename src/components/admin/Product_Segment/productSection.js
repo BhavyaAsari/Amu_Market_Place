@@ -26,12 +26,23 @@ export default function ProductSection({ data, stockTrendsData }) {
     totalPages: productPages,
     topSelling: topSellingData,
   } = data;
-
-  const productScatterConfig = {
+const productScatterConfig = {
   xKey: "stock",
   yKey: "sellThroughRate",
   title: "",
   subtitle: "",
+
+  // 👇 Axis config
+  xDomain: [0, "dataMax + 10"],
+  xTicks: undefined, // auto — stock values vary per product
+  xTickFormatter: (val) => val,
+
+  yDomain: [0, 100], // sell through rate is always 0–100%
+  yTicks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+  yTickFormatter: (val) => `${val}%`,
+
+  minRadius: 6,
+  maxRadius: 18,
 
   getColor: (item) => {
     if (item.highDemand && item.lowStock) return "#ef4444";
@@ -128,7 +139,7 @@ export default function ProductSection({ data, stockTrendsData }) {
         <ReusableBarChart data={chartData} />
       </AdminCard>
 
-      <AdminCard bgColor="bg-linear-to-br from-violet-500 via-purple-400 to-violet-600">
+      <AdminCard bgColor="bg-linear-to-br from-purple-600 via-purple-500 to-purple-800">
         <section className="flex justify-between">
           <div>
             <section className="flex gap-2">
