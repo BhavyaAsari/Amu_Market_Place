@@ -1,5 +1,7 @@
 "use client";
 
+import { LuTriangleAlert, LuTrendingUp } from "react-icons/lu";
+
 import { FcGoogle } from "react-icons/fc";
 import { MdEmail } from "react-icons/md";
 import Table from "../Reusable_Components/Table";
@@ -16,7 +18,7 @@ import { useState, useEffect, useMemo } from "react";
 import Scattergraph from "../Reusable_Components/ScatterGraph";
 
 export default function UserSegment({ data, scatterData }) {
-  console.log("data of Scatter", scatterData);
+  // console.log("data of Scatter", scatterData);
   const router = useRouter();
 
   //  Extract domain data
@@ -27,22 +29,32 @@ export default function UserSegment({ data, scatterData }) {
     totalPages,
   } = data;
 
-const userScatterConfig = {
-  xKey: "totalOrders",
-  yKey: "totalSpent",
-  zKey: "totalItems",
+  const userScatterConfig = {
+    xKey: "totalOrders",
+    yKey: "totalSpent",
+    zKey: "totalItems",
+    minRadius: 6,
+    maxRadius: 6,
 
-  title: "",
-  subtitle: "",
+    xDomain: [0, 70],
+    xTicks: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
 
-  getColor: (item) => {
-    if (item.category === "high") return "#22c55e";
-    if (item.category === "medium") return "#facc15";
-    return "#ef4444";
-  },
+    yDomain: [0, 20000000],
+    yTicks: [
+      0, 50000, 100000, 150000, 200000, 250000, 300000, 350000, 400000, 450000,
+      500000, 600000, 700000, 800000, 900000, 1000000, 2000000, 5000000,
+      10000000, 15000000, 20000000,
+    ],
 
-  tooltipRenderer: (item) => (
-    <div className="
+    getColor: (item) => {
+      if (item.category === "high") return "#22c55e";
+      if (item.category === "medium") return "#facc15";
+      return "#ef4444";
+    },
+
+    tooltipRenderer: (item) => (
+      <div
+        className="
       backdrop-blur-md
       bg-linear-to-br 
       from-[#4c1d95]/90 
@@ -55,24 +67,34 @@ const userScatterConfig = {
       text-white
       text-xs
       min-w-45
-    ">
-      {/* Title */}
-      <p className="font-semibold text-sm mb-1 textDropShadow text-glow">
-        👤 User Analytics
-      </p>
+    "
+      >
+        {/* Title */}
+        <p className="font-semibold text-sm mb-1 textDropShadow text-glow">
+          👤 User Analytics
+        </p>
 
-      {/* Divider */}
-      <div className="h-px bg-white/20 my-1" />
+        {/* Divider */}
+        <div className="h-px bg-white/20 my-1" />
 
-      {/* Data */}
-      <div className="space-y-1 text-purple-100 textDropShadow text-glow">
-        <p>📦 Orders: <span className="text-white">{item.totalOrders}</span></p>
-        <p>💰 Spent: <span className="text-white">₹{item.totalSpent.toLocaleString()}</span></p>
-        <p>🛒 Items: <span className="text-white">{item.totalItems}</span></p>
+        {/* Data */}
+        <div className="space-y-1 text-purple-100 textDropShadow text-glow">
+          <p>
+            📦 Orders: <span className="text-white">{item.totalOrders}</span>
+          </p>
+          <p>
+            💰 Spent:{" "}
+            <span className="text-white">
+              ₹{item.totalSpent.toLocaleString()}
+            </span>
+          </p>
+          <p>
+            🛒 Items: <span className="text-white">{item.totalItems}</span>
+          </p>
+        </div>
       </div>
-    </div>
-  ),
-};
+    ),
+  };
 
   const [filter, setFilter] = useState("weekly");
   const [loadingId, setLoadingId] = useState(null);
@@ -218,23 +240,15 @@ const userScatterConfig = {
       <StatsTabUser userStats={userStats} />
 
       {/* Chart */}
-      <section className="relative flex flex-col justify-between items-center mt-24">
-        <div
-          className="absolute z-50 -top-24 w-full 
-          bg-linear-to-bl from-purple-400 via-purple-500 to-purple-700 
-          flex items-center justify-between px-4 py-3 rounded-xl"
-        >
-          <span className="font-semibold text-white text-2xl textDropShadow text-glow ">
-            User Stats
-          </span>
+      <section className=" flex flex-col justify-between items-center">
+        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5 ">
+          {/* <h2 className=" text-2xl font-semibold text-glow text-black textDropShadow">Filter</h2> */}
 
-          <div className="w-60">
-            <LocalDropDown
-              options={filterOptions}
-              value={filter}
-              onChange={setFilter}
-            />
-          </div>
+          <LocalDropDown
+            options={filterOptions}
+            value={filter}
+            onChange={setFilter}
+          />
         </div>
 
         <AnalyticalChartLayout
@@ -251,16 +265,63 @@ const userScatterConfig = {
       </section>
 
       <AdminCard bgColor="bg-linear-to-br from-purple-600 via-purple-500 to-purple-800">
-        <Scattergraph
-          data={scatterData}
- config={userScatterConfig}
-         />
+        <section className="flex justify-between">
+          <div>
+            <section className="flex gap-2">
+              <div className="titleContainer mt-5"></div>
+              <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2">
+                Users vs Orders
+              </h2>
+            </section>
+
+            <p className="text-purple-200 text-sm textDropShadow text-glow ml-5">
+              User to order ratio
+            </p>
+          </div>
+
+          <div
+            className="flex flex-col gap-3 text-xs text-white mt-4 mb-4 border  border-white/20 bg-linear-to-br 
+from-purple-900/40 
+via-purple-700/30 
+to-purple-500/30 backdrop-blur-md shadow-lg  p-2 rounded-lg  "
+          >
+            <span className="font-semibold textDropShadow ">Graph Markers</span>
+            <div className="flex gap-3">
+              <span className="flex items-center gap-1 l">
+                <div className="w-3 h-3 bg-red-500 rounded-full" /> Critical
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-green-400 rounded-full" /> Good
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-yellow-400 rounded-full " /> Low
+                Demand
+              </span>
+            </div>
+          </div>
+        </section>
+        <Scattergraph data={scatterData} config={userScatterConfig} />
+
+        <div className="mt-4 text-sm text-purple-100 flex justify-between ">
+          <p className="flex gap-2">
+            <LuTrendingUp size={22} className="text-green-400 text-glow " />
+            <span className="textDropShadow text-glow ">
+              High demand products need restocking
+            </span>
+          </p>
+          <p className="flex gap-2">
+            <LuTriangleAlert size={22} className="text-red-400 text-glow " />
+            <span className="textDropShadow text-glow ">
+              Overstock items may require discounts
+            </span>
+          </p>
+        </div>
       </AdminCard>
 
       {/* Table */}
-      <div className="max-h-125 overflow-y-auto rounded-xl">
+      <AdminCard>
         <Table columns={columns} rows={formattedRows} totalPages={totalPages} />
-      </div>
+      </AdminCard>
     </main>
   );
 }
