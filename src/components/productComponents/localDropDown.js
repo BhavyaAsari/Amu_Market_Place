@@ -8,14 +8,14 @@ export default function LocalDropDown({
   options,
   value,
   onChange,
-  rounded = "lg", // ✅ default value
+  rounded = "lg", //  default value
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const selectedOption = options.find((o) => o.value === value);
+  const selectedOption = options.find((o) => o.value === value );
 
-  // ✅ Rounded mapping
+  //  Rounded mapping
   const roundedClasses = {
     lg: "rounded-lg",
     xl: "rounded-xl",
