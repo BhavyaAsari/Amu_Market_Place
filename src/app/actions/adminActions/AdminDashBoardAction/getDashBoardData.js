@@ -19,6 +19,7 @@ import { getPriceBreakDown } from "./getPriceBreakDownWithInsights";
 //Orders
 import { getOrderStats } from "../OrdersAction/getOrderStats";
 import { getOrdersGrowth } from "../OrdersAction/getOrderGrowth";
+import { getRegionOrderAnalytics } from "../OrdersAction/getRegionRevenue";
 
 export async function getDashBoardData({search,page}) {
 
@@ -40,6 +41,7 @@ export async function getDashBoardData({search,page}) {
   UsersVsOrdersData,
   orderStatsCard,
   ordersGrowth,
+  orderDoubleBarRegionData,
 ] = await Promise.all([
   getProductStats(),
   getRevenueData(),
@@ -54,6 +56,7 @@ export async function getDashBoardData({search,page}) {
   getCustomersScatterData(),
   getOrderStats(),
   getOrdersGrowth(),
+  getRegionOrderAnalytics(),
 ]);
 
       return {
@@ -91,7 +94,8 @@ export async function getDashBoardData({search,page}) {
   ordersDataObject : {
 
     orderStatsAnalytics:orderStatsCard,
-    orderGrowthAnalysis:ordersGrowth
+    orderGrowthAnalysis:ordersGrowth,
+    orderRegionalAnalysis:orderDoubleBarRegionData,
   }
 };
 
