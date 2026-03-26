@@ -7,6 +7,12 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import OrderSummary from "./orderSummary";
 import Breadcrumb from "@/components/heroComponents/breadCrum";
+import {
+  getCountries,
+  getStates,
+  getCities,
+  getPostalCodes,
+} from "@/libs/locationData";
 
 import LocalDropDown from "../productComponents/localDropDown";
 
@@ -33,21 +39,15 @@ export default function CheckOutPage({ user }) {
     paymentMethod: "cod",
   });
 
-  const countryOptions = [
-    { label: "India", value: "india" },
-    { label: "USA", value: "usa" },
-  ];
+  const countryOptions = getCountries();
+  const stateOptions = getStates(formData.country);
+  const cityOptions = getCities(formData.country, formData.state);
 
-  const stateOptions =
-    formData.country === "india"
-      ? [
-          { label: "Gujarat", value: "gujarat" },
-          { label: "Maharashtra", value: "maharashtra" },
-        ]
-      : [
-          { label: "California", value: "california" },
-          { label: "Texas", value: "texas" },
-        ];
+  const postalOptions = getPostalCodes(
+    formData.country,
+    formData.state,
+    formData.city,
+  ).map((code) => ({ label: code, value: code }));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -155,21 +155,21 @@ export default function CheckOutPage({ user }) {
                 value={formData.street}
               />
 
-              <input
+              {/* <input
                 className="addressInput"
                 placeholder="City"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-              />
+              /> */}
 
-              <input
+              {/* <input
                 className="addressInput"
                 placeholder="Postal Code"
                 value={formData.postalCode}
                 onChange={handleChange}
                 name="postalCode"
-              />
+              /> */}
 
               <LocalDropDown
                 label="Country"
@@ -179,7 +179,9 @@ export default function CheckOutPage({ user }) {
                   setFormData((prev) => ({
                     ...prev,
                     country: value,
-                    state: "", // reset state when country changes
+                    state: "",
+                    city:"",
+                    postalCode:""
                   }))
                 }
               />
@@ -192,6 +194,33 @@ export default function CheckOutPage({ user }) {
                   setFormData((prev) => ({
                     ...prev,
                     state: value,
+                    city:"",
+                    postalCode:""
+                  }))
+                }
+              />
+
+              <LocalDropDown
+                label="City"
+                options={cityOptions}
+                value={formData.city}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    city: value,
+                    postalCode: "",
+                  }))
+                }
+              />
+
+              <LocalDropDown
+                label="Postal-Code"
+                options={postalOptions}
+                value={formData.postalCode}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    postalCode: value,
                   }))
                 }
               />
