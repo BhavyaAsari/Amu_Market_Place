@@ -270,12 +270,12 @@ export default function UserSegment({ data, scatterData }) {
             <section className="flex gap-2">
               <div className="titleContainer mt-5"></div>
               <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2">
-                Users vs Orders
+                User Engagement vs Orders
               </h2>
             </section>
 
             <p className="text-purple-200 text-sm textDropShadow text-glow ml-5">
-              User to order ratio
+              Track how user activity translates into purchases
             </p>
           </div>
 
@@ -285,17 +285,18 @@ from-purple-900/40
 via-purple-700/30 
 to-purple-500/30 backdrop-blur-md shadow-lg  p-2 rounded-lg  "
           >
+
+            
             <span className="font-semibold textDropShadow ">Graph Markers</span>
-            <div className="flex gap-3">
+            <div className="flex  flex-col gap-3">
               <span className="flex items-center gap-1 l">
-                <div className="w-3 h-3 bg-red-500 rounded-full" /> Critical
+                🔴 Critical — Low conversion segment
               </span>
               <span className="flex items-center gap-1">
-                <div className="w-3 h-3 bg-green-400 rounded-full" /> Good
+                🟢 Good — High engagement users
               </span>
               <span className="flex items-center gap-1">
-                <div className="w-3 h-3 bg-yellow-400 rounded-full " /> Low
-                Demand
+                🟡 Low — Low activity users
               </span>
             </div>
           </div>
@@ -306,13 +307,13 @@ to-purple-500/30 backdrop-blur-md shadow-lg  p-2 rounded-lg  "
           <p className="flex gap-2">
             <LuTrendingUp size={22} className="text-green-400 text-glow " />
             <span className="textDropShadow text-glow ">
-              High demand products need restocking
+              High engagement users driving strong order growth
             </span>
           </p>
           <p className="flex gap-2">
             <LuTriangleAlert size={22} className="text-red-400 text-glow " />
             <span className="textDropShadow text-glow ">
-              Overstock items may require discounts
+              Many users but low orders — conversion needs improvement
             </span>
           </p>
         </div>
