@@ -7,6 +7,7 @@ import Cart from "@/models/CartModel";
 import Orders from "@/models/Orders";
 import { stripe } from "@/libs/Stripe";
 import mongoose from "mongoose";
+import { locationData } from "@/libs/locationData";
 
 function generateOrderNumber() {
   const now = new Date();
@@ -69,6 +70,53 @@ export async function POST(req) {
       postalCode,
       country
     } = shippingAddress;
+
+
+    const countryData = locationData[country];
+
+    //Country Validation
+    if(!countryData) {
+
+      return NextResponse.json(
+
+        {error:"Invalid Country"},
+        {status:400}
+      );
+    }
+
+    const stateData = countryData.states[state];
+
+    if(!stateData) {
+
+      return NextResponse.json(
+
+        {error:"Invalid state for selected country"},
+        {status:400}
+      );
+    }
+
+    const cityData = stateData.cities.find(c => c.name === city);
+
+    if(!cityData) {
+
+      return NextResponse.json(
+
+        {error:"Invalid City selected for the selected State"},
+        {status:400}
+      );
+    }
+
+
+    if(!cityData.postalCodes.includes(postalCode)) {
+
+      return NextResponse.json(
+
+        {error:"Invalid Postal code for selected city"},
+        {status:400}
+      );
+    }
+
+
 
     if (
       !fullName?.trim() ||
