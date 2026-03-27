@@ -105,7 +105,7 @@ const productScatterConfig = {
       {/* Header */}
       <div>
         <h1 className="AdminTitle">Products</h1>
-        <p className="subTitleAdmin">Manage all the products</p>
+        <p className="subTitleAdmin font-semibold">Manage all the products</p>
       </div>
 
       <AddProductActionButton href="/admin/createProduct">
@@ -125,7 +125,7 @@ const productScatterConfig = {
       </AdminCard>
 
       {/* Chart */}
-      <AdminCard bgColor="bg-linear-to-br from-purple-500 via-violet-800 to-purple-500">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
         <section className="flex">
           <div className="titleContainer mt-3"></div>
           <h1 className="font-extrabold text-white text-2xl ml-2 textDropShadow text-glow ">
@@ -139,7 +139,7 @@ const productScatterConfig = {
         <ReusableBarChart data={chartData} />
       </AdminCard>
 
-      <AdminCard bgColor="bg-linear-to-br from-purple-600 via-purple-500 to-purple-800">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
         <section className="flex justify-between">
           <div>
             <section className="flex gap-2">
