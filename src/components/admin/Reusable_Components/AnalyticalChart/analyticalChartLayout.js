@@ -18,7 +18,7 @@ export default function AnalyticalChartLayout({
 
   // console.log("units of users graph",unit);
   return (
-    <div className="analyticalChartContainer">
+    <div className="">
 
       
 
