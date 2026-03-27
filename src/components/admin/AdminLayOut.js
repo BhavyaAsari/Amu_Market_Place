@@ -28,14 +28,23 @@ export default function AdminLayout({ data }) {
   useSync();
 
   //  FIX 1: Extract data FIRST
-  const { stats, revenue, users, products, stock,analyticsData,usersVsorders,ordersDataObject } = data;
+  const {
+    stats,
+    revenue,
+    users,
+    products,
+    stock,
+    analyticsData,
+    usersVsorders,
+    ordersDataObject,
+  } = data;
 
   const priceData = analyticsData?.priceAnalysis?.ChartAnalytics || [];
-const insights = analyticsData?.priceAnalysis?.inSights || {};
+  const insights = analyticsData?.priceAnalysis?.inSights || {};
 
-const orderInsights = ordersDataObject;
+  const orderInsights = ordersDataObject;
 
-console.log("order Insights: ",orderInsights);
+  // console.log("order Insights: ",orderInsights);
 
   // console.log("charts", stock.stocksTrend);
 
@@ -80,9 +89,9 @@ console.log("order Insights: ",orderInsights);
       <div className="flex flex-col gap-8">
         {active === "dashboard" && (
           <>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
               <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
-              <p className="text-gray-500 text-sm">Managing the Admin Panel</p>
+              <p className="subTitleAdmin">Managing the Admin Panel</p>
             </div>
 
             <AdminCard bgColor="bg-gradient-to-r from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
@@ -93,80 +102,80 @@ console.log("order Insights: ",orderInsights);
             </AdminCard>
 
             <GraphRevenue data={revenue} />
-            <AdminCard bgColor="bg-linear-to-br from-violet-600 via-purple-500 to-violet-600">
+            <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
+              <section className="flex items-center justify-between ">
+                <h2 className="text-2xl font-semibold text-white textDropShadow">
+                  Price Breakdown Analysis
+                </h2>
+              </section>
 
-  <section className="flex items-center justify-between ">
-    <h2 className="text-2xl font-semibold text-white textDropShadow">
-      Price Breakdown Analysis
-    </h2>
-  </section>
+              {/* 🔥 Chart + Insights */}
+              <div className="flex ">
+                {/* LEFT → CHART */}
+                <div className="w-full ">
+                  <PriceBreakdown data={priceData} />
+                </div>
 
-  {/* 🔥 Chart + Insights */}
-  <div className="flex ">
+                {/* RIGHT → INSIGHTS */}
+                <div className="flex flex-col gap-4">
+                  {/*  Product Strategy */}
+                  <div className="text-glow p-4 rounded-xl bg-linear-to-br from-purple-300/90 via-fuchsia-400/50 to-purple-500">
+                    <h3 className="text-lg font-semibold text-white textDropShadow text-glow ">
+                      Product Strategy
+                    </h3>
 
-    {/* LEFT → CHART */}
-    <div className="w-full "><PriceBreakdown data={priceData} /></div>
+                    <p className="text-sm text-white textDropShadow text-glow mt-2">
+                      <b>Case:</b> {insights?.productStrategy?.case}
+                    </p>
 
-    {/* RIGHT → INSIGHTS */}
-    <div className="flex flex-col gap-4">
+                    <p className="text-sm text-white textDropShadow text-glow mt-1">
+                      {insights?.productStrategy?.inSight}
+                    </p>
 
-      {/*  Product Strategy */}
-      <div className="text-glow p-4 rounded-xl bg-linear-to-br from-purple-300/90 via-fuchsia-400/50 to-purple-500">
-        <h3 className="text-lg font-semibold text-white textDropShadow text-glow ">
-           Product Strategy
-        </h3>
+                    <p className="text-sm text-white textDropShadow text-glow mt-1">
+                      {insights?.productStrategy?.action}
+                    </p>
+                  </div>
 
-        <p className="text-sm text-white textDropShadow text-glow mt-2">
-          <b>Case:</b> {insights?.productStrategy?.case}
-        </p>
+                  {/*  Revenue Insight */}
+                  <div className="text-glow p-4 rounded-xl bg-linear-to-br from-purple-300/90 via-fuchsia-400/50 to-purple-500">
+                    <h3 className="text-lg font-semibold text-white textDropShadow text-glow">
+                      Revenue Optimization
+                    </h3>
 
-        <p className="text-sm text-white textDropShadow text-glow mt-1">
-           {insights?.productStrategy?.inSight}
-        </p>
+                    <p className="text-sm   text-white textDropShadow text-glow mt-1">
+                      <b>Case:</b> {insights?.revenue?.case}
+                    </p>
 
-        <p className="text-sm text-white textDropShadow text-glow mt-1">
-           {insights?.productStrategy?.action}
-        </p>
-      </div>
+                    <p className="text-sm text-white textDropShadow text-glow mt-1 ">
+                      {insights?.revenue?.inSight}
+                    </p>
 
-      {/*  Revenue Insight */}
-      <div className="text-glow p-4 rounded-xl bg-linear-to-br from-purple-300/90 via-fuchsia-400/50 to-purple-500">
-        <h3 className="text-lg font-semibold text-white textDropShadow text-glow">
-           Revenue Optimization
-        </h3>
-
-        <p className="text-sm   text-white textDropShadow text-glow mt-1">
-          <b>Case:</b> {insights?.revenue?.case}
-        </p>
-
-        <p className="text-sm text-white textDropShadow text-glow mt-1 ">
-          {insights?.revenue?.inSight}
-        </p>
-
-        <p className="text-sm text-white textDropShadow text-glow mt-1">
-          {insights?.revenue?.action}
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</AdminCard>
+                    <p className="text-sm text-white textDropShadow text-glow mt-1">
+                      {insights?.revenue?.action}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </AdminCard>
 
             <InsightBrandsChart />
-
-          
           </>
         )}
 
         {/*  FIX 2 */}
-        {active === "users" && <UserSegment data={users}  scatterData={usersVsorders?.scatterDataUsers} />}
+        {active === "users" && (
+          <UserSegment
+            data={users}
+            scatterData={usersVsorders?.scatterDataUsers}
+          />
+        )}
 
         {active === "products" && (
           <ProductSection data={products} stockTrendsData={stock.stocksTrend} />
         )}
 
-        {active === "orders" && <OrderSegment data={orderInsights}/>}
+        {active === "orders" && <OrderSegment data={orderInsights} />}
       </div>
     </main>
   );
