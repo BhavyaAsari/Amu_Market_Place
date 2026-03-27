@@ -240,8 +240,8 @@ export default function UserSegment({ data, scatterData }) {
       <StatsTabUser userStats={userStats} />
 
       {/* Chart */}
-      <section className=" flex flex-col justify-between items-center">
-        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5 ">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
+        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5 top-14 relative ">
           {/* <h2 className=" text-2xl font-semibold text-glow text-black textDropShadow">Filter</h2> */}
 
           <LocalDropDown
@@ -262,9 +262,9 @@ export default function UserSegment({ data, scatterData }) {
           dataKey="users"
           unit="users"
         />
-      </section>
+      </AdminCard>
 
-      <AdminCard bgColor="bg-linear-to-br from-purple-600 via-purple-500 to-purple-800">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
         <section className="flex justify-between">
           <div>
             <section className="flex gap-2">
