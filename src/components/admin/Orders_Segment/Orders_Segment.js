@@ -4,8 +4,9 @@ import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyt
 import ResusableDoubleBargraph from "../Reusable_Components/DoubleBarchart";
 import OrderStatsUI from "./OrderStatsCardUI";
 import LocalDropDown from "@/components/productComponents/localDropDown";
-import { useState } from "react";
+import { useState,useTransition,useEffect } from "react";
 
+import { getRegionOrderAnalytics } from "@/app/actions/adminActions/OrdersAction/getRegionRevenue";
 import { getCountries,getStates,getCities,getPostalCodes } from "@/libs/locationData";
 
 export default function OrderSegment({ data }) {
@@ -17,6 +18,9 @@ export default function OrderSegment({ data }) {
 
   const [selectedCountry,setSelectedCountry] = useState("");
   const [selectedState,setSelectedState] = useState("");
+  const [regionalData,setRegionalData] = useState(orderRegionalAnalysis?.data || []);
+  const[isPending,startTransition] = useTransition();
+
 
   const countryOptions  = getCountries();
 
@@ -38,18 +42,42 @@ export default function OrderSegment({ data }) {
 
   const growthData = orderGrowthAnalysis?.[filter] || [];
 
-  const RegionalData =  orderRegionalAnalysis?.data
+  // const RegionalData =  orderRegionalAnalysis?.data
 
-  console.log("Data of the orders", data);
+  // console.log("Data of the orders", data);
+
+  //Re-fetch regional data whenever country or state changes
+
+  useEffect(() => {
+
+    startTransition(async () => {
+
+      const result = await getRegionOrderAnalytics({
+
+        country: selectedCountry || undefined,
+        state: selectedState || undefined,
+      });
+
+      // console.log("Result of re-fetch",result);
+
+      if(result.success) {
+
+        setRegionalData(result.data);
+      }
+    });
+
+  },[selectedCountry,selectedState]);
 
   return (
     <>
-      <h1>Orders Section</h1>
-
+<div className="mb-6">
+        <h1 className="AdminTitle">Orders</h1>
+        <p className="subTitleAdmin font-semibold">Manage all the orders.</p>
+      </div>
       <OrderStatsUI dataOrders={orderStatsAnalytics} />
 
-      <section className="flex flex-col justify-between items-center">
-        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5 ">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
+        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5  relative top-15 ">
           <LocalDropDown
             options={filterOptions}
             value={filter}
@@ -68,17 +96,21 @@ export default function OrderSegment({ data }) {
           dataKey="orders"
           unit="orders"
         />
-      </section>
+      </AdminCard>
 
-      <AdminCard>
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
 
-        <LocalDropDown 
+        {isPending && <p className="text-xl ">Loading...</p>}
+
+        <div className="flex flex-col w-60 ml-auto">
+          {/* <h1 className="text-2xl text-white text-glow textDropShadow">Filters</h1> */}
+          <LocalDropDown 
         label="Country"
         options={[
           {
             label:"All Countries",value:""
           },
-          ...countryOptions.map((c) => ({label:c,value:c})),
+          ...countryOptions,
         ]}
         value={selectedCountry}
         onChange={(val) => {
@@ -93,25 +125,26 @@ export default function OrderSegment({ data }) {
         options={[
 
           {label:"All states",value:""},
-          ...stateoptions.map((s) => ({label:s,value:s})),
+          ...stateoptions,
         ]}
         value={selectedState}
 onChange={(val) => setSelectedState(val)}        />
+        </div>
 
         <ResusableDoubleBargraph
-        data={ RegionalData || []}
+        data={ regionalData || []}
         xKey="region"
          bars={[
     {
       dataKey: "orders",
       name: "Orders",
-      color: "#8b5cf6",
+      color: "#7c3aed",
       yAxis: "left",
     },
     {
       dataKey: "revenue",
       name: "Revenue",
-      color: "#22c55e",
+      color: "#4c1d95",
       yAxis: "right",
     },
   ]}
