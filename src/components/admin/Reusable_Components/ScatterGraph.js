@@ -89,6 +89,7 @@ export default function Scattergraph({ data = [], config = {} }) {
 
           <Scatter
             data={data}
+            
             shape={(props) => {
               const { payload, cx, cy } = props;
               const color = getColor ? getColor(payload) : "#a855f7";
@@ -109,6 +110,9 @@ export default function Scattergraph({ data = [], config = {} }) {
                   r={radius}
                   fill={color}
                   fillOpacity={0.85}
+                            style={{
+    filter: "drop-shadow(0px 4px 10px rgba(0,0,0,0.3))"
+  }}
                   stroke="#fff"
                   strokeWidth={1}
                 />
