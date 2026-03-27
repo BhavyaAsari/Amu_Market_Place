@@ -10,7 +10,7 @@ import {
 
 export default function OrderStatsUI({ dataOrders }) {
 
-  console.log("data Orders UI",dataOrders);
+  // console.log("data Orders UI",dataOrders);
   const today = new Date();
 
   const formattedDate = today.toLocaleDateString("en-Us", {
