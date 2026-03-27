@@ -538,7 +538,7 @@
 
 @layer components {
   .customDropDown {
-    @apply py-6  relative w-full max-w-xl;
+    @apply py-2  relative w-full max-w-xl;
   }
 
   .dropMenu {
@@ -1331,7 +1331,7 @@
 
 .subTitleAdmin {
 
-  @apply text-gray-700 text-sm;
+  @apply text-gray-700 text-sm font-semibold;
 }
 
 }
