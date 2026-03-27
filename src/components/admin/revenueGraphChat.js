@@ -33,11 +33,11 @@ export default function GraphRevenue() {
 
   return (
     // <AdminCard>
-<div>
-  <section className="flex justify-between items-center mb-4 ">
-        <p className="font-extrabold text-3xl">Revenue Stats</p>
+<AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
+  <section className="flex justify-between items-center  ">
+        {/* <p className="font-extrabold text-3xl">Revenue Stats</p> */}
 
-       <div className=" w-60  h-20 rounded-xl mb-4 ml-auto">
+       <div className=" w-60  h-20 rounded-xl relative   ml-auto top-18">
          <LocalDropDown
           options={filterOptions}
           value={filter}
@@ -61,7 +61,7 @@ export default function GraphRevenue() {
           />
         )}
       </div>
-</div>
+</AdminCard>
 
     // </AdminCard>
   );
