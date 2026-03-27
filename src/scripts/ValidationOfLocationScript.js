@@ -33,19 +33,19 @@ async function cancelInvalidOrders() {
 
       if (!isValid) {
         await Orders.findByIdAndUpdate(order._id, {
-          status: "cancelled",
+          orderStatus: "cancelled",
         });
 
         cancelledCount++;
-        console.log(`❌ Cancelled: ${order._id}`);
+        console.log(` Cancelled: ${order._id}`);
       }
     }
 
-    console.log(`✅ Done. Cancelled Orders: ${cancelledCount}`);
+    console.log(` Done. Cancelled Orders: ${cancelledCount}`);
     process.exit();
 
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error(" Error:", error);
     process.exit(1);
   }
 }
