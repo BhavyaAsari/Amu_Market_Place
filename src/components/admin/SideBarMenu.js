@@ -31,7 +31,7 @@ export default function SideMenuAdmin({ menuItems, active, setActive}) {
           key={key}
           onClick={() => setActive(key)}
           className={`icons-menu-admin hover-effect ${
-            active === key ? "bg-purple-600 text-white" : ""
+            active === key ? "bg-linear-to-br from-purple-500 via-purple-500 to-purple-600 text-white text-glow shadow-black/40  backdrop-blur-sm -translate-y-1 transition-all ease-in-out rounded-xl border-b-4 border-white" : ""
           }`}
         >
           <Icon className="icons-AdminMenu" />
