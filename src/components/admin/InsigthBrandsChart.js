@@ -15,7 +15,7 @@ export default function InsightBrandsChart() {
 
   return (
     <div>
-      <AdminCard bgColor="bg-gradient-to-br from-purple-500 via-violet-800 to-purple-500">
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
        
         <section className="flex gap-2 p-4">
               <div className="titleContainer mt-3"></div>
