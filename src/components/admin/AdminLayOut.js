@@ -95,7 +95,7 @@ export default function AdminLayout({ data }) {
             </div>
 
             <AdminCard bgColor="bg-gradient-to-r from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
-              <h1 className="text-xl mb-2 font-semibold text-white textDropShadow">
+              <h1 className="text-xl mb-2 font-semibold text-white textDropShadow drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
                 Admin Insights
               </h1>
               <StatsGrid items={statsItems} />
@@ -104,12 +104,12 @@ export default function AdminLayout({ data }) {
             <GraphRevenue data={revenue} />
             <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
               <section className="flex items-center justify-between ">
-                <h2 className="text-2xl font-semibold text-white textDropShadow">
+                <h2 className="text-2xl font-semibold text-white textDropShadow drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
                   Price Breakdown Analysis
                 </h2>
               </section>
 
-              {/* 🔥 Chart + Insights */}
+              {/*  Chart + Insights */}
               <div className="flex ">
                 {/* LEFT → CHART */}
                 <div className="w-full ">
