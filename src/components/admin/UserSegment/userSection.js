@@ -143,7 +143,7 @@ export default function UserSegment({ data, scatterData }) {
       key: "image",
       label: "#",
       render: (_, row) => (
-        <div className="relative w-12 h-12">
+        <div className="relative w-20 h-20">
           <Image
             fill
             src={row.image || "/default.png"}
@@ -241,7 +241,7 @@ export default function UserSegment({ data, scatterData }) {
 
       {/* Chart */}
       <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
-        <div className=" w-70 flex flex-col  z-100 ml-auto mr-5 top-14 relative ">
+        <div className=" w-70 flex flex-col   ml-auto mr-5 -top-2 relative ">
           {/* <h2 className=" text-2xl font-semibold text-glow text-black textDropShadow">Filter</h2> */}
 
           <LocalDropDown
@@ -269,7 +269,7 @@ export default function UserSegment({ data, scatterData }) {
           <div>
             <section className="flex gap-2">
               <div className="titleContainer mt-5"></div>
-              <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2">
+              <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
                 User Engagement vs Orders
               </h2>
             </section>
@@ -288,7 +288,7 @@ to-purple-500/30 backdrop-blur-md shadow-lg  p-2 rounded-lg  "
 
             
             <span className="font-semibold textDropShadow ">Graph Markers</span>
-            <div className="flex  flex-col gap-3">
+            <div className="flex  flex-col gap-3 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
               <span className="flex items-center gap-1 l">
                 🔴 Critical — Low conversion segment
               </span>
