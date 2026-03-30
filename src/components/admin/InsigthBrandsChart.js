@@ -19,7 +19,7 @@ export default function InsightBrandsChart() {
        
         <section className="flex gap-2 p-4">
               <div className="titleContainer mt-3"></div>
-            <h2 className="text-2xl font-medium  mb-4 textDropShadow text-glow text-white">
+            <h2 className="text-2xl font-medium  mb-4 textDropShadow text-glow text-white drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
           Top Selling Brands across the globe
         </h2>
             </section>
