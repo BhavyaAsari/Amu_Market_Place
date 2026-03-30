@@ -37,7 +37,7 @@ export default function GraphRevenue() {
   <section className="flex justify-between items-center  ">
         {/* <p className="font-extrabold text-3xl">Revenue Stats</p> */}
 
-       <div className=" w-60  h-20 rounded-xl relative   ml-auto top-18">
+       <div className="w-60  h-20 rounded-xl relative   ml-auto -top-4">
          <LocalDropDown
           options={filterOptions}
           value={filter}
