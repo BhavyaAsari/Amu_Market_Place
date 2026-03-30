@@ -15,7 +15,7 @@ export default function StatsSection({
   // console.log("statechange",statChange)
 
   return (
-    <main className="flex gap-8 mb-8">
+    <main className="flex gap-8 mb-8 relative -top-20">
 
       <div>
         <p className="statsFont textDropShadow">{statValue}</p>
