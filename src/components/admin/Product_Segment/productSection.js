@@ -117,7 +117,7 @@ const productScatterConfig = {
 
       {/* Stats */}
       <AdminCard bgColor="bg-gradient-to-b from-[#4c1d95] via-[#6d28d9] to-[#9333ea]">
-        <h1 className="font-semibold text-white text-xl mb-3 textDropShadow text-glow ">
+        <h1 className="font-semibold text-white text-xl mb-3 textDropShadow text-glow drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
           Product Insights
         </h1>
 
@@ -128,7 +128,7 @@ const productScatterConfig = {
       <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
         <section className="flex">
           <div className="titleContainer mt-3"></div>
-          <h1 className="font-extrabold text-white text-2xl ml-2 textDropShadow text-glow ">
+          <h1 className="font-extrabold text-white text-2xl ml-2 textDropShadow text-glow drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
           Top 5 Selling Series
         </h1>
         </section>
@@ -144,7 +144,7 @@ const productScatterConfig = {
           <div>
             <section className="flex gap-2">
               <div className="titleContainer mt-5"></div>
-            <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2">
+            <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
               Inventory vs Demand Insights
             </h2>
             </section>
