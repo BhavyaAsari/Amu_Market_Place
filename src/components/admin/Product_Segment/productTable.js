@@ -27,12 +27,12 @@ const router = useRouter();
       key: "image",
       label: "#",
       render: (_, row) => (
-<div className="relative w-20 h-20 bg-slate-50 rounded-md overflow-hidden">          <Image
+<div className="relative w-40 h-40 bg-slate-50 rounded-md overflow-hidden">          <Image
             fill
             priority
             src={row.image || "/products/default.png"}
             alt="Loading..."
-            className="    object-cover p-3 "
+            className="    object-contain rounded p-3 "
           />
         </div>
       ),
