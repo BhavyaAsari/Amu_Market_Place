@@ -2,20 +2,23 @@
 
 import { connectDB } from "@/libs/db";
 import User from "@/models/Users";
+import {revalidatePath, unstable_cache} from "next/cache"
 
-export async function getUsersDetails({ search = "", page = 1 }) {
-  await connectDB();
 
-  try {
-    const limit = 15;
+
+const getChachedUsers = unstable_cache(
+
+  async ({search,page}) => {
+
+    await connectDB();
+
+     const limit = 15;
 
     const skip = (page - 1) * limit;
 
     let query = {};
 
-    // console.log("search",search)
-
-    if (search) {
+     if (search) {
       query = {
         $or: [
           { username: { $regex: search, $options: "i" } },
@@ -32,14 +35,42 @@ export async function getUsersDetails({ search = "", page = 1 }) {
       .skip(skip)
       .limit(limit);
 
-    // console.log("users",users)
-    const totalUsers = await User.countDocuments(query);
+       const totalUsers = await User.countDocuments(query);
 
     const totalPages = Math.ceil(totalUsers / limit);
 
-    return { users: JSON.parse(JSON.stringify(users)), totalPages };
+    return {
+      users: JSON.parse(JSON.stringify(users)),
+      totalPages,
+    };
+  },
+  ["Users-list"],
+  {
+    revalidate:60,
+    tags:["Users"],
+  }
+);
+
+
+export async function getUsersDetails({ search = "", page = 1 }) {
+  await connectDB();
+
+  try {
+   
+
+    
+      return await getChachedUsers({search,page})
+    // console.log("search",search)
+
+   
+
+    
+
+    // console.log("users",users)
+   
+
   } catch (error) {
     console.error("Error fetching Users: ", error);
-    return [];
+    return  { users: [], totalPages: 0 };
   }
 }
