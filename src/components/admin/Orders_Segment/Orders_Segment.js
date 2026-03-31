@@ -14,6 +14,8 @@ import {
   getPostalCodes,
 } from "@/libs/locationData";
 import PieChartReusable from "../Reusable_Components/pieChart";
+import StatsCardGraph from "../Reusable_Components/GraphStatsCards";
+import StatsDetails from "../Reusable_Components/graphsStatDetails";
 
 export default function OrderSegment({ data }) {
   const {
@@ -21,6 +23,8 @@ export default function OrderSegment({ data }) {
     orderGrowthAnalysis,
     orderRegionalAnalysis,
     orderStatusAnalysis,
+    OrdersKpiData
+
   } = data || {};
 
   // console.log("orderRegionalAnalysis:", orderRegionalAnalysis);
@@ -82,6 +86,46 @@ export default function OrderSegment({ data }) {
 
 };
 
+
+const cardsData = [
+
+  {
+
+    label: "Total Orders",
+    value:regionalData.reduce((sum,r) => sum + r.orders,0),
+  },
+  {
+    label:"Total Revenue",
+    value:`₹${(regionalData.reduce((sum,r) => sum + r.revenue,0)/1000).toFixed(0)}k`,
+  },
+  {
+
+    label: "Top Region",
+    value: regionalData[0]?.region || "-",
+  },
+  {
+    label:"Regions Shown",
+    value:regionalData.length,
+  },
+];
+
+const KpiCards = [
+  {
+    label:"Delivery Rate",
+    value: `${OrdersKpiData?.data?.deliveryRate} %`,
+  },
+  {
+    label:"Cancel Rate",
+    value:`${OrdersKpiData?.data?.cancelRate } %`,
+  },
+  {
+    label:"Average Order Value ",
+    value:`₹${OrdersKpiData?.data?.AOV.toLocaleString("en-IN")}`,
+  },
+]
+
+// console.log("KPI CARDS",KpiCards);
+
   return (
     <>
       <div className="mb-6">
@@ -129,40 +173,11 @@ export default function OrderSegment({ data }) {
         </p>
 
         {/* ← Add this summary strip */}
-        <div className="flex gap-4 ml-5 mt-3 flex-wrap">
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-            <p className="text-purple-200 text-xs">Total Orders</p>
-            <p className="text-white font-bold text-lg">
-              {regionalData
-                .reduce((sum, r) => sum + r.orders, 0)
-                .toLocaleString("en-US")}
-            </p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-            <p className="text-purple-200 text-xs">Total Revenue</p>
-            <p className="text-white font-bold text-lg">
-              ₹
-              {(
-                regionalData.reduce((sum, r) => sum + r.revenue, 0) / 1_000
-              ).toFixed(0)}
-              K
-            </p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-            <p className="text-purple-200 text-xs">Top Region</p>
-            <p className="text-white font-bold text-lg capitalize">
-              {regionalData[0]?.region || "—"}
-            </p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-            <p className="text-purple-200 text-xs">Regions Shown</p>
-            <p className="text-white font-bold text-lg">
-              {regionalData.length}
-            </p>
-          </div>
-        </div>
+        <StatsCardGraph
+         cards={cardsData}/>
 
-        <div className="grid grid-cols-2 gap-30 relative -top-36 w-full max-w-lg ml-auto">
+       
+        <div className="grid grid-cols-2 gap-30 relative -top-32 w-full max-w-lg ml-auto">
           {/* <h1 className="text-2xl text-white text-glow textDropShadow">Filters</h1> */}
 
           <LocalDropDown
@@ -208,21 +223,43 @@ export default function OrderSegment({ data }) {
           ]}
         />
       </AdminCard>
+<div className="bg-linear-to-tl from-purple-600 via-purple-400 to-purple-800 rounded-lg max-w-3xl">
 
-      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
-        <section className="flex gap-2">
-          <div className="titleContainer mt-5"></div>
-          <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
-            Order Status Analytics
-          </h2>
-        </section>
-        <PieChartReusable
-          data={orderStatusAnalysis.data}
-          configData={configData}
-          nameKey="status"
-          dataKey="count"
-        />
-      </AdminCard>
-    </>
+  {/* 🔹 Header */}
+  <div className="flex flex-col gap-1 mb-4">
+    <section className="flex gap-2 ml-4"> <div className="titleContainer mt-5"></div> <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]"> Order Status Analytics </h2> </section>
+    <p className="text-purple-200 text-sm ml-4">
+      Status distribution snapshot
+    </p>
+  </div>
+
+  {/* 🔹 KPI Cards */}
+  <div className="mb-5">
+    <StatsCardGraph cards={KpiCards} />
+  </div>
+
+  {/* 🔹 Chart + Details */}
+  <div className="flex flex-col lg:flex-row gap-6 items-start">
+
+    {/* 📊 Pie Chart */}
+    <div className="flex-1 w-full">
+      <PieChartReusable
+        data={orderStatusAnalysis?.data || []}
+        configData={configData}
+        nameKey="status"
+        dataKey="count"
+      />
+    </div>
+
+    {/* 📋 Details */}
+    <div className="w-full lg:w-75 mr-4">
+      <StatsDetails
+        statsDetails={orderStatusAnalysis?.data || []}
+        statConfig={configData}
+      />
+    </div>
+
+  </div>
+</div>    </>
   );
 }
