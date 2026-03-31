@@ -1363,3 +1363,34 @@
   
 }
 
+@layer components {
+
+  .graphStatsContainer {
+
+    @apply  flex gap-4 ml-5 mt-3 flex-wrap;
+  }
+
+
+  .cardContainerMain {
+
+    @apply bg-white/10  backdrop-blur-sm rounded-xl px-4 py-2;
+  }
+
+
+  .labelOfContainer {
+
+    @apply  text-purple-200 text-xs  ;
+  }
+
+
+  .valueOfContainer {
+
+    @apply text-white font-bold text-lg;
+  }
+
+  .statsDetailsContainer {
+
+    @apply bg-white/10 backdrop-blur-sm p-4 min-w-50 ;
+  }
+}
+
