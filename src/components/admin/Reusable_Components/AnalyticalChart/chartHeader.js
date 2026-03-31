@@ -14,7 +14,7 @@ export default function ChartHeader({ title, subtitle } = {}) {
     return (
 
         <main className="">
-            <div className="HeaderContainer relative -top-20 ">
+            <div className="HeaderContainer relative -top-20 mt-6">
                 <div className="titleContainer ">
                     {/* <span className="text-[22px] tracking-[0.2em] uppercase text-violet-500 font-mono">Analytics</span> */}
                     

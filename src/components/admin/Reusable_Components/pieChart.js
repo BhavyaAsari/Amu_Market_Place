@@ -52,7 +52,7 @@ export default function PieChartReusable({
             <Tooltip
               formatter={(value, name) => [value, configData[name]?.label || name]}
             />
-            <Legend formatter={(value) => configData[value]?.label || value} />
+            {/* <Legend formatter={(value) => configData[value]?.label || value} /> */}
           </PieChart>
         </ResponsiveContainer>
       </div>
