@@ -1,18 +1,22 @@
 import { products } from "@/app/data/products";
-import { connectDB } from "@/libs/db"
-import Product from "@/models/Product"
+import { connectDB } from "@/libs/db";
+import Product from "@/models/Product";
+import { unstable_cache } from "next/cache";
 
 
-export async function getProductDetails({ search = "", page = 1 }) {
 
-  await connectDB();
+const getCachedProducts = unstable_cache(
 
-  try {
+  async ({search,page}) => {
 
+      await connectDB();
+
+    
     const limit = 100;
     const skip = (page - 1) * limit;
 
     let query = {};
+      
 
     if (search) {
       query = {
@@ -35,10 +39,27 @@ export async function getProductDetails({ search = "", page = 1 }) {
 
     const productPages = Math.ceil(totalProducts / limit);
 
-    return {
+      return {
       productsDetails: JSON.parse(JSON.stringify(products)),
       productPages
     };
+
+  },
+  ["products-lists"],
+  {
+    revalidate:60,
+    tags:["products"]
+  }
+)
+
+
+export async function getProductDetails({ search = "", page = 1 }) {
+
+
+  try {
+
+
+  return  await getCachedProducts({search,page});
 
   } catch (error) {
 
