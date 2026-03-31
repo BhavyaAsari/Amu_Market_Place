@@ -21,6 +21,7 @@ import { getOrderStats } from "../OrdersAction/getOrderStats";
 import { getOrdersGrowth } from "../OrdersAction/getOrderGrowth";
 import { getRegionOrderAnalytics } from "../OrdersAction/getRegionRevenue";
 import { getOrderStatusDistribution } from "../OrdersAction/getOrderStatusDistribution";
+import { getKpiStats } from "../OrdersAction/getKPIStats";
 
 export async function getDashBoardData({search,page}) {
 
@@ -44,6 +45,7 @@ export async function getDashBoardData({search,page}) {
   ordersGrowth,
   orderDoubleBarRegionData,
   orderStatusData,
+  KPIData
 ] = await Promise.all([
   getProductStats(),
   getRevenueData(),
@@ -60,6 +62,7 @@ export async function getDashBoardData({search,page}) {
   getOrdersGrowth(),
   getRegionOrderAnalytics(),
   getOrderStatusDistribution(),
+  getKpiStats(),
 ]);
 
       return {
@@ -100,6 +103,7 @@ export async function getDashBoardData({search,page}) {
     orderGrowthAnalysis:ordersGrowth,
     orderRegionalAnalysis:orderDoubleBarRegionData,
     orderStatusAnalysis:orderStatusData,
+    OrdersKpiData:KPIData
   }
 };
 
