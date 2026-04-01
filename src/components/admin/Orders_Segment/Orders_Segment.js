@@ -1,21 +1,23 @@
 "use client";
+
 import AdminCard from "../adminCard";
 import AnalyticalChartLayout from "../Reusable_Components/AnalyticalChart/analyticalChartLayout";
 import ResusableDoubleBargraph from "../Reusable_Components/DoubleBarchart";
 import OrderStatsUI from "./OrderStatsCardUI";
 import LocalDropDown from "@/components/productComponents/localDropDown";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, useMemo } from "react";
 
 import { getRegionOrderAnalytics } from "@/app/actions/adminActions/OrdersAction/getRegionRevenue";
 import {
   getCountries,
   getStates,
   getCities,
-  getPostalCodes,
 } from "@/libs/locationData";
+
 import PieChartReusable from "../Reusable_Components/pieChart";
 import StatsCardGraph from "../Reusable_Components/GraphStatsCards";
 import StatsDetails from "../Reusable_Components/graphsStatDetails";
+import Table from "../Reusable_Components/Table";
 
 export default function OrderSegment({ data }) {
   const {
@@ -23,28 +25,21 @@ export default function OrderSegment({ data }) {
     orderGrowthAnalysis,
     orderRegionalAnalysis,
     orderStatusAnalysis,
-    OrdersKpiData
-
+    OrdersKpiData,
+    orderDetailAnalysis,
   } = data || {};
 
-  // console.log("orderRegionalAnalysis:", orderRegionalAnalysis);
-  // console.log("doubleBarData:", orderRegionalAnalysis?.orderDoubleBarRegionData);
-  // console.log("Orders Growth Data", orderGrowthAnalysis);
+  const totalPages = orderDetailAnalysis?.pagination?.totalPages || 1;
 
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [regionalData, setRegionalData] = useState(
-    orderRegionalAnalysis?.data || [],
+    orderRegionalAnalysis?.data || []
   );
   const [isPending, startTransition] = useTransition();
 
   const countryOptions = getCountries();
-
-  const stateoptions = selectedCountry ? getStates(selectedCountry) : [];
-
-  const cityOptions = selectedState
-    ? getCities(selectedCountry, selectedState)
-    : [];
+  const stateOptions = selectedCountry ? getStates(selectedCountry) : [];
 
   const [filter, setFilter] = useState("weekly");
 
@@ -56,11 +51,34 @@ export default function OrderSegment({ data }) {
 
   const growthData = orderGrowthAnalysis?.[filter] || [];
 
-  // const RegionalData =  orderRegionalAnalysis?.data
+  const formattedRows = useMemo(() => {
+    const ords = orderDetailAnalysis?.orders || [];
 
-  // console.log("Data of the orders", data);
+    return ords.map((order) => ({
+      id: order._id,
+      orderNumber: order.orderNumber,
 
-  //Re-fetch regional data whenever country or state changes
+      user: {
+        name: order.user?.username || order.user?.email || "N/A",
+        email: order.user?.email || "",
+      },
+
+      items: order.items || [],
+      total: order.total,
+
+      paymentMethod: order.paymentMethod,
+      paymentStatus: order.paymentStatus,
+
+      orderStatus: order.orderStatus,
+
+      shippingAddress: {
+        city: order.shippingAddress?.city || "",
+        state: order.shippingAddress?.state || "",
+      },
+
+      createdAt: order.createdAt,
+    }));
+  }, [orderDetailAnalysis]);
 
   useEffect(() => {
     startTransition(async () => {
@@ -69,73 +87,154 @@ export default function OrderSegment({ data }) {
         state: selectedState || undefined,
       });
 
-      // console.log("Result of re-fetch",result);
-
       if (result.success) {
         setRegionalData(result.data);
       }
     });
   }, [selectedCountry, selectedState]);
 
-  //OrderStatus
   const configData = {
-  processing: { label: "Processing", color: "#f59e0b" },  // amber    — warm, energetic
-  shipped:    { label: "Shipped",    color: "#06b6d4" },  // cyan     — cool, clean
-  delivered:  { label: "Delivered",  color: "#10b981" },  // emerald  — positive, done
-  cancelled:  { label: "Cancelled",  color: "#F13C59"}
+    processing: { label: "Processing", color: "#f59e0b" },
+    shipped: { label: "Shipped", color: "#06b6d4" },
+    delivered: { label: "Delivered", color: "#10b981" },
+    cancelled: { label: "Cancelled", color: "#F13C59" },
+  };
 
-};
+  const cardsData = [
+    {
+      label: "Total Orders",
+      value: regionalData.reduce((sum, r) => sum + r.orders, 0),
+    },
+    {
+      label: "Total Revenue",
+      value: `₹${(
+        regionalData.reduce((sum, r) => sum + r.revenue, 0) / 1000
+      ).toFixed(0)}k`,
+    },
+    {
+      label: "Top Region",
+      value: regionalData[0]?.region || "-",
+    },
+    {
+      label: "Regions Shown",
+      value: regionalData.length,
+    },
+  ];
 
+  const KpiCards = [
+    {
+      label: "Delivery Rate",
+      value: `${OrdersKpiData?.data?.deliveryRate} %`,
+    },
+    {
+      label: "Cancel Rate",
+      value: `${OrdersKpiData?.data?.cancelRate} %`,
+    },
+    {
+      label: "Average Order Value",
+      value: `₹${OrdersKpiData?.data?.AOV.toLocaleString("en-IN")}`,
+    },
+  ];
 
-const cardsData = [
+  const columns = [
+    {
+      key: "orderNumber",
+      label: "Order ID",
+      render: (value) => (
+        <span className="font-bold text-sm text-gray-800">{value}</span>
+      ),
+    },
+    {
+      key: "user",
+      label: "Customer",
+      render: (_, row) => (
+        <div className="flex flex-col">
+          <span className="font-bold text-gray-800">
+            {row.user?.name}
+          </span>
+          <span className="text-xs font-semibold text-gray-500">
+            {row.user?.email}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "items",
+      label: "Items",
+      render: (value) => (
+        <span className="text-sm text-gray-600 font-semibold">
+          {value?.length || 0} items
+        </span>
+      ),
+    },
+    {
+      key: "total",
+      label: "Total",
+      render: (value) => <span className="font-semibold">₹{value}</span>,
+    },
+    {
+      key: "payment",
+      label: "Payment",
+      render: (_, row) => (
+        <div>
+          <div className="font-semibold text-lg">{row.paymentMethod}</div>
+          <div className="text-xs font-semibold">{row.paymentStatus}</div>
+        </div>
+      ),
+    },
+    {
+      key: "orderStatus",
+      label: "Status",
+      render: (value) => {
+        const base = "px-2 py-2 rounded text-xs font-semibold";
 
-  {
+        if (value === "processing")
+          return <span className={`${base} bg-amber-100 text-amber-600`}>Processing</span>;
 
-    label: "Total Orders",
-    value:regionalData.reduce((sum,r) => sum + r.orders,0),
-  },
-  {
-    label:"Total Revenue",
-    value:`₹${(regionalData.reduce((sum,r) => sum + r.revenue,0)/1000).toFixed(0)}k`,
-  },
-  {
+        if (value === "shipped")
+          return <span className={`${base} bg-cyan-100 text-cyan-600`}>Shipped</span>;
 
-    label: "Top Region",
-    value: regionalData[0]?.region || "-",
-  },
-  {
-    label:"Regions Shown",
-    value:regionalData.length,
-  },
-];
+        if (value === "delivered")
+          return <span className={`${base} bg-emerald-100 text-emerald-600`}>Delivered</span>;
 
-const KpiCards = [
-  {
-    label:"Delivery Rate",
-    value: `${OrdersKpiData?.data?.deliveryRate} %`,
-  },
-  {
-    label:"Cancel Rate",
-    value:`${OrdersKpiData?.data?.cancelRate } %`,
-  },
-  {
-    label:"Average Order Value ",
-    value:`₹${OrdersKpiData?.data?.AOV.toLocaleString("en-IN")}`,
-  },
-]
-
-// console.log("KPI CARDS",KpiCards);
+        return <span className={`${base} bg-rose-100 text-rose-600`}>Cancelled</span>;
+      },
+    },
+    {
+      key: "location",
+      label: "Location",
+      render: (_, row) => (
+        <span className="font-semibold">
+          {row.shippingAddress.city}, {row.shippingAddress.state}
+        </span>
+      ),
+    },
+    {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => new Date(value).toLocaleDateString(),
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: () => <button className="text-purple-600">View</button>,
+    },
+  ];
 
   return (
-    <>
-      <div className="mb-6">
-        <h1 className="AdminTitle ">Orders</h1>
-        <p className="subTitleAdmin font-semibold">Manage all the orders.</p>
+    <div className="space-y-8 max-w-7xl mx-auto px-4">
+
+      {/* Header */}
+      <div>
+        <h1 className="AdminTitle">Orders</h1>
+        <p className="subTitleAdmin">Manage all the orders.</p>
       </div>
+
       <OrderStatsUI dataOrders={orderStatsAnalytics} />
 
+      {/* Growth */}
       <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
-        <div className=" w-70 flex flex-col   ml-auto mr-5  relative -top-2 ">
+        <div className="flex justify-end mb-4">
           <LocalDropDown
             options={filterOptions}
             value={filter}
@@ -147,64 +246,49 @@ const KpiCards = [
           title="Orders Growth"
           subtitle={`${filter} order growth`}
           statValue={orderStatsAnalytics.ordersThisMonth}
-          statChange={`${orderStatsAnalytics.growthPercent}% this month`}
+          statChange={`${orderStatsAnalytics.growthPercent}`}
           totalValue={orderStatsAnalytics.totalOrders}
           totalLabel="Total Orders"
           data={growthData}
           dataKey="orders"
-          unit="orders"
         />
       </AdminCard>
 
+      {/* Regional */}
       <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
-        {isPending && <p className="text-xl ">Loading...</p>}
-        <section className="flex mr-auto gap-2">
-          <div className="titleContainer mt-5"></div>
-          <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 shadow-xsm drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
-            Regional Analytics
-          </h2>
-        </section>
-        <p className="text-purple-200 text-sm textDropShadow text-glow ml-5">
-          {selectedState
-            ? `Cities in ${selectedState}`
-            : selectedCountry
-              ? `States in ${selectedCountry}`
-              : "Top countries by orders & revenue"}
-        </p>
+        <div className="flex justify-between items-center mb-4">
+         <div>
+            <section className="flex gap-2">
+              <div className="titleContainer mt-5"></div>
+              <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
+              Regional Analytics
+              </h2>
+            </section>
 
-        {/* ← Add this summary strip */}
-        <StatsCardGraph
-         cards={cardsData}/>
-
-       
-        <div className="grid grid-cols-2 gap-30 relative -top-32 w-full max-w-lg ml-auto">
-          {/* <h1 className="text-2xl text-white text-glow textDropShadow">Filters</h1> */}
-
-          <LocalDropDown
-            label="Country"
-            options={[
-              {
-                label: "All Countries",
-                value: "",
-              },
-              ...countryOptions,
-            ]}
-            value={selectedCountry}
-            onChange={(val) => {
-              setSelectedCountry(val);
-              setSelectedState("");
-            }}
-          />
-
-          <LocalDropDown
-            label="state"
-            options={[{ label: "All states", value: "" }, ...stateoptions]}
-            value={selectedState}
-            onChange={(val) => setSelectedState(val)}
-          />
+            <p className="text-purple-200 text-sm textDropShadow text-glow ml-5">
+              Track how user activity translates into purchases
+            </p>
+          </div>
+          <div className="flex gap-10 w-96">
+            <LocalDropDown
+              options={[{ label: "All Nations", value: "" }, ...countryOptions]}
+              value={selectedCountry}
+              onChange={(val) => {
+                setSelectedCountry(val);
+                setSelectedState("");
+              }}
+            />
+            <LocalDropDown
+              options={[{ label: "All states", value: "" }, ...stateOptions]}
+              value={selectedState}
+              onChange={setSelectedState}
+            />
+          </div>
         </div>
 
-        <ResusableDoubleBargraph
+        <StatsCardGraph cards={cardsData} />
+
+         <ResusableDoubleBargraph
           data={regionalData || []}
           xKey="region"
           bars={[
@@ -223,43 +307,51 @@ const KpiCards = [
           ]}
         />
       </AdminCard>
-<div className="bg-linear-to-tl from-purple-600 via-purple-400 to-purple-800 rounded-lg max-w-3xl">
 
-  {/* 🔹 Header */}
-  <div className="flex flex-col gap-1 mb-4">
-    <section className="flex gap-2 ml-4"> <div className="titleContainer mt-5"></div> <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]"> Order Status Analytics </h2> </section>
-    <p className="text-purple-200 text-sm ml-4">
-      Status distribution snapshot
-    </p>
-  </div>
+      {/* Status */}
+      <AdminCard bgColor="bg-linear-to-tl from-purple-600 via-purple-400  to-purple-800">
+          <div>
+            <section className="flex gap-2">
+              <div className="titleContainer mt-5"></div>
+              <h2 className="font-extrabold text-white text-2xl textDropShadow text-glow mt-2 drop-shadow-[5px_5px_5px_rgba(0,0,0,0.6)]">
+              Order Status Analytics
+              </h2>
+            </section>
 
-  {/* 🔹 KPI Cards */}
-  <div className="mb-5">
-    <StatsCardGraph cards={KpiCards} />
-  </div>
+            <p className="text-purple-200 text-sm textDropShadow text-glow ml-5">
+              Track how user activity translates into purchases
+            </p>
+          </div>
 
-  {/* 🔹 Chart + Details */}
-  <div className="flex flex-col lg:flex-row gap-6 items-start">
+        <div className=""><StatsCardGraph cards={KpiCards} /></div>
 
-    {/* 📊 Pie Chart */}
-    <div className="flex-1 w-full">
-      <PieChartReusable
-        data={orderStatusAnalysis?.data || []}
-        configData={configData}
-        nameKey="status"
-        dataKey="count"
-      />
+        <div className="flex flex-col lg:flex-row gap-6">
+          <PieChartReusable
+            data={orderStatusAnalysis?.data || []}
+            configData={configData}
+            nameKey="status"
+            dataKey="count"
+          />
+
+         <div className="min-w-sm">
+           <StatsDetails
+            statsDetails={orderStatusAnalysis?.data || []}
+            statConfig={configData}
+          />
+         </div>
+        </div>
+      </AdminCard>
+
+      {/* Table */}
+      <AdminCard >
+        <div className="overflow-x-auto">
+          <Table
+            columns={columns}
+            rows={formattedRows}
+            totalPages={totalPages}
+          />
+        </div>
+      </AdminCard>
     </div>
-
-    {/* 📋 Details */}
-    <div className="w-full lg:w-75 mr-4">
-      <StatsDetails
-        statsDetails={orderStatusAnalysis?.data || []}
-        statConfig={configData}
-      />
-    </div>
-
-  </div>
-</div>    </>
   );
 }
