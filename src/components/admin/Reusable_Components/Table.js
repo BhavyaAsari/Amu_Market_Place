@@ -1,4 +1,4 @@
-"Use client";
+"use client";
 
 import AdminCard from "../adminCard";
 import SearchBarAdmin from "./SearchBarAdmin";
@@ -19,14 +19,14 @@ export default function Table({ columns, rows,totalPages }) {
           <SearchBarAdmin/>
 
     </section>
-       <table className="w-full text-sm min-w-[900px] ">
+       <table className="w-full text-sm min-w-225 ">
 
-        <thead className="  bg-linear-to-b from-purple-400 to-purple-800 ">
+        <thead className="bg-linear-to-r from-purple-500 via-violet-700 to-purple-500">
           <tr>
             {columns.map((col, index) => (
               <th
                 key={index}
-                className="text-left px-10 py-2 text-gray-700 text-sm "
+                className="text-left px-10 py-2 text-gray-100 text-sm "
               >
                 {col.label}
               </th>
@@ -39,11 +39,12 @@ export default function Table({ columns, rows,totalPages }) {
           {rows.map((row, i) => (
             <tr
               key={i}
-              className="border-b hover:bg-purple-50 transition hover:-translate-y-1 hover:shadow-xl"
-            >
+className={`${
+  i % 2 === 0 ? "bg-white" : "bg-gray-50"
+} border-b hover:bg-purple-50 transition`}       >
 
               {columns.map((col, j) => (
-                <td key={j} className="px-10 py-2">
+                <td key={j} className="px-6 py-3">
 
                   {col.render
                     ? col.render(row[col.key], row)
