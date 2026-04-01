@@ -13,7 +13,7 @@ export default function LocalDropDown({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const selectedOption = options.find((o) => o.value === value );
+  const selectedOption = options?.find((o) => o.value === value );
 
   //  Rounded mapping
   const roundedClasses = {
