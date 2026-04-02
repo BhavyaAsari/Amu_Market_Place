@@ -6,6 +6,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/authOptions";
 import { adminGuard } from "@/libs/adminGuard";
 import { revalidatePath } from "next/cache";
+import Logs from "@/models/Logs";
+import { logAdminAction } from "@/libs/logger";
 
 export async function updateProductAdmin(productId,data) {
 
@@ -33,24 +35,55 @@ export async function updateProductAdmin(productId,data) {
             "status"
         ];
 
+        //Get Existing Project First
+        const existingProduct = await Product.findById(productId);
 
-        const updateData = {};
+        if(!existingProduct) {
 
-        for(let key of allowedFields) {
-
-            if(data[key] !== undefined) {
-
-                updateData[key] = data[key];
-            }
+            return {success:false, message: "Product not found"};
         }
 
 
-        const updated = await Product.findByIdAndUpdate(
+        const updateData = {};
+        const before = {};
+        const after = {};
+
+        for(let key of allowedFields) {
+
+            if(data[key] !== undefined && data[key] !==  existingProduct[key]) {
+
+                updateData[key] = data[key];
+
+                before[key] =  existingProduct[key];
+                after[key] = data[key];
+            }
+        }
+
+        //No change occured
+        if(Object.keys(updateData).length === 0) {
+
+            return {success:false,message:"No changes detected"};
+        }
+
+
+         await Product.findByIdAndUpdate(
 
             productId,
             {$set:updateData},
             {new:true}
         );
+
+
+        await logAdminAction({
+
+            adminId,
+            adminName,
+            action:"Update Product",
+            module:"Product",
+            targetId:productId,
+            before,
+            after
+        });
 
         revalidatePath("/admin/adminProduct/edt/${row.id}");
 
