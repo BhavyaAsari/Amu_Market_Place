@@ -6,6 +6,7 @@ import {
   LuPackage,
   LuLayoutDashboard,
   LuLaptopMinimal,
+  LuScroll
 } from "react-icons/lu";
 
 import { LuTrendingUp, LuShoppingCart } from "react-icons/lu";
@@ -21,6 +22,7 @@ import ProductSection from "./Product_Segment/productSection";
 import useSync from "@/hooks/useRealTimeRefresh";
 import Scattergraph from "./Reusable_Components/ScatterGraph";
 import OrderSegment from "./Orders_Segment/Orders_Segment";
+import LogSystemMain from "./logs_Segment/logSection";
 
 export default function AdminLayout({ data }) {
   const [active, setActive] = useState("dashboard");
@@ -37,6 +39,7 @@ export default function AdminLayout({ data }) {
     analyticsData,
     usersVsorders,
     ordersDataObject,
+    logsObject
   } = data;
 
   const priceData = analyticsData?.priceAnalysis?.ChartAnalytics || [];
@@ -53,6 +56,7 @@ export default function AdminLayout({ data }) {
     { key: "products", name: "Products", icon: LuLaptopMinimal },
     { key: "users", name: "Users", icon: LuUser },
     { key: "orders", name: "Orders", icon: LuPackage },
+    {key:"logs",name:"Audit Logs",icon:LuScroll}
   ];
 
   const statsItems = [
@@ -176,6 +180,12 @@ export default function AdminLayout({ data }) {
         )}
 
         {active === "orders" && <OrderSegment data={orderInsights} />}
+
+        {active ===  "logs" && (
+
+          <LogSystemMain  />
+        )}
+
       </div>
     </main>
   );
