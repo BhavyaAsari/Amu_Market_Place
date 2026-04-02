@@ -6,37 +6,38 @@ import { adminGuard } from "@/libs/adminGuard";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/authOptions";
-
-
+import { logAdminAction } from "@/libs/logger";
 
 export async function toggleUserStatus(userId) {
+  await connectDB();
 
-    await connectDB();
+  const session = await getServerSession();
+  const adminId = session?.user?.id;
 
-    const session = getServerSession();
-    const adminId = session?.user?.id;
+  const check = await adminGuard(adminId, userId);
 
-    const check = adminGuard(adminId,userId);
+  if (!check.allowed) {
+    return { success: false, message: check.message };
+  }
 
-    if(!check.allowed) {
+  const user = check.user;
 
-        return {success:false,message:check.message}
-    }
+  const oldStatus = user.status;
+  const newStatus = user.status === "active" ? "blocked" : "active";
 
-    const user = check.user;
+  await User.findByIdAndUpdate(userId, { status: newStatus });
 
-    const newStatus = user.status === "active" ? "blocked" : "active";
+  await logAdminAction({
+    adminId,
+    adminName,
+    action: newStatus === "blocked" ? "BLOCK_USER" : "ACTIVATE_USER",
+    module: "User",
+    targetId: "userId",
+    before: { status: oldStatus },
+    after: { status: newStatus },
+  });
 
-    await User.findByIdAndUpdate(
-        userId,
-        { status:newStatus
+  revalidatePath("/admin/Users/edit/${row.id}");
 
-        });
-
-        revalidatePath("/admin/Users/edit/${row.id}");
-
-
-        return {success:true};
-
-    
+  return { success: true };
 }
