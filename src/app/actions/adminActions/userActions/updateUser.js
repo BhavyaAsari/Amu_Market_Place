@@ -1,55 +1,99 @@
-"use server";
+  "use server";
 
-import { connectDB } from "@/libs/db";
-import User from "@/models/Users";
-import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/libs/authOptions";
-import { adminGuard } from "@/libs/adminGuard";
+  import { connectDB } from "@/libs/db";
+  import User from "@/models/Users";
+  import { revalidatePath } from "next/cache";
+  import { getServerSession } from "next-auth";
+  import { authOptions } from "@/libs/authOptions";
+  import { adminGuard } from "@/libs/adminGuard";
+  import { logAdminAction } from "@/libs/logger";
+import successPage from "@/app/(main)/success/[id]/page";
 
-export async function updateUsersAdmin(userId,data) {
+  export async function updateUsersAdmin(userId,data) {
 
-  try {
+    try {
 
-    await connectDB();
+      await connectDB();
 
-    //Getting AdminID from the server session   
-    const session = await getServerSession(authOptions);
-    const adminId = session?.user?.id;
+      //Getting AdminID from the server session   
+      const session = await getServerSession(authOptions);
+      const adminId = session?.user?.id;
 
-    const check = await adminGuard(adminId,userId);
+      const check = await adminGuard(adminId,userId);
 
-    if(!check.allowed) {
+      if(!check.allowed) {
 
-        return {success:false,message:check.message};
-    }
+          return {success:false,message:check.message};
+      }
 
-    //Extracting details of the user  from the front-end sende data
+      //Extract exisiting User
+      const exisitingUser = await User.findById(userId);
 
-    const {firstName,lastName,phone,country,postalCode,role,status} = data;
+      if(!exisitingUser) {
 
-    const username = `${firstName} ${lastName}`;
+        return {success:false,message:"User not found"};
+      }
 
-    await User.findByIdAndUpdate(
-      userId,
-      {
+      //Extracting details of the user  from the front-end sende data
+
+      const {firstName,lastName,phone,country,postalCode,role,status} = data;
+
+      const username = `${firstName} ${lastName}`;
+
+      const before = {};
+      const after = {};
+      const updateData = {};
+
+      const fieldsTOCheck = {
+
         username,
         phone,
         country,
         postalCode,
         role,
         status
+      };
+
+      for(let key in fieldsTOCheck) {
+
+        if(!fieldsTOCheck[key] !== undefined && fieldsTOCheck[key] !== exisitingUser[key]) {
+
+          before[key] = exisitingUser[key];
+          after[key] = fieldsTOCheck[key];
+          updateData[key] = fieldsTOCheck[key];
+        }
       }
-    );
 
-        revalidatePath("/admin/Users/edit/${row.id}");
+      //No changes case 
+      if(Object.keys(updateData).length === 0) {
 
-    return { success:true, message:"User updated Successfully" };
+        return {success:false,message:"No changes detected"};
+      }
 
-  } catch (error) {
+      await User.findByIdAndUpdate(
+        userId,
+        updateData
+      );
 
-    console.error(error);
+      await logAdminAction({
 
-    return { success:false, message:"Server error" };
+        adminId,
+        adminName,
+        action:"UPDATE_USER",
+        module:"User",
+        targetId:userId,
+        before,
+        after
+      });
+
+          revalidatePath("/admin/Users/edit/${row.id}");
+
+      return { success:true, message:"User updated Successfully" };
+
+    } catch (error) {
+
+      console.error(error);
+
+      return { success:false, message:"Server error" };
+    }
   }
-}
