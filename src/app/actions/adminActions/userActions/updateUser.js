@@ -18,6 +18,7 @@ import successPage from "@/app/(main)/success/[id]/page";
       //Getting AdminID from the server session   
       const session = await getServerSession(authOptions);
       const adminId = session?.user?.id;
+      const adminName = session?.user?.name;
 
       const check = await adminGuard(adminId,userId);
 
@@ -54,15 +55,17 @@ import successPage from "@/app/(main)/success/[id]/page";
         status
       };
 
-      for(let key in fieldsTOCheck) {
+      for (let key in fieldsTOCheck) {
 
-        if(!fieldsTOCheck[key] !== undefined && fieldsTOCheck[key] !== exisitingUser[key]) {
-
-          before[key] = exisitingUser[key];
-          after[key] = fieldsTOCheck[key];
-          updateData[key] = fieldsTOCheck[key];
-        }
-      }
+  if (
+    fieldsTOCheck[key] !== undefined &&
+    fieldsTOCheck[key] !== exisitingUser[key]
+  ) {
+    before[key] = exisitingUser[key];
+    after[key] = fieldsTOCheck[key];
+    updateData[key] = fieldsTOCheck[key];
+  }
+}
 
       //No changes case 
       if(Object.keys(updateData).length === 0) {
