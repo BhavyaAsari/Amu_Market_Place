@@ -1,4 +1,5 @@
 import LoginForm from "@/components/authComponents/loginForm"
+import { Suspense } from "react";
 export default function UserLogin() {
 
     return (
@@ -18,9 +19,12 @@ export default function UserLogin() {
     
 
     {/* Login Section */}
-    <div className="p-6 sm:p-8 md:p-10">
+    
+     <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+     <div className="p-6 sm:p-8 md:p-10">
       <LoginForm />
     </div>
+    </Suspense>
 
   </div>
 </main>
