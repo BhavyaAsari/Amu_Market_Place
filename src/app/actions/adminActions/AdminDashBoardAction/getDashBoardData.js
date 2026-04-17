@@ -113,12 +113,12 @@ export async function getDashBoardData({search,page}) {
     orderDetailAnalysis:ordersDataDetails,
   },
 
-  // logsObject : {
+  logsObject : {
 
-  //   LogsAudit:adminLogs
+    LogsAudit:adminLogs
 
 
-  // }
+  }
 };
 
     }  catch (error) {

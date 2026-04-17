@@ -13,7 +13,18 @@ export async function getAdminLogs() {
         .sort({createdAt:-1})
         .lean();
 
-        return logs;
+        const serialized = logs.map((log) => ({
+            ...log,
+            _id: log._id.toString(),
+            adminId: log.adminId?.toString() ?? null,
+            targetId: log.targetId?.toString() ?? null,
+            createdAt: log.createdAt?.toISOString() ?? null,
+            changes: log.changes ? JSON.parse(JSON.stringify(log.changes)) : null,
+        }));
+
+        return serialized;
+
+       
     } catch(error) {
 
         console.log("Fetch logs error",error);
