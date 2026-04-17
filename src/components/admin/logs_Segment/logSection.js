@@ -1,8 +1,17 @@
 import LocalDropDown from "@/components/productComponents/localDropDown";
 import SearchBarAdmin from "../Reusable_Components/SearchBarAdmin";
 import AdminCard from "../adminCard";
+import { useState } from "react";
 
 export default function LogSystemMain({dbLogs}) {
+
+const [filters,setFilters] = useState({
+
+    module:"all",
+    action:"all",
+    date:"all"
+})
+
 //   const logs = [
 //     {
 //       id: 1,
@@ -58,7 +67,7 @@ export default function LogSystemMain({dbLogs}) {
 
   const auditLogs = formatLogs(dbLogs);
 
-  console.log("Db Logs",dbLogs);
+//   console.log("Db Logs",dbLogs);
 
   const groupedLogs = {
     today: auditLogs.filter((log) => log.date === "today"),
@@ -72,6 +81,17 @@ function getValue(val) {
   return val;
 }
   function formatLogs(logs) {
+
+
+     function buildMessage(action, before, after) {
+    if (action === "UPDATE_ORDER_STATUS") {
+      return `Order status changed`;
+    }
+    if (action === "UPDATE_PAYMENT_STATUS") {
+      return `Payment status changed `;
+    }
+    return action; // fallback — just show the action key
+  }
 
     if (!logs) return [];
     return logs.map((log) => {
@@ -90,6 +110,8 @@ function getValue(val) {
       id: log._id,
       type: log.module,
       action: log.action,
+      message: log.message,
+      actionType: log.action.split("_")[0],
       entityId: log.targetId,
       user: log.adminName,
       time: dateObj.toLocaleTimeString([], {
@@ -97,14 +119,16 @@ function getValue(val) {
         minute: "2-digit",
       }),
       date: isToday ? "today" : "yesterday",
-      changes: {
-       from: getValue(log.changes?.before), 
-        to: getValue(log.changes?.after),   
-      },
+      changes: Object.keys(log.changes?.after || {}).map((key) => ({
+  field: key,
+  from: log.changes.before?.[key],
+  to: log.changes.after?.[key],
+}))
     };
     })
   }
 
+  
   return (
     <main>
       <div className="flex gap-4">
@@ -124,21 +148,34 @@ function getValue(val) {
 
             <AdminCard>
               <div>
+                <span>{log.entityId}</span>
                 <p className="font-medium">
-                  {log.action}
-                  <span>{log.entityId}</span>
+                  {log.message}
+                  
                 </p>
 
                 <p>by {log.user}</p>
-                <div className="mt-2 flex gap-2 text-xs">
-                  <span className="bg-gray-500/30 px-2 py-1 rounded">
-                    {log.changes.from}
-                  </span>
-                  <span>→</span>
-                  <span className="bg-green-500/30 px-2 py-1 rounded">
-                    {log.changes.to}
-                  </span>
-                </div>
+                <div className="mt-2 flex flex-col gap-1 text-xs">
+  {log.changes.map((change, i) => (
+    <div key={i} className="flex gap-2 items-center">
+
+      <span className="text-gray-400">
+        {change.field}:
+      </span>
+
+      <span className="bg-gray-500/30 px-2 py-1 rounded">
+        {change.from}
+      </span>
+
+      <span>→</span>
+
+      <span className="bg-green-500/30 px-2 py-1 rounded">
+        {change.to}
+      </span>
+
+    </div>
+  ))}
+</div>
                 <p className="text-xs text-purple-300 mt-2">{log.time}</p>
               </div>
             </AdminCard>
@@ -159,7 +196,7 @@ function getValue(val) {
             <AdminCard>
               <div>
                 <p className="font-medium">
-                  {log.action}
+                  {log.message}
                   <span>{log.entityId}</span>
                 </p>
 

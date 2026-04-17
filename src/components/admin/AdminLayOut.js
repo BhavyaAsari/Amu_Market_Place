@@ -24,7 +24,7 @@ import Scattergraph from "./Reusable_Components/ScatterGraph";
 import OrderSegment from "./Orders_Segment/Orders_Segment";
 import LogSystemMain from "./logs_Segment/logSection";
 
-export default function AdminLayout({ data }) {
+export default function   AdminLayout({ data }) {
   const [active, setActive] = useState("dashboard");
 
   useSync();
@@ -50,6 +50,8 @@ export default function AdminLayout({ data }) {
   // console.log("order Insights: ",orderInsights);
 
   // console.log("charts", stock.stocksTrend);
+
+  const dbLogs = logsObject.LogsAudit; 
 
   const menuItems = [
     { key: "dashboard", name: "Dashboard", icon: LuLayoutDashboard },
@@ -183,7 +185,7 @@ export default function AdminLayout({ data }) {
 
         {active ===  "logs" && (
 
-          <LogSystemMain  />
+          <LogSystemMain dbLogs = {dbLogs} />
         )}
 
       </div>
